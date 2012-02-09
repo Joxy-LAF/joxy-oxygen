@@ -39,6 +39,7 @@ public class JoxyMenuUI extends BasicMenuUI {
 	@Override
 	public void installUI(JComponent c) {
 		super.installUI(c);
+		c.setOpaque(false);
 		((JMenu) c).setRolloverEnabled(true);
 		c.setFont(UIManager.getFont("Button.font"));
 	}
