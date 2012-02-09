@@ -94,6 +94,7 @@ public class TestGUI {
 			}
 		});
 		JPanel tab1 = new JPanel();
+		tab1.add(new JLabel("<html><i>This is a GUI that can be used to test Joxy."));
 		tab1.add(pr);
 		JProgressBar pr2 = new JProgressBar();
 		pr2.setIndeterminate(true);
@@ -197,7 +198,6 @@ public class TestGUI {
 		});
 		frame.add(j, BorderLayout.LINE_START);
 		frame.add(new JSlider(JSlider.VERTICAL, 0, 100, 50), BorderLayout.LINE_END);
-		frame.add(new JSlider(JSlider.HORIZONTAL, 0, 100, 50), BorderLayout.PAGE_END);
 		
 		frame.pack();
 		frame.setVisible(true);
