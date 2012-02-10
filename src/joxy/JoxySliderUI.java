@@ -17,6 +17,13 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+/**
+ * Class overriding the default Slider (BasicSliderUI) to provide a good
+ * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxySliderUI extends BasicSliderUI {
 	
 	public static final int ARC = 8;
