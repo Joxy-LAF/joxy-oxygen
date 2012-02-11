@@ -66,6 +66,13 @@ public class Output {
 			System.out.println("[D] " + callerClass + "." + callerMethod + "()" + msg);
 		}
 	}
+	
+	/**
+	 * Print the caller class and caller method.
+	 */
+	public static void debug() {
+		debug("");
+	}
 
 	/**
 	 * Print the given message in the form
