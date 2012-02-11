@@ -99,6 +99,17 @@ public class TestGUI {
 		JProgressBar pr2 = new JProgressBar();
 		pr2.setIndeterminate(true);
 		tab1.add(pr2);
+
+		JButton j = new JButton("Open a file chooser");
+		j.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser f = new JFileChooser();
+				f.showOpenDialog(frame);
+			}
+		});
+		tab1.add(j);
 		tab1.add(new JTextField("The game"));
 		tab1.add(new JToggleButton("Aan of uit?"));
 		t.addTab("Een tab", tab1);
@@ -187,17 +198,6 @@ public class TestGUI {
 		
 		
 		frame.add(t, BorderLayout.CENTER);
-		JButton j = new JButton("Some button");
-		j.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser f = new JFileChooser();
-				f.showOpenDialog(frame);
-			}
-		});
-		frame.add(j, BorderLayout.LINE_START);
-		frame.add(new JSlider(JSlider.VERTICAL, 0, 100, 50), BorderLayout.LINE_END);
 		
 		frame.pack();
 		frame.setVisible(true);
