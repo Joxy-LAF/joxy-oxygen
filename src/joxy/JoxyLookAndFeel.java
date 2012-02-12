@@ -19,6 +19,8 @@ import joxy.utils.Utils;
  */
 public class JoxyLookAndFeel extends BasicLookAndFeel {
 
+	/** Serial version UID */
+	private static final long serialVersionUID = 4566566724969768247L;
 	//-- CONSTANTS ------------------------------------------------------------
 	public static final int ANIMATION_NONE = 0;
 	public static final int ANIMATION_HOVER = 1;

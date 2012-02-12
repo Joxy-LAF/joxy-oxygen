@@ -14,7 +14,6 @@ import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import joxy.utils.ColorUtils;
 import joxy.utils.ColorUtils.ShadeRoles;
-import joxy.utils.Output;
 
 /**
  * Class overriding the default Rootpane (BasicRootpaneUI) to provide a good

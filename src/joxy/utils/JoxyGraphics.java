@@ -38,5 +38,5 @@ public class JoxyGraphics {
 		//}
 	}
 	
-	public static native void drawStringNative(Graphics g, Class c, String str, float x, float y);
+	public static native void drawStringNative(Graphics g, Class<?> c, String str, float x, float y);
 }

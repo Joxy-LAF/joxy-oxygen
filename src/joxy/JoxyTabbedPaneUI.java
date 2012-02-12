@@ -21,8 +21,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
-import joxy.utils.Output;
-
 /**
  * Class overriding the default TabbedPaneUI (BasicTabbedPaneUI) to provide a good
  * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.

@@ -13,6 +13,9 @@ import javax.swing.JTabbedPane;
 
 
 public class AboutKDEWindow extends JFrame {
+	/** Serial version UID */
+	private static final long serialVersionUID = 4039760594384966275L;
+
 	public AboutKDEWindow() {
 		super("Info over KDE");
 		
@@ -34,6 +37,9 @@ public class AboutKDEWindow extends JFrame {
 	}
 	
 	private class UpperPanel extends JPanel {
+		/** Serial version UID */
+		private static final long serialVersionUID = 835631753655713033L;
+
 		public UpperPanel() {
 			setLayout(new GridLayout());
 			
@@ -45,12 +51,18 @@ public class AboutKDEWindow extends JFrame {
 	}
 	
 	private class LeftPanel extends JLabel {
+		/** Serial version UID */
+		private static final long serialVersionUID = -6478578696701775202L;
+
 		public LeftPanel() {
 			super(new ImageIcon("konqi.png"));
 		}
 	}
 	
 	private class ContentPanel extends JPanel {
+		/** Serial version UID */
+		private static final long serialVersionUID = -2334173606481835530L;
+
 		public ContentPanel() {
 			setLayout(new GridLayout());
 			
@@ -81,6 +93,9 @@ public class AboutKDEWindow extends JFrame {
 	}
 	
 	private class LowerPanel extends JPanel {
+		/** Serial version UID */
+		private static final long serialVersionUID = -3840377528268742462L;
+
 		public LowerPanel() {
 			setLayout(new BorderLayout());
 			

@@ -50,9 +50,10 @@ public class ProgressBarIndicator {
 			Color lhighlight = ColorUtils.calcLightColor(highlight);
 			Color light = ColorUtils.calcLightColor(color);
 			Color dark = ColorUtils.calcDarkColor(color);
-			Color shadow = ColorUtils.calcShadowColor(color);
+			// Color shadow = ColorUtils.calcShadowColor(color);
 			
 			// draw shadow
+			// TODO draw shadow
 			
 			// draw fill
 			g2.setColor(ColorUtils.mix(highlight, dark, 0.2f));

@@ -2,9 +2,7 @@ package joxy;
 
 import java.awt.Component;
 
-import javax.swing.AbstractButton;
 import javax.swing.JComponent;
-import javax.swing.JSlider;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicToolBarUI;
 

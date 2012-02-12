@@ -28,14 +28,12 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 	/** The width and height of the arcs that form up
 	 *  the corners of the rounded rectangles. */
 	public static final int ARC = 8;
-	private int itemType;
 	/** The Rectangle to paint the icon in. */
     private Rectangle paintIconR = new Rectangle();
 	/** The Rectangle to paint the text in. */
     private Rectangle paintTextR = new Rectangle();
     
 	public JoxyMenuItemUI(int i) {
-		this.itemType = i;
 	}
 	
 	public static ComponentUI createUI(JComponent c) {

@@ -231,7 +231,7 @@ public class ColorUtils {
 		
 		// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 		// to contrastF, that divides the contrast by 10.
-		double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
+		// double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
 		// backgroundContrast -= CONTRAST_ADJUSTMENT;
 		
 		return ColorUtils.shadeScheme(color, ShadeRoles.LightShade, contrast);
@@ -248,7 +248,7 @@ public class ColorUtils {
 		
 		// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 		// to contrastF, that divides the contrast by 10.
-		double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
+		// double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
 		// backgroundContrast -= CONTRAST_ADJUSTMENT;
 		
         if (lowThreshold(color)) {
@@ -269,7 +269,7 @@ public class ColorUtils {
 		
 		// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 		// to contrastF, that divides the contrast by 10.
-		double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
+		// double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
 		// backgroundContrast -= CONTRAST_ADJUSTMENT;
 		
         if (lowThreshold(color)) {

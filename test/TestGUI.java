@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -139,6 +138,9 @@ public class TestGUI {
 				"Of de tekst <big>groter</big> of <small>kleiner </small> maken.<br>" +
 				"Én het heeft nog antialiasing ook!")));
 		JPanel tab4 = new JPanel() {
+			/** Serial version UID */
+			private static final long serialVersionUID = 5596697860474540908L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -150,6 +152,9 @@ public class TestGUI {
 		t.addTab("Meer tekst", new JTextPane());
 		
 		TableModel dataModel = new AbstractTableModel() {
+			/** Serial version UID */
+			private static final long serialVersionUID = 1666347484034514225L;
+
 			public int getColumnCount() {
 				return 10;
 			}
@@ -171,7 +176,7 @@ public class TestGUI {
 		vect.add("Hallo");
 		vect.add("Dag");
 		vect.add("Doei");
-		JList list = new JList(vect);
+		JList<Object> list = new JList<Object>(vect);
 		t.addTab("Een lijst", list);
 		
 		JPanel tabZoveel = new JPanel();

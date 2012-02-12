@@ -10,6 +10,9 @@ import javax.swing.JMenuItem;
 
 public class TestMenu extends JMenuBar {
 
+	/** Serial version UID */
+	private static final long serialVersionUID = 8183484172726704741L;
+
 	public TestMenu() {
 		// File
 		JMenu fileMenu = new JMenu("File");

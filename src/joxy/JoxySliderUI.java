@@ -102,17 +102,17 @@ public class JoxySliderUI extends BasicSliderUI {
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         
         // If mouse is over the component, draw light blue border
-        if (/*slider.isRollover()*/ false) {
-        	// Rounded rectangle with light blue border
-        	//g2.setColor(new Color(110, 214, 255));
-        	Color hover = UIManager.getColor("Button.hover"); // [ws] TODO moet dit naar de initialisatie?
-        	g2.setColor(hover);
-        	g2.setStroke(new BasicStroke(2f));
-        	g2.draw(new Ellipse2D.Double(0, 0, 13, 13));
-        	g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), 128));
-        	g2.setStroke(new BasicStroke(5f));
-        	g2.draw(new Ellipse2D.Double(0, 0, 13, 13));
-        } else {
+//        if (slider.isRollover() false) {
+//        	// Rounded rectangle with light blue border
+//        	//g2.setColor(new Color(110, 214, 255));
+//        	Color hover = UIManager.getColor("Button.hover"); // [ws] TODO moet dit naar de initialisatie?
+//        	g2.setColor(hover);
+//        	g2.setStroke(new BasicStroke(2f));
+//        	g2.draw(new Ellipse2D.Double(0, 0, 13, 13));
+//        	g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), 128));
+//        	g2.setStroke(new BasicStroke(5f));
+//        	g2.draw(new Ellipse2D.Double(0, 0, 13, 13));
+//        } else {
         	// If it has the focus, draw dark blue border
         	if (slider.isFocusOwner()) {
         		// Rounded rectangle with dark blue border
@@ -132,7 +132,7 @@ public class JoxySliderUI extends BasicSliderUI {
         		g2.fill(new Ellipse2D.Double(0, 0, 15, 15));
         		g2.fill(new Ellipse2D.Double(1, 1, 13, 13));
         	}
-        }
+//        }
         
         // The inside part
         GradientPaint top = new GradientPaint(0, 0, new Color(233, 232, 228), 0, 13, new Color(191, 189, 183));
