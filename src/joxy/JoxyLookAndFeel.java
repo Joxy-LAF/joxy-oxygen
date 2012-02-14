@@ -123,6 +123,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"SeparatorUI", "joxy.JoxySeparatorUI",
 				"SliderUI", "joxy.JoxySliderUI",
 				"TabbedPaneUI", "joxy.JoxyTabbedPaneUI",
+				"TableUI", "joxy.JoxyTableUI",
 				"TextAreaUI", "joxy.JoxyTextAreaUI",
 				"TextFieldUI", "joxy.JoxyTextFieldUI",
 				"ToggleButtonUI", "joxy.JoxyToggleButtonUI",
