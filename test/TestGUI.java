@@ -176,7 +176,7 @@ public class TestGUI {
 		vect.add("Hallo");
 		vect.add("Dag");
 		vect.add("Doei");
-		JList<Object> list = new JList<Object>(vect);
+		JList list = new JList(vect);
 		t.addTab("Een lijst", list);
 		
 		JPanel tabZoveel = new JPanel();
