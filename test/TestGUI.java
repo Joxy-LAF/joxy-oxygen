@@ -5,11 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -201,6 +203,8 @@ public class TestGUI {
 				"En de grootte ervan klopt precies met de tekst die erin staat."));
 		t.addTab("Een scroll-pane", new JScrollPane(tabZoveel));
 		
+		t.addTab("Een JEditorPane", new JEditorPane("", "Dit is een test met een JEditorPane. Hmm, daar moet " +
+				"nog wel wat aan gebeuren!"));
 		
 		frame.add(t, BorderLayout.CENTER);
 		
