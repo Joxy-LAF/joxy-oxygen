@@ -37,6 +37,9 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 	@Override
 	protected void installDefaults() {
 		super.installDefaults();
+		
+		// force the default font to be used if the HTML does not override it... nice :-)
+		editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 	}
 	
     @Override
