@@ -205,7 +205,7 @@ public class TestGUI {
 		
 		t.addTab("Een JEditorPane", new JEditorPane("", "Dit is een test met een JEditorPane. Hmm, daar moet " +
 				"nog wel wat aan gebeuren!"));
-		t.addTab("Een JEditorPane met HTML", new JEditorPane("text/html", "<html><head><title>Joxy!!!</title></head><body>Hoi! Dit is een HTML-pagina.<br>Hoe kan het nou dat deze wel geantialiast is?</body></html>"));
+		t.addTab("Een JEditorPane met HTML", new JEditorPane("text/html", "<html><head><title>Joxy!!!</title></head><body>Hoi! Dit is een HTML-pagina.<br>Hoe kan het nou dat deze wel geantialiast is?<br><font face=\"DejaVu Sans\">testerdetest</font></body></html>"));
 		
 		frame.add(t, BorderLayout.CENTER);
 		
