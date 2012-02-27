@@ -175,6 +175,8 @@ public class Utils {
 			propMap = new Object[] {
 				// Button settings
 				"Button.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+				// Editor pane settings
+				"EditorPane.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 				// General settings
 				"General.contrast", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[KDE]", "contrast")),
 				// Language settings
