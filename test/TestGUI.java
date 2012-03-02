@@ -209,7 +209,7 @@ public class TestGUI {
 		
 		frame.add(t, BorderLayout.CENTER);
 		
-		frame.pack();
+		frame.setSize(800, 600);
 		frame.setVisible(true);
 
 		JOptionPane.showMessageDialog(frame, "<html>Ja, we hebben een <b>JOptionPane</b> mét mooie achtergrond!<br>" +
