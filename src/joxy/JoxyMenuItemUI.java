@@ -107,7 +107,8 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		} else { // No HTML, draw ourselves
 			int w = f.stringWidth(clippedText);
 			int h = f.getHeight();
-			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2, paintTextR.y + (paintTextR.height + h) / 2 - 3);
+			// TODO [ws] That 3 added to the x coordinate is to be consistent with JoxyMenuUI.
+			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2 + 3, paintTextR.y + (paintTextR.height + h) / 2 - 3);
 		}
 	}
 	

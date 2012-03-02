@@ -15,6 +15,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicCheckBoxUI;
 
+import joxy.utils.JoxyGraphics;
+
 
 /**
  * Class overriding the default CheckBox (BasicCheckBoxUI) to provide a good
@@ -109,7 +111,7 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 		g2.setColor(Color.BLACK);
 		g2.setFont(b.getFont());
 		// TODO support for HTML, but how?
-		g2.drawString(b.getText(), 22, 13);
+		JoxyGraphics.drawString(g2, b.getText(), 22, 13);
 		// Done :)
 		g2.translate(-(c.getHeight() - 16) / 2, -(c.getHeight() - 16) / 2);
 	}

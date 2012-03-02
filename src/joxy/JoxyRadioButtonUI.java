@@ -15,6 +15,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRadioButtonUI;
 
+import joxy.utils.JoxyGraphics;
+
 
 /**
  * Class overriding the default RadioButton (BasicRadioButtonUI) to provide a good
@@ -100,7 +102,7 @@ public class JoxyRadioButtonUI extends BasicRadioButtonUI {
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		g2.setColor(Color.BLACK);
 		g2.setFont(b.getFont());
-		g2.drawString(b.getText(), 22, 13);
+		JoxyGraphics.drawString(g2, b.getText(), 22, 13);
 		// Done :)
 		g2.translate(-(c.getHeight() - 16) / 2, -(c.getHeight() - 16) / 2);
 	}

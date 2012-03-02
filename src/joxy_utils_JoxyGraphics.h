@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     joxy_utils_JoxyGraphics
  * Method:    drawStringNative
- * Signature: (Ljava/awt/Graphics;Ljava/lang/Class;Ljava/lang/String;FF)V
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;)V
  */
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *, jclass, jobject, jclass, jstring, jfloat, jfloat);
+  (JNIEnv *, jclass, jstring, jobject);
 
 #ifdef __cplusplus
 }

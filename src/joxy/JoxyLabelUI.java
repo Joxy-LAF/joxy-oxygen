@@ -17,6 +17,8 @@ import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicLabelUI;
 import javax.swing.text.View;
 
+import joxy.utils.JoxyGraphics;
+
 
 /**
  * Class overriding the default LabelUI (BasicLabelUI) to provide a good
@@ -105,6 +107,11 @@ public class JoxyLabelUI extends BasicLabelUI {
 				}
 			}
 		}
+	}
+	
+	@Override
+	protected void paintEnabledText(JLabel l, Graphics g, String s, int textX, int textY) {
+		JoxyGraphics.drawString((Graphics2D) g, s, textX, textY);
 	}
 
 	/**

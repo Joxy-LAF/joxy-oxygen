@@ -21,6 +21,8 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
+import joxy.utils.JoxyGraphics;
+
 /**
  * Class overriding the default TabbedPaneUI (BasicTabbedPaneUI) to provide a good
  * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
@@ -229,7 +231,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			// plain text
 			g2.setColor(tabPane.getForegroundAt(tabIndex));
 
-			g2.drawString(title, textRect.x, textRect.y + metrics.getAscent());
+			JoxyGraphics.drawString(g2, title, textRect.x, textRect.y + metrics.getAscent());
 		}
 	}
 
