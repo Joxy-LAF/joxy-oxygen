@@ -107,6 +107,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 		table.putDefaults(new Object[] {
 				"ButtonUI", "joxy.JoxyButtonUI",
 				"CheckBoxUI", "joxy.JoxyCheckBoxUI",
+				"ComboBoxUI", "joxy.JoxyComboBoxUI",
 				"EditorPaneUI", "joxy.JoxyEditorPaneUI",
 				"FileChooserUI", "joxy.JoxyFileChooserUI",
 				"LabelUI", "joxy.JoxyLabelUI",
