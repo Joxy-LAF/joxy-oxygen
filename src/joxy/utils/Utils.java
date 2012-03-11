@@ -214,35 +214,12 @@ public class Utils {
 		Object[] propMap = new Object[0];
 		// If on KDE, we detect the properties of the user...
 		if (Utils.isKDE()) {
-			// If the contents of the config file are not read already,
-			// do it now
-			if (kdeConfigLines == null) {
-				readKDEConfigFiles();
-			}
-			// Now we create a propMap from this
+			
 			propMap = new Object[] {
-				// Button settings
-				"OptionPane.informationIcon", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// Editor pane settings
-				"EditorPane.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// General settings
-				"General.contrast", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[KDE]", "contrast")),
-				// Language settings
-				"Locale.country", getKDEConfigValue(kdeConfigLines, "[Locale]", "Country"),
-				"Locale.dateFormat", getKDEConfigValue(kdeConfigLines, "[Locale]", "DateFormat"),
-				"Locale.language", getKDEConfigValue(kdeConfigLines, "[Locale]", "Language"), // by ':' separated list of languages, first is preferred language
-				// [ws] dit kan worden gebruikt worden met de Java-locale
-				// Window decoration settings
-				"Window.blendColor", getKDEConfigValue(kdeConfigLines, "[Windeco]", "BlendColor"),
-				"Window.buttonSize", getKDEConfigValue(kdeConfigLines, "[Windeco]", "ButtonSize"),
-				"Window.drawSeparator", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawSeparator"),
-				"Window.drawTitleOutline", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawTitleOutline"),
-				"Window.frameBorder", getKDEConfigValue(kdeConfigLines, "[Windeco]", "FrameBorder"),
-				"Window.sizeGripMode", getKDEConfigValue(kdeConfigLines, "[Windeco]", "SizeGripMode"),
-				"Window.tabsEnabled", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TabsEnabled"),
-				"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
-				"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
-				"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows")
+				// JOptionPane
+				"OptionPane.informationIcon", getOxygenIcon("status/dialog-information", 64),
+				"OptionPane.warningIcon", getOxygenIcon("status/dialog-warning", 64),
+				"OptionPane.errorIcon", getOxygenIcon("status/dialog-error", 64),
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
@@ -426,16 +403,16 @@ public class Utils {
 	 * @param name The name of the icon, without extension; for example actions/go-previous.
 	 * @return The created ImageIcon.
 	 */
-	public static ImageIcon getOxygenIcon(String name) {
-        File file = new File("/usr/share/icons/oxygen/22x22/"+name+".png");
+	public static ImageIcon getOxygenIcon(String name, int size) {
+        File file = new File("/usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
 
         if (file.exists()) {
-            return new ImageIcon("/usr/share/icons/oxygen/22x22/"+name+".png");
+            return new ImageIcon("/usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
         }
         
 		Output.warning("Could not find " + name + " icon");
 		Output.warning("Searched on places:");
-		Output.warning("  /usr/share/icons/oxygen/22x22/"+name+".png");
+		Output.warning("  /usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
 		return null;
 	}
 }

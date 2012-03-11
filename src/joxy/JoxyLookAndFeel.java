@@ -163,6 +163,8 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 		// For example, borders, icons and other properties can be set.
 		table.putDefaults(Utils.getKDEPropertiesMap());
 		
+		table.putDefaults(Utils.getKDEIconsMap());
+		
 		setupActions(table);
 	}
 	
