@@ -6,8 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
@@ -26,6 +29,8 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	 *  the corners of the rounded rectangles. */
 	public static final int ARC = 8;
 	
+	protected boolean hovered = false;
+	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyComboBoxUI();
 	}
@@ -34,6 +39,46 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	protected void installDefaults() {
 		comboBox.setFont(UIManager.getFont("Button.font"));
 		comboBox.setOpaque(false);
+		comboBox.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+	}
+	
+	@Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		MouseListener mouseListener = new MouseListener() {
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hovered = false;
+				comboBox.repaint();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				hovered = true;
+				comboBox.repaint();
+			}
+			
+			// [ws] TODO The following repaints are just workarounds for some non-repainting problems
+			// that probably need fixing elsewhere
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				comboBox.repaint();
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				comboBox.repaint();
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				comboBox.repaint();
+			}
+		};
+		
+		comboBox.addMouseListener(mouseListener);
 	}
 	
 	@Override
@@ -57,7 +102,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 					comboBox.getHeight() - 4);
 		} else {
 			// If mouse is over the component, draw hover indicator
-			if (false) { // [ws] TODO!
+			if (hovered) { // [ws] TODO!
 				HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 						comboBox.getHeight() - 4);
 			} else {
@@ -86,18 +131,6 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		if (!comboBox.isEnabled()) {
 
 		}
-	}
-	
-	@Override
-	public Dimension getPreferredSize(JComponent c) {
-		// Simply pick the preferred size of the BasicComboBoxUI and make it
-		// larger to account for the larger decorations.
-		// If you consider this ugly... you are right.
-		Dimension dim = super.getPreferredSize(c);
-		dim.width += 10;
-		dim.height += 4;
-		
-		return dim;
 	}
 	
 	@Override
