@@ -41,6 +41,7 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
     	Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 		// Shadow
 		g2.setColor(new Color(0, 0, 0, 5));
@@ -54,21 +55,18 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
 		}
 		
 		// Inner side
-		int splitY = (int) Math.min(300, .75 * c.getHeight());
-		
-		// determine colors to use
 		Color color = UIManager.getColor("Window.background");
-		
+		// [ws] TODO search real colors
 	    Color backgroundTopColor = JoxyRootPaneUI.getBackgroundTopColor(color);
         Color backgroundBottomColor = JoxyRootPaneUI.getBackgroundBottomColor(color);
         
     	g2.setPaint(new GradientPaint(0, 0, backgroundTopColor,
-    			                      0, splitY, backgroundBottomColor));
+    			                      0, 100, backgroundBottomColor));
     	g2.fill(new RoundRectangle2D.Float(6, 6, c.getWidth() - 12, c.getHeight() - 12, ARC, ARC));
     	
     	// Border
     	g2.setColor(Color.WHITE);
-		g2.setStroke(new BasicStroke(0.5f));
+		g2.setStroke(new BasicStroke(0.25f));
 		g2.draw(new RoundRectangle2D.Float(6, 6, c.getWidth() - 13, c.getHeight() - 13, ARC, ARC));
 
     }
