@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
@@ -45,7 +46,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	}
 
 	protected void paintBackgroundNonEditable(Graphics2D g2) {
-		if (popup.isVisible()) {
+		if (popup.isVisible()) { // [ws] TODO this does not work well...
 			PressedButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 					comboBox.getHeight() - 4);
 		} else {
@@ -91,5 +92,11 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		dim.height += 4;
 		
 		return dim;
+	}
+	
+	@Override
+	protected JButton createArrowButton() {
+		// TODO Auto-generated method stub
+		return new JButton("dropdown");
 	}
 }
