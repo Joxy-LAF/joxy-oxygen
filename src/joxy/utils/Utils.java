@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
@@ -184,6 +185,7 @@ public class Utils {
 				"Locale.country", getKDEConfigValue(kdeConfigLines, "[Locale]", "Country"),
 				"Locale.dateFormat", getKDEConfigValue(kdeConfigLines, "[Locale]", "DateFormat"),
 				"Locale.language", getKDEConfigValue(kdeConfigLines, "[Locale]", "Language"), // by ':' separated list of languages, first is preferred language
+				"OptionPane.buttonOrientation", SwingConstants.RIGHT,
 				// [ws] dit kan worden gebruikt worden met de Java-locale
 				// Window decoration settings
 				"Window.blendColor", getKDEConfigValue(kdeConfigLines, "[Windeco]", "BlendColor"),
@@ -220,6 +222,10 @@ public class Utils {
 				"OptionPane.informationIcon", getOxygenIcon("status/dialog-information", 64),
 				"OptionPane.warningIcon", getOxygenIcon("status/dialog-warning", 64),
 				"OptionPane.errorIcon", getOxygenIcon("status/dialog-error", 64),
+				"OptionPane.yesIcon", getOxygenIcon("actions/dialog-information", 16),
+				"OptionPane.noIcon", getOxygenIcon("actions/dialog-information", 16),
+				"OptionPane.cancelIcon", getOxygenIcon("actions/dialog-cancel", 16),
+				"OptionPane.okIcon", getOxygenIcon("actions/dialog-ok", 16),
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
