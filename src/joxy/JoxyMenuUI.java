@@ -139,7 +139,7 @@ public class JoxyMenuUI extends BasicMenuUI {
         Rectangle textR)
     {
         return SwingUtilities.layoutCompoundLabel(
-            (JComponent) m,
+            m,
             fontMetrics,
             text,
             icon,

@@ -1,6 +1,5 @@
 package joxy.utils;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
@@ -26,7 +25,8 @@ public class JoxyGraphics {
 	/**
 	 * Draws a string with the given Graphics object. This is done by a call to Qt.
 	 * 
-	 * @param c   The component that we are drawing for. May not be <code>null</code>.
+	 * @param g2  The Graphics2D object we are painting on. The font family, font size and color
+	 * to draw with, are inferred from this object.
 	 * @param str The String to draw.
 	 * @param x   The x-coordinate of the left side of the text.
 	 * @param y   The y-coordinate of the lower side of the text.

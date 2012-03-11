@@ -160,14 +160,17 @@ public class TestGUI {
 			/** Serial version UID */
 			private static final long serialVersionUID = 1666347484034514225L;
 
+			@Override
 			public int getColumnCount() {
 				return 10;
 			}
 
+			@Override
 			public int getRowCount() {
 				return 10;
 			}
 
+			@Override
 			public Object getValueAt(int row, int col) {
 				return new Integer(row * col);
 			}

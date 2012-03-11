@@ -52,7 +52,7 @@ public class ColorUtils {
 	}
 
 	/**
-	 * Refer to documentation of {@link #shade(Color, double, double)} with chromaAmount = 0.0.
+	 * Refer to documentation of {@link #shade(Color, float, float)} with chromaAmount = 0.0.
 	 */
 	public static Color shade(Color color, float lumaAmount) {
 		return ColorUtils.shade(color, lumaAmount, 0.0f);
@@ -182,9 +182,8 @@ public class ColorUtils {
 		
 		if (Utils.useRNDColorScheme) {
 			return new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
-		} else { // [ws] Dit is idioot...
-			return result;
 		}
+		return result;
 	}
 
 	/**
