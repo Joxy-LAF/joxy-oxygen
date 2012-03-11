@@ -229,11 +229,9 @@ public class TestGUI {
 		frame.setSize(800, 600);
 		frame.setVisible(true);
 
-		JOptionPane.showMessageDialog(frame, "<html>Ja, we hebben een <b>JOptionPane</b> mét mooie achtergrond!<br>" +
-				"Helaas nog zonder icoontjes.<br>" +
-				"Maar daar gaan we nog wel wat aan doen.<br>" +
-				"Er staat ook nog geen vinkje op de OK-knop.<br>" +
-				"En de OK-knop is nog niet donker genoeg... maar dat wordt opgelost<br>" +
-				"als we onze mooie nieuwe knopjescode klaar hebben.", "Een JOptionPane", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "This is some information. Very useful, isn't it?", "Information", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "Watch out! There is an error coming...", "Warning", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "Oh no, something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+		//JOptionPane.showConfirmDialog(frame, "This is a question.", "Question", JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 }
