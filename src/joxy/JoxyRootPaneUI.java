@@ -50,12 +50,14 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 
 		// draw upper linear gradient
 		g2.setPaint(new GradientPaint(0, 0, backgroundTopColor, 0, splitY, backgroundBottomColor));
-		g2.fillRect(0, 0, c.getWidth(), splitY); // Note that compared to the original code, we always take an offset of 0
+		g2.fillRect(0, 0, c.getWidth(), c.getHeight()); // Note that compared to the original code, we always take an offset of 0
 												 // (this is also true in the original code really)
         
+		// [ws] TODO I realized this is not really needed - Java does this automatically when
+		// painting "outside" the gradient part
 		// draw lower flat part
-		g2.setColor(backgroundBottomColor);
-		g2.fillRect(0, splitY, c.getWidth(), c.getHeight()-splitY);
+		//g2.setColor(backgroundBottomColor);
+		//g2.fillRect(0, splitY, c.getWidth(), c.getHeight()-splitY);
 		
 		// draw upper radial gradient
 		int radialWidth = Math.min(600, c.getWidth());
@@ -126,7 +128,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
         return out;
 	}
 	
-	private static Color getBackgroundRadialColor(Color baseColor) {
+	public static Color getBackgroundRadialColor(Color baseColor) {
 		Color out = new Color(0, 0, 0);
 		
 		//if (ColorUtils.lowThreshold(baseColor)) {
