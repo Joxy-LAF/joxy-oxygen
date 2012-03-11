@@ -123,7 +123,11 @@ public class TestGUI {
 		items.add("Still another item");
 		items.add("The last item");
 		tab1.add(new JComboBox(items));
+		JComboBox box = new JComboBox(items);
+		box.setEditable(true);
+		tab1.add(box);
 		t.addTab("Een tab", tab1);
+		
 		JPanel tab2 = new JPanel();
 		tab2.setPreferredSize(new Dimension(600, 200));
 		tab2.add(new JButton("Test"));
