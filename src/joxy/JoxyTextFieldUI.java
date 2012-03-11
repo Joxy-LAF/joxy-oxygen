@@ -65,7 +65,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textField.setBorder(BorderFactory.createEmptyBorder(3, 1, 3, 1));
+		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textField.setFont(UIManager.getFont("Button.font"));
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
 	}

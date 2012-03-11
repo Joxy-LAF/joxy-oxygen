@@ -42,7 +42,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textArea.setBorder(BorderFactory.createEmptyBorder(3, 1, 3, 1));
+		textArea.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textArea.setFont(UIManager.getFont("Button.font"));
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
 	}
