@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JButton;
@@ -47,6 +48,10 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	}
 
 	protected void paintBackgroundNonEditable(Graphics2D g2) {
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
 		if (popup.isVisible()) { // [ws] TODO this does not work well...
 			PressedButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 					comboBox.getHeight() - 4);
