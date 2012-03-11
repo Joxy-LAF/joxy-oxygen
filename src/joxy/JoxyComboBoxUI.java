@@ -92,12 +92,16 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		}
 	}
 
+	/**
+	 * Paints the background of a combo box that is non-editable.
+	 * @param g2 The graphics object to paint with.
+	 */
 	protected void paintBackgroundNonEditable(Graphics2D g2) {
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		if (popup.isVisible()) { // [ws] TODO this does not work well...
+		if (isPopupVisible(comboBox)) { // [ws] TODO this does not work well...
 			PressedButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 					comboBox.getHeight() - 4);
 		} else {

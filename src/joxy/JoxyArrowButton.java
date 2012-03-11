@@ -22,15 +22,16 @@ public class JoxyArrowButton extends BasicArrowButton {
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		
-		Point2D center = new Point2D.Double(getWidth() / 2f, getHeight() / 2f);
+		Point2D center = new Point2D.Double(getWidth() / 2f, getHeight() / 2f + 1);
 		
-		double width = 8;
-		double height = 4;   // note: should be width / 2
+		double width = 7;
+		double height = 3.5;   // note: should be width / 2
 		
 		Rectangle2D paintRect = new Rectangle2D.Double(center.getX() - width / 2, center.getY() - height / 2, width, height);
 		
-		g2.setStroke(new BasicStroke(1.5f));
+		g2.setStroke(new BasicStroke(1.25f));
 		
 		switch (direction) {
 		case SOUTH: default:
