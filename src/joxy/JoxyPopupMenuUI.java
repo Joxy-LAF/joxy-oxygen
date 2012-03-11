@@ -2,6 +2,7 @@ package joxy;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -53,7 +54,16 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
 		}
 		
 		// Inner side
-    	g2.setColor(UIManager.getDefaults().getColor("Window.background"));
+		int splitY = (int) Math.min(300, .75 * c.getHeight());
+		
+		// determine colors to use
+		Color color = UIManager.getColor("Window.background");
+		
+	    Color backgroundTopColor = JoxyRootPaneUI.getBackgroundTopColor(color);
+        Color backgroundBottomColor = JoxyRootPaneUI.getBackgroundBottomColor(color);
+        
+    	g2.setPaint(new GradientPaint(0, 0, backgroundTopColor,
+    			                      0, splitY, backgroundBottomColor));
     	g2.fill(new RoundRectangle2D.Float(6, 6, c.getWidth() - 12, c.getHeight() - 12, ARC, ARC));
     	
     	// Border
