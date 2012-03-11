@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import joxy.painter.ButtonSlabPainter;
@@ -96,7 +97,8 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	
 	@Override
 	protected JButton createArrowButton() {
-		// TODO Auto-generated method stub
-		return new JButton("dropdown");
+		JButton button = new JoxyArrowButton(BasicArrowButton.SOUTH);
+		button.setName("ComboBox.arrowButton");
+		return button;
 	}
 }
