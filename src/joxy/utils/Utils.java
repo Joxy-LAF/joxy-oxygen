@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
@@ -417,5 +418,24 @@ public class Utils {
 		// TODO This is a hack: Java font sizes seem to be smaller than KDE font sizes
 		int size = (int) (Integer.valueOf(str.split(",")[1]) * 1.4f);
 		return new FontUIResource(name, style, size);
+	}
+	
+	/**
+	 * Gets an icon from the Oxygen theme from the /usr/share/icons/oxygen folder.
+	 * Issues a warning and returns null if the icon cannot be found.
+	 * @param name The name of the icon, without extension; for example actions/go-previous.
+	 * @return The created ImageIcon.
+	 */
+	public static ImageIcon getOxygenIcon(String name) {
+        File file = new File("/usr/share/icons/oxygen/22x22/"+name+".png");
+
+        if (file.exists()) {
+            return new ImageIcon("/usr/share/icons/oxygen/22x22/"+name+".png");
+        }
+        
+		Output.warning("Could not find " + name + " icon");
+		Output.warning("Searched on places:");
+		Output.warning("  /usr/share/icons/oxygen/22x22/"+name+".png");
+		return null;
 	}
 }
