@@ -9,21 +9,27 @@
 #include <QtGui/qpainter.h>
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *env, jclass cl, jstring str, jobject image) {
+  (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jstring fontname, jint fontsize, jint color) {
 
 
     int argc = 0;
     char** argv;
     QApplication a(argc, argv);
 
-    const char* cstr = env->GetStringUTFChars(str, JNI_FALSE);
-    QImage* qimage = new QImage(400, 30, QImage::Format_ARGB32);
+    QImage* qimage = new QImage(width, 30, QImage::Format_ARGB32);
+    QColor qcolor = QColor::fromRgb(color);
+    qcolor.setAlpha(0);
+    qimage->fill(qcolor);
     QPainter* painter = new QPainter(qimage);
-    qimage->fill(QColor::fromRgb(0, 0, 0, 0));
-    painter->drawText(0, 10, cstr);
-    env->ReleaseStringUTFChars(str, NULL);
+    painter->setPen(QColor::fromRgb(color));
 
-    //printf("Test");
+    const char* cfontname = env->GetStringUTFChars(fontname, JNI_FALSE);
+    painter->setFont(QFont(cfontname, fontsize, 0, false));
+    env->ReleaseStringUTFChars(str, cfontname);
+
+    const char* cstr = env->GetStringUTFChars(str, JNI_FALSE);
+    painter->drawText(0, 10, cstr);
+    env->ReleaseStringUTFChars(str, cstr);
 
 	jclass cls = env->GetObjectClass(image);
 	jmethodID mid = env->GetMethodID(cls, "setRGB", "(III)V");
@@ -32,12 +38,16 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
         return;
     }
 
-	for (int i = 0; i < qimage->width(); i++) {
-	    for (int j = 0; j < qimage->height(); j++) {
+    int height = qimage->height();
+
+	for (int i = 0; i < width; i++) {
+	    for (int j = 0; j < height; j++) {
 	    	int pixel = qimage->pixel(i, j);
 
-	    	//image.setRGB(i, j, pixel);
-	        env->CallVoidMethod(image, mid, i, j, pixel);
+	    	// if it is transparent, it is useless to copy it...
+	    	if (pixel != 0) {
+	    		env->CallVoidMethod(image, mid, i, j, pixel);
+	    	}
 	    }
 	}
 }

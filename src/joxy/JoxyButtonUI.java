@@ -164,7 +164,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 		
 		// Draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		g2.setColor(Color.BLACK);
+		g2.setColor(b.getForeground());
 		View v = (View) c.getClientProperty(BasicHTML.propertyKey);
 		if (v != null) { // Text contains HTML
 			v.paint(g2, paintTextR);

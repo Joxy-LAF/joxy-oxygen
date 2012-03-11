@@ -7,13 +7,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef joxy_utils_JoxyGraphics_NATIVE_TEXT_RENDERING
+#define joxy_utils_JoxyGraphics_NATIVE_TEXT_RENDERING 1L
 /*
  * Class:     joxy_utils_JoxyGraphics
  * Method:    drawStringNative
- * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;)V
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;ILjava/lang/String;II)V
  */
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *, jclass, jstring, jobject);
+  (JNIEnv *, jclass, jstring, jobject, jint, jstring, jint, jint);
 
 #ifdef __cplusplus
 }
