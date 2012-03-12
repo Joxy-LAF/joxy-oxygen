@@ -39,7 +39,7 @@ public class JoxyGraphics {
 	    	
 	    	// If not in cache, call native method to create it, and put it in the cache.
 	    	if (img == null) {
-	    		//Output.debug("Native text rendering called for \"" + key + "\"");
+	    		// Output.debug("Native text rendering called for \"" + key + "\"");
 	    		
 	    		int width = g2.getFontMetrics().stringWidth(str);
 	    		

@@ -20,7 +20,6 @@ public class JoxyScrollPaneUI extends BasicScrollPaneUI {
     	scrollpane.setBackground(null);
     	scrollpane.setOpaque(false);
     	scrollpane.getViewport().setOpaque(false);
-    	Output.debug("scrollpane");
     	// [ws] TODO We moeten hier eens goed naar kijken.
     	// We kunnen in plaats van dit soort ingecodeerde dingen beter
     	// de defaults gebruiken zoals die in Java zitten.

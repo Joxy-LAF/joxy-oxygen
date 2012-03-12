@@ -111,6 +111,7 @@ public class JoxyLabelUI extends BasicLabelUI {
 	
 	@Override
 	protected void paintEnabledText(JLabel l, Graphics g, String s, int textX, int textY) {
+		g.setColor(l.getForeground());
 		JoxyGraphics.drawString((Graphics2D) g, s, textX, textY);
 	}
 

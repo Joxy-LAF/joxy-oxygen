@@ -115,8 +115,8 @@ public class TestGUI {
 			}
 		});
 		tab1.add(j);
-		tab1.add(new JTextField("The game"));
-		tab1.add(new JToggleButton("Aan of uit?"));
+		tab1.add(new JTextField("Some text field..."));
+		tab1.add(new JToggleButton("A toggle button"));
 		Vector<String> items = new Vector<String>();
 		items.add("An item");
 		items.add("Another item");

@@ -141,7 +141,15 @@ public class Utils {
 				"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 				"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 				// Window colors
-				"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal"))
+				"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
+				
+				// Table
+				"Table.background", stringToColorUI("255,255,255"),
+				"Table.alternateRowColor", stringToColorUI("240,240,240"),
+				"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Table.gridColor", stringToColorUI("128,128,128"),
+				"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			};
 		} else { // ...else, we use a default color scheme
 			// TODO: Create a default colormap here [tca 18-nov-2011] if we are going to support non-KDE platforms [wso 18-nov-2011]
@@ -197,7 +205,10 @@ public class Utils {
 				"Window.tabsEnabled", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TabsEnabled"),
 				"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
 				"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
-				"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows")
+				"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows"),
+				// Table settings
+				"Table.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+				"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
