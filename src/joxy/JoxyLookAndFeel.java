@@ -29,7 +29,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Define the version of Joxy */
-	private final String version = "0.0.1 pre-alpha";
+	private final String version = "0.0.3 prereleased";
 	/** Whether Joxy already has been installed in the UIManager. */
 	private static boolean isInstalled = false;
 	
@@ -111,6 +111,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"EditorPaneUI", "joxy.JoxyEditorPaneUI",
 				"FileChooserUI", "joxy.JoxyFileChooserUI",
 				"LabelUI", "joxy.JoxyLabelUI",
+				"ListUI", "joxy.JoxyListUI",
 				"MenuUI", "joxy.JoxyMenuUI",
 				"MenuBarUI", "joxy.JoxyMenuBarUI",
 				"MenuItemUI", "joxy.JoxyMenuItemUI",
@@ -121,6 +122,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"ProgressBarUI", "joxy.JoxyProgressBarUI",
 				"RadioButtonUI", "joxy.JoxyRadioButtonUI",
 				"RootPaneUI", "joxy.JoxyRootPaneUI",
+				"ScrollBarUI", "joxy.JoxyScrollBarUI",
 				"ScrollPaneUI", "joxy.JoxyScrollPaneUI",
 				"SeparatorUI", "joxy.JoxySeparatorUI",
 				"SliderUI", "joxy.JoxySliderUI",
