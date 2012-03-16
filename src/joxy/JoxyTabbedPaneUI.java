@@ -14,10 +14,13 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
@@ -37,13 +40,13 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	
 	/**
 	 * Indicates whether the selected tab should over-/underflow when it is
-	 * scrolled past the begin orend of the tab run. Note that KDE is not consistent
+	 * scrolled past the begin or end of the tab run. Note that KDE is not consistent
 	 * with respect to this. For example <i>System Settings > Common Appearance
 	 * and Behaviour > Locale > Country/Region & Language</i> does overflow,
 	 * but <i>System Settings > Desktop Effects</i> does not. Perhaps this has
 	 * something to do with the number of tabs.
 	 */
-	public static final boolean SCROLL_OVERFLOW = false;
+	public static final boolean SCROLL_OVERFLOW = true;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -352,5 +355,26 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			Rectangle[] rects, int tabIndex, Rectangle iconRect,
 			Rectangle textRect, boolean isSelected) {
 		// No focus indicator!
+	}
+	
+	// Copy from super class.
+	// We first wanted to override this to immediately return a JoxyArrowButton,
+	// but that creates two ghost tabs, presumably because it is no UIResource?
+	// And for some reason, ScrollableTabButton is private. Well, then we do it
+	// this way. And it works!
+    @Override
+	protected JButton createScrollButton(int direction) {
+        if (direction != SOUTH && direction != NORTH && direction != EAST &&
+                                  direction != WEST) {
+            throw new IllegalArgumentException("Direction must be one of: " +
+                                               "SOUTH, NORTH, EAST or WEST");
+        }
+        return new ScrollableTabButton(direction);
+    }
+    
+	private class ScrollableTabButton extends JoxyArrowButton implements UIResource {
+		public ScrollableTabButton(int direction) {
+			super(direction);
+		}
 	}
 }
