@@ -32,7 +32,7 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
             popupMenu.setLayout(new DefaultMenuLayout(popupMenu, BoxLayout.Y_AXIS));
 
         //LookAndFeel.installProperty(popupMenu, "opaque", Boolean.TRUE);
-        popupMenu.setBorder(BorderFactory.createEmptyBorder(9, 8, 8, 8));
+        popupMenu.setBorder(BorderFactory.createEmptyBorder(7, 8, 10, 8));
         //LookAndFeel.installColorsAndFont(popupMenu, "PopupMenu.background", "PopupMenu.foreground", "PopupMenu.font");
     }
     
@@ -46,12 +46,12 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
 		// Shadow
 		g2.setColor(new Color(0, 0, 0, 5));
 		for (int i = 0; i < 3; i++) {
-	    	g2.fill(new RoundRectangle2D.Float(i, i, c.getWidth() - 2*i, c.getHeight() - 2*i, ARC - i + 6, ARC - i + 6));
+	    	g2.fill(new RoundRectangle2D.Float(i, 0.9f * i, c.getWidth() - 2*i, c.getHeight() - 2*i, ARC - i + 6, ARC - i + 6));
 		}
 		
-		g2.setColor(new Color(0, 0, 0, 20));
+		g2.setColor(new Color(0, 0, 0, 15));
 		for (int i = 3; i < 6; i++) {
-	    	g2.fill(new RoundRectangle2D.Float(i, i, c.getWidth() - 2*i, c.getHeight() - 2*i, ARC - i + 6, ARC - i + 6));
+	    	g2.fill(new RoundRectangle2D.Float(i, 0.9f * i, c.getWidth() - 2*i, c.getHeight() - 2*i, ARC - i + 6, ARC - i + 6));
 		}
 		
 		// Inner side
@@ -62,12 +62,12 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
         
     	g2.setPaint(new GradientPaint(0, 0, backgroundTopColor,
     			                      0, 100, backgroundBottomColor));
-    	g2.fill(new RoundRectangle2D.Float(6, 6, c.getWidth() - 12, c.getHeight() - 12, ARC, ARC));
+    	g2.fill(new RoundRectangle2D.Float(6, 4, c.getWidth() - 12, c.getHeight() - 12, ARC, ARC));
     	
     	// Border
     	g2.setColor(Color.WHITE);
 		g2.setStroke(new BasicStroke(0.25f));
-		g2.draw(new RoundRectangle2D.Float(6, 6, c.getWidth() - 13, c.getHeight() - 13, ARC, ARC));
+		g2.draw(new RoundRectangle2D.Float(6, 4, c.getWidth() - 13, c.getHeight() - 13, ARC, ARC));
 
     }
 }

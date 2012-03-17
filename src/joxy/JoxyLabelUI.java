@@ -39,7 +39,7 @@ public class JoxyLabelUI extends BasicLabelUI {
     private Rectangle paintTextR = new Rectangle();
 	
 	public static ComponentUI createUI(JComponent c) {
-		c.setOpaque(false);
+		//c.setOpaque(false); // [ws] This caused bugs in other components, unfortunately
 		JoxyLabelUI ui = new JoxyLabelUI();
 		return ui;
 	}

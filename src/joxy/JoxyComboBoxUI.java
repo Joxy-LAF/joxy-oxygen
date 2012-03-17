@@ -14,8 +14,10 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
@@ -41,6 +43,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	public void installUI(JComponent c) {
 		super.installUI(c);
 		
+		((JComponent) currentValuePane).setOpaque(false);
 		Component editorComponent = comboBox.getEditor().getEditorComponent();
 		if (editorComponent instanceof JComponent) {
 			((JComponent) editorComponent).setOpaque(false);
@@ -179,7 +182,23 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	@Override
 	protected ComboPopup createPopup() {
 		ComboPopup popup = new BasicComboPopup(comboBox);
-		popup.getList().setOpaque(false);
+		
+		popup.getList().setOpaque(true);
+
+        LookAndFeel.installBorder(popup.getList(), "List.border");
+
+        LookAndFeel.installColorsAndFont(popup.getList(), "List.background", "List.foreground", "List.font");
+        
+        Color sbg = popup.getList().getSelectionBackground();
+        if (sbg == null || sbg instanceof UIResource) {
+        	popup.getList().setSelectionBackground(UIManager.getColor("List.selectionBackground"));
+        }
+        
+        Color sfg = popup.getList().getSelectionForeground();
+        if (sfg == null || sfg instanceof UIResource) {
+        	popup.getList().setSelectionForeground(UIManager.getColor("List.selectionForeground"));
+        }
+
 		return popup;
 	}
 }

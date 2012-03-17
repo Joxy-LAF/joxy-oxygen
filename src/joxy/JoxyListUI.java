@@ -19,7 +19,5 @@ public class JoxyListUI extends BasicListUI {
 	@Override
 	protected void installDefaults() {
 		super.installDefaults();
-
-		list.setOpaque(false);
 	}
 }
