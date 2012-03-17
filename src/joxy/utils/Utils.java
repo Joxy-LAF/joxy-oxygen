@@ -126,6 +126,7 @@ public class Utils {
 				"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
 				"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 				"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
+				
 				// Window shadow
 				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
 				"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
@@ -239,6 +240,17 @@ public class Utils {
 		if (Utils.isKDE()) {
 			
 			propMap = new Object[] {
+			    // JFileChooser
+				"FileView.directoryIcon", getOxygenIcon("places/folder", 16),
+				"FileView.fileIcon", getOxygenIcon("mimetypes/unknown", 16),
+				"FileView.computerIcon", getOxygenIcon("devices/computer", 16),
+				"FileView.hardDriveIcon", getOxygenIcon("devices/drive-harddisk", 16),
+				"FileView.floppyDriveIcon", getOxygenIcon("devices/media-floppy", 16),
+				"FileChooser.newFolderIcon", getOxygenIcon("actions/folder-new", 22),
+				"FileChooser.upFolderIcon", getOxygenIcon("actions/go-up", 22),
+				"FileChooser.homeFolderIcon", getOxygenIcon("places/user-home", 22),
+				"FileChooser.detailsViewIcon", getOxygenIcon("actions/view-list-details", 16),
+				"FileChooser.listViewIcon", getOxygenIcon("actions/view-list-icons", 16),
 				// JOptionPane
 				"OptionPane.informationIcon", getOxygenIcon("status/dialog-information", 64),
 				"OptionPane.warningIcon", getOxygenIcon("status/dialog-warning", 64),
