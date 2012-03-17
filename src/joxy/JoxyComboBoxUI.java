@@ -18,6 +18,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.ComboPopup;
 
 import joxy.painter.ButtonSlabPainter;
 import joxy.painter.FocusIndicatorPainter;
@@ -172,5 +174,12 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		JButton button = new JoxyArrowButton(BasicArrowButton.SOUTH);
 		button.setName("ComboBox.arrowButton");
 		return button;
+	}
+	
+	@Override
+	protected ComboPopup createPopup() {
+		ComboPopup popup = new BasicComboPopup(comboBox);
+		popup.getList().setOpaque(false);
+		return popup;
 	}
 }

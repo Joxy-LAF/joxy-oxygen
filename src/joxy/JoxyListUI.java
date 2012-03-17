@@ -6,6 +6,9 @@ import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicListUI;
 
+/**
+ * Only a stub.
+ */
 public class JoxyListUI extends BasicListUI {
 
 	public static ComponentUI createUI(JComponent c) {
@@ -16,8 +19,7 @@ public class JoxyListUI extends BasicListUI {
 	@Override
 	protected void installDefaults() {
 		super.installDefaults();
-		
-		list.setBorder(null);
-		list.setSelectionBackground(Color.BLUE);
+
+		list.setOpaque(false);
 	}
 }
