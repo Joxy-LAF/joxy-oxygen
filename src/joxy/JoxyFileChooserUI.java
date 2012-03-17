@@ -32,7 +32,7 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 	}
 	
 	// FIXME [ws] This is a hack to prevent NullPointerExceptions
-	@Override
+/*	@Override
 	public FileView getFileView(JFileChooser fc) {
 		return new BasicFileView() {
 			@Override
@@ -40,5 +40,5 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 				return new ImageIcon();
 			}
 		};
-	}
+	}*/
 }
