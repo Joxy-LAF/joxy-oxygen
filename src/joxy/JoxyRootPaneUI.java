@@ -5,14 +5,20 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 
 import javax.swing.JComponent;
+import javax.swing.JRootPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import joxy.utils.ColorUtils;
+import joxy.utils.Output;
 import joxy.utils.ColorUtils.ShadeRoles;
 
 /**
@@ -26,53 +32,107 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	
 	public static final float CONTRAST_ADJUSTMENT = 0f;
 	
-	public static ComponentUI createUI(JComponent c) {
-		JoxyRootPaneUI rootPaneUI = new JoxyRootPaneUI();
-		return rootPaneUI;
-	}
+	/**
+	 * In this hash table we store cached images of the <b>linear</b> part of the
+	 * background to improve performance. Because these images are just stretchable
+	 * in the <i>x</i> direction, they are 1 pixel wide.
+	 */
+	private static Hashtable<Integer, BufferedImage> backgroundCache = new Hashtable<Integer, BufferedImage>();
 	
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * <p>The logic for this method is taken from the actual Oxygen rendering code.</p>
+	 * In this image we cache the radial gradient that is 600 pixels wide. It is
+	 * too memory-wasting to store every radial gradient, but because 600 pixels is the
+	 * maximum width for these gradient, this width will be used for every window with
+	 * width greater or equal than 600 pixels. So it is worth caching this gradient.
 	 */
-	@Override
-	public void paint(Graphics g, JComponent c) {
-		Graphics2D g2 = (Graphics2D) g;
-		int splitY = (int) Math.min(300, .75 * c.getHeight());
-		
-		// determine colors to use
+	private static BufferedImage radialGradient600px = null;
+	
+	static {
+		radialGradient600px = new BufferedImage(600, 64, BufferedImage.TYPE_INT_ARGB);
 		Color color = UIManager.getColor("Window.background");
-		
-	    Color backgroundTopColor = getBackgroundTopColor(color);
-        Color backgroundBottomColor = getBackgroundBottomColor(color);
         Color backgroundRadialColor = getBackgroundRadialColor(color);
-
-		// draw upper linear gradient
-		g2.setPaint(new GradientPaint(0, 0, backgroundTopColor, 0, splitY, backgroundBottomColor));
-		g2.fillRect(0, 0, c.getWidth(), c.getHeight()); // Note that compared to the original code, we always take an offset of 0
-												 // (this is also true in the original code really)
-        
-		// [ws] TODO I realized this is not really needed - Java does this automatically when
-		// painting "outside" the gradient part
-		// draw lower flat part
-		//g2.setColor(backgroundBottomColor);
-		//g2.fillRect(0, splitY, c.getWidth(), c.getHeight()-splitY);
-		
-		// draw upper radial gradient
-		int radialWidth = Math.min(600, c.getWidth());
 		
 		Color radial1 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 0);
 		Color radial2 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 37);
 		Color radial3 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 105);
 		Color radial4 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 255);
 		
-		g2.setPaint(new RadialGradientPaint(new Rectangle2D.Double((c.getWidth()-radialWidth)/2, -23 - 64, radialWidth, 2 * 64),
+		Graphics2D imgg2 = (Graphics2D) (radialGradient600px.getGraphics());
+		
+		imgg2.setPaint(new RadialGradientPaint(new Rectangle2D.Double(0, -64 - 23, 600, 2 * 64),
 				new float[] {0.0f, 0.5f, 0.75f, 1.0f}, // Distribution of colors over gradient
 				new Color[] {radial4, radial3, radial2, radial1},
 				RadialGradientPaint.CycleMethod.NO_CYCLE));
+
+		imgg2.fillRect(0, 0, 600, 64); // last one is gradientHeight
+	}
+	
+	public static ComponentUI createUI(JComponent c) {
+		JoxyRootPaneUI rootPaneUI = new JoxyRootPaneUI();
+		return rootPaneUI;
+	}
+	
+	@Override
+	protected void installDefaults(JRootPane c) {
+		super.installDefaults(c);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * <p>The logic for this method is taken from the actual Oxygen rendering code,
+	 * but with a different caching scheme.</p>
+	 */
+	@Override
+	public void paint(Graphics g, JComponent c) {
+		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.fillRect((c.getWidth()-radialWidth)/2, 0, radialWidth, 64); // last one is gradientHeight
+		// speed is important here
+		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+		
+		int splitY = (int) Math.min(300, .75 * c.getHeight());
+		
+		// determine colors to use
+		Color color = UIManager.getColor("Window.background");
+
+		// draw linear gradient
+		BufferedImage gradient = backgroundCache.get(c.getHeight());
+		
+		if (gradient == null) {
+			Output.debug("Linear background: created new image for height " + c.getHeight());
+			BufferedImage newGradient = new BufferedImage(1, c.getHeight(), BufferedImage.TYPE_INT_RGB);
+			Graphics2D imgg2 = (Graphics2D) (newGradient.getGraphics());
+		    Color backgroundTopColor = getBackgroundTopColor(color);
+	        Color backgroundBottomColor = getBackgroundBottomColor(color);
+			imgg2.setPaint(new GradientPaint(0, 0, backgroundTopColor, 0, splitY, backgroundBottomColor));
+			imgg2.fillRect(0, 0, 1, c.getHeight());
+			backgroundCache.put(c.getHeight(), newGradient);
+			g2.drawImage(newGradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
+		} else {
+			Output.debug("Linear background: used cached image for height " + c.getHeight());
+			g2.drawImage(gradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
+		}
+		
+		// draw upper radial gradient
+        Color backgroundRadialColor = getBackgroundRadialColor(color);
+		int radialWidth = Math.min(600, c.getWidth());
+		if (c.getWidth() >= 600) {
+			Output.debug("Radial background: used the cached 600px image");
+			g2.drawImage(radialGradient600px, (c.getWidth()-600)/2, 0, null);
+		} else {
+			Output.debug("Radial background: created a new image");
+			Color radial1 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 0);
+			Color radial2 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 37);
+			Color radial3 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 105);
+			Color radial4 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 255);
+	
+			g2.setPaint(new RadialGradientPaint(new Rectangle2D.Double(0, -23 - 64, radialWidth, 2 * 64),
+					new float[] {0.0f, 0.5f, 0.75f, 1.0f}, // Distribution of colors over gradient
+					new Color[] {radial4, radial3, radial2, radial1},
+					RadialGradientPaint.CycleMethod.NO_CYCLE));
+	
+			g2.fillRect(0, 0, c.getWidth(), 64); // last one is gradientHeight
+		}
 	}
 
 	/**
