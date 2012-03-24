@@ -6,6 +6,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.UIManager;
+
+import joxy.JoxyRootPaneUI;
+import joxy.utils.ColorUtils;
+
 /**
  * Painter for a button slab. A button slab is the shape that makes up a button.
  */
@@ -23,6 +28,7 @@ public class ButtonSlabPainter {
 	 */
 	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
 		GradientPaint top = new GradientPaint(0, 2, new Color(241, 240, 239), 0, height, new Color(223, 220, 217));
+//		GradientPaint top = new GradientPaint(0, 2, ColorUtils.darken(UIManager.getColor("Button.background"), 0.9f), 0, height, UIManager.getColor("Button.background"));
 		g2.setPaint(top);
 		g2.fill(new RoundRectangle2D.Double(x, y, width, height, ARC, ARC));
 		g2.setColor(Color.WHITE);
