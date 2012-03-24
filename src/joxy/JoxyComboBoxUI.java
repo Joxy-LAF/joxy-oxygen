@@ -14,6 +14,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.ListCellRenderer;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
@@ -43,7 +44,6 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	public void installUI(JComponent c) {
 		super.installUI(c);
 		
-		((JComponent) currentValuePane).setOpaque(false);
 		Component editorComponent = comboBox.getEditor().getEditorComponent();
 		if (editorComponent instanceof JComponent) {
 			((JComponent) editorComponent).setOpaque(false);
@@ -200,5 +200,41 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
         }
 
 		return popup;
+	}
+	
+	@Override
+	public void paintCurrentValueBackground(Graphics g, Rectangle bounds, boolean hasFocus) {
+		// nothing!
+	}
+	
+	/**
+	 * Copy from super, with ugly changes
+	 */
+	@Override
+	public void paintCurrentValue(Graphics g, Rectangle bounds, boolean hasFocus) {
+        ListCellRenderer renderer = comboBox.getRenderer();
+        Component c;
+
+        if ( hasFocus && !isPopupVisible(comboBox) ) {
+            c = renderer.getListCellRendererComponent( listBox,
+                                                       comboBox.getSelectedItem(),
+                                                       -1,
+                                                       true,
+                                                       false );
+        }
+        else {
+            c = renderer.getListCellRendererComponent( listBox,
+                                                       comboBox.getSelectedItem(),
+                                                       -1,
+                                                       false,
+                                                       false );
+        }
+        
+        c.setFont(comboBox.getFont());
+        c.setForeground(comboBox.getForeground());
+        c.setBackground(new Color(0, 0, 0, 0)); // transparent
+
+        // ugly! these coordinates should not be fixed, compare super
+        currentValuePane.paintComponent(g,c,comboBox, 5, 0, comboBox.getWidth() - 20, comboBox.getHeight());
 	}
 }
