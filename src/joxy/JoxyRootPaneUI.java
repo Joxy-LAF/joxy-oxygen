@@ -99,7 +99,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		BufferedImage gradient = backgroundCache.get(c.getHeight());
 		
 		if (gradient == null) {
-			Output.debug("Linear background: created new image for height " + c.getHeight());
+			// Output.debug("Linear background: created new image for height " + c.getHeight());
 			BufferedImage newGradient = new BufferedImage(1, c.getHeight(), BufferedImage.TYPE_INT_RGB);
 			Graphics2D imgg2 = (Graphics2D) (newGradient.getGraphics());
 		    Color backgroundTopColor = getBackgroundTopColor(color);
@@ -109,7 +109,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			backgroundCache.put(c.getHeight(), newGradient);
 			g2.drawImage(newGradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
 		} else {
-			Output.debug("Linear background: used cached image for height " + c.getHeight());
+			// Output.debug("Linear background: used cached image for height " + c.getHeight());
 			g2.drawImage(gradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
 		}
 		
@@ -117,10 +117,10 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
         Color backgroundRadialColor = getBackgroundRadialColor(color);
 		int radialWidth = Math.min(600, c.getWidth());
 		if (c.getWidth() >= 600) {
-			Output.debug("Radial background: used the cached 600px image");
+			// Output.debug("Radial background: used the cached 600px image");
 			g2.drawImage(radialGradient600px, (c.getWidth()-600)/2, 0, null);
 		} else {
-			Output.debug("Radial background: created a new image");
+			// Output.debug("Radial background: created a new image");
 			Color radial1 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 0);
 			Color radial2 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 37);
 			Color radial3 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 105);
