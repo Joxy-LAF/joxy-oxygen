@@ -29,14 +29,21 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Define the version of Joxy */
-	private final String version = "0.0.3 prereleased";
+	private final String version = "current";
 	/** Whether Joxy already has been installed in the UIManager. */
 	private static boolean isInstalled = false;
 	
 	//-- PUBLIC METHODS -------------------------------------------------------
 	@Override
 	public String getDescription() {
-		return "The Joxy Look and Feel (v" + version + "): integration with KDE Oxygen";
+		return "Joxy Look and Feel (version " + version + ")";
+	}
+	
+	/**
+	 * Returns the version of the Joxy Look and Feel.
+	 */
+	public String getVersion() {
+		return version;
 	}
 
 	@Override
