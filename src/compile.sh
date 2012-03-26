@@ -75,7 +75,7 @@ $CMD
 if [ $? -eq 0 ]
 then
   echo "$NM: [II] Done. File 'libnativeTextRenderer.so' created."
-  echo -e "$NM: [II] You should move this file to the Java library path. \n  Currently, the following directories are present in your Java library path:$LIST_SEP$JAVA_LB_PATH\n  You should pick on of these folders to move the shared library to."
+  echo -e "$NM: [II] You should move this file to the Java library path. \n  Currently, the following directories are present in your Java library path:$LIST_SEP$JAVA_LB_PATH\n  You should pick one of these folders to move the shared library to."
 else
   echo "$NM: [EE] Compiling not succesfull. Please check g++ output or Joxy wiki."
 fi
