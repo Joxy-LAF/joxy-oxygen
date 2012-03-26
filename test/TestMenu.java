@@ -27,7 +27,14 @@ public class TestMenu extends JMenuBar {
 		fileSubmenu.add(new JMenuItem("With an item", KeyEvent.VK_S));
 		fileMenu.add(fileSubmenu);
 		fileMenu.addSeparator();
-		fileMenu.add(new JMenuItem("Quit", KeyEvent.VK_Q));
+		JMenuItem quitItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+		quitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0); // ugly, I know
+			}
+		});
+		fileMenu.add(quitItem);
 		this.add(fileMenu);
 		// Edit
 		JMenu editMenu = new JMenu("Edit");
