@@ -20,7 +20,16 @@ public class JoxyGraphicsTest {
 		}
 		
 		long afterTime = System.currentTimeMillis();
-		System.out.println("Native text rendering took " + ((afterTime - beforeTime) / 10) / 10f + " ms per string.");
+		System.out.println("Without caching, native text rendering took " + ((afterTime - beforeTime) / 10) / 10f + " ms per string.");
+
+		beforeTime = System.currentTimeMillis();
+		
+		for (int i = 0; i < 100; i++) {
+			JoxyGraphics.drawString(g2, "Test", 0, 0); // every time exactly the same string, so cache should be used
+		}
+		
+		afterTime = System.currentTimeMillis();
+		System.out.println("With caching, native text rendering took " + ((afterTime - beforeTime) / 10) / 10f + " ms per string.");
 	}
 
 }
