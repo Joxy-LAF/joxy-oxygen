@@ -29,8 +29,22 @@ public class DarkEngravingPainter {
         GradientPaint fill = new GradientPaint(0, 0, new Color(159, 152, 149), 0, 6, new Color(182, 174, 170));
  		g2.setPaint(fill);
  		g2.fill(new RoundRectangle2D.Double(x, y, width, height, ARC, ARC));
- 		LinearGradientPaint gr = new LinearGradientPaint(0, y, 0, y + height, new float[]{0, 1}, new Color[]{new Color(80, 77, 74), new Color(159, 152, 149)});
- 		g2.setPaint(gr);
+ 		
+ 		// TODO Workaround for the IllegalArgumentException, and to collect some information about why it is failing.
+ 		// Probably it has something to do with width <= 0 or height <= 0.
+ 		try {
+ 			LinearGradientPaint gr = new LinearGradientPaint(0, y, 0, y + height, new float[]{0, 1}, new Color[]{new Color(80, 77, 74), new Color(159, 152, 149)});
+ 	 		g2.setPaint(gr);
+ 	 	} catch (IllegalArgumentException e) {
+ 			System.err.println("Catched IllegalArgumentException in DarkEngravingPainter.paint with the following arguments:");
+ 			System.err.println(" x = " + x);
+ 			System.err.println(" y = " + y);
+ 			System.err.println(" width = " + width);
+ 			System.err.println(" height = " + height);
+ 			System.err.println("The exception was:");
+ 			e.printStackTrace();
+ 		}
+ 		
  		g2.setStroke(new BasicStroke(0.2f));
  		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height-1, ARC, ARC));
 	}
