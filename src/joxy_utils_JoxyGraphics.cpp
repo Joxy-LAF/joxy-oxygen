@@ -8,33 +8,38 @@
 #include <QtGui/qimage.h>
 #include <QtGui/qpainter.h>
 
+int argc = 0;
+char** argv = NULL;
+QApplication a(argc, argv);
+jmethodID mid;
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
   (JNIEnv *env, jclass cl) {
 
-	// Create a QApplication, because Qt forces this
-	int argc = 0;
-    char** argv = NULL;
-    QApplication a(argc, argv);
+    printf("QApplication has been created\n");
 
-    printf("QApplication has been created");
+	jclass cls = env->FindClass("java/awt/image/BufferedImage");
 
-	jclass cls = env->GetObjectClass(image);
-	jmethodID mid = env->GetMethodID(cls, "setRGB", "(III)V");
-    if (mid == NULL) {
-    	printf("Couldn't find method setRGB(int)");
+	if (cls == NULL) {
+    	printf("Couldn't find class BufferedImage\n");
         return;
     }
+
+    printf("Class has been found\n");
+
+	mid = env->GetMethodID(cls, "setRGB", "(III)V");
+
+    if (mid == NULL) {
+    	printf("Couldn't find method setRGB(int)\n");
+        return;
+    }
+
+    printf("Method has been found\n");
+    printf("End of initialization\n");
 }
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
   (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jstring fontname, jint fontsize, jint color) {
-
-	// TODO Why do we need a QApplication here? Does it cache something?
-	// We also yet made one in initializeNative...
-	int argc = 0;
-    char** argv = NULL;
-    QApplication a(argc, argv);
 
     QImage qimage(width, 30, QImage::Format_ARGB32);
     QColor qcolor = QColor::fromRgb(color);
@@ -49,14 +54,6 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
     painter.drawText(0, 10, cstr);
     env->ReleaseStringUTFChars(str, cfontname);
     env->ReleaseStringUTFChars(str, cstr);
-
-    // TODO move to initializer...
-	jclass cls = env->GetObjectClass(image);
-	jmethodID mid = env->GetMethodID(cls, "setRGB", "(III)V");
-    if (mid == NULL) {
-    	printf("Couldn't find method setRGB(int)");
-        return;
-    }
 
     // TODO do this with the int[] version, so the for-loop is unnecessary
     int height = qimage.height();
