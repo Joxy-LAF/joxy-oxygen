@@ -11,6 +11,14 @@ extern "C" {
 #define joxy_utils_JoxyGraphics_NATIVE_TEXT_RENDERING 1L
 /*
  * Class:     joxy_utils_JoxyGraphics
+ * Method:    initializeNative
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     joxy_utils_JoxyGraphics
  * Method:    drawStringNative
  * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;ILjava/lang/String;II)V
  */

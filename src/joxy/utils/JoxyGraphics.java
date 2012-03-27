@@ -18,6 +18,8 @@ public class JoxyGraphics {
 		if (NATIVE_TEXT_RENDERING){
 			System.loadLibrary("nativeTextRenderer");
 			
+			initializeNative();
+			
 			imageCache = new Hashtable<String, BufferedImage>();
 		}
 	}
@@ -62,6 +64,12 @@ public class JoxyGraphics {
 	    }
 	}
 	
+	/**
+	 * Initializes the native code. This method <b>must</b> be called before any other
+	 * native call.
+	 */
+	private static native void initializeNative();
+
 	/**
 	 * Paints the given string onto the given image.
 	 * @param str Some string.
