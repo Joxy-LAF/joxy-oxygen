@@ -34,18 +34,23 @@ JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
 JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk"
 if [ ! -d $JAVA_HOME ]
 then
-  JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
-  JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk-amd64"
+  JAVA_HOME="/usr/lib/jvm/java-7-openjdk-i386"
+  JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk"
   if [ ! -d $JAVA_HOME ]
   then
-	JAVA_HOME="/usr/lib/jvm/java-6-openjdk"
-	JAVA_HOME_ALT=""
+	JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+	JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk-amd64"
 	if [ ! -d $JAVA_HOME ]
 	then
-	  JAVA_HOME=""
+	  JAVA_HOME="/usr/lib/jvm/java-6-openjdk"
+	  JAVA_HOME_ALT=""
 	  if [ ! -d $JAVA_HOME ]
 	  then
-		JAVA_HOME=""
+		JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64"
+		if [ ! -d $JAVA_HOME ]
+		then
+		  JAVA_HOME=""
+		fi
 	  fi
 	fi
   fi
