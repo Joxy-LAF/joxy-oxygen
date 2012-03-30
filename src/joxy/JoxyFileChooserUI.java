@@ -82,7 +82,7 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 					map.addMimeTypes("audio/x-generic wav wma mp3 ogg");
 					map.addMimeTypes("image/x-generic bmp jpg jpeg png tif tiff xpm wmf emf");
 					map.addMimeTypes("image/x-eps eps");
-					map.addMimeTypes("image/svg+xml svg");
+					map.addMimeTypes("image/svg+xml svg svgz");
 					map.addMimeTypes("text/css css");
 					map.addMimeTypes("text/html htm html");
 					map.addMimeTypes("text/plain txt");
@@ -99,7 +99,7 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 					map.addMimeTypes("text/x-sql sql");
 					map.addMimeTypes("text/x-tcl tcl");
 					map.addMimeTypes("text/x-tex tex");
-					map.addMimeTypes("text/xml xml");
+					map.addMimeTypes("text/xml xml osm");
 					map.addMimeTypes("video/x-generic wmv mpeg mp4 ogv swf mov dvd osp");
 				    String mimeType = map.getContentType(f);
 				    
