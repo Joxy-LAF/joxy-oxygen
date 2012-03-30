@@ -48,7 +48,7 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 				
 				if (f.isFile()) {
 					FileNameMap fileNameMap = URLConnection.getFileNameMap();
-					MimetypesFileTypeMap map = new MimetypesFileType();
+					MimetypesFileTypeMap map = new MimetypesFileTypeMap();
 					map.addMimeTypes("application/pdf pdf");
 					map.addMimeTypes("application/x-compress zip gz tar rar");
 					map.addMimeTypes("application/x-font-otf otf OTF");
