@@ -2,6 +2,7 @@ package joxy;
 
 import java.awt.Component;
 
+import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicToolBarUI;
@@ -27,10 +28,10 @@ public class JoxyToolBarUI extends BasicToolBarUI {
 	
 	@Override
 	protected void setBorderToNonRollover(Component c) {
-		if (c instanceof JComponent) {
+		if (c instanceof AbstractButton) {
 			// This interacts with the JoxyButtonUI code to remove the background
 			// and apply other effects. See JoxyButtonUI.
-			((JComponent) c).putClientProperty("isToolbarButton", Boolean.TRUE);
+			((AbstractButton) c).setContentAreaFilled(false);
 		}
 	}
 	

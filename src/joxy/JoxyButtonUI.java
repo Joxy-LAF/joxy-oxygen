@@ -78,6 +78,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 		if (USE_NEW_BUTTON_CODE) {
 		// Note that in the original code, the button can be painted in flat mode. In Java, there is no such thing as
 		// flat mode, so we only draw the non-flat mode.
+		// TODO [ws] There is one in Java! See isContentAreaPainted().
 		boundRectangle = new Rectangle(0, 0, c.getWidth() - 1, c.getHeight() - 1);
 
 		// match color to the window background
@@ -110,38 +111,40 @@ public class JoxyButtonUI extends BasicButtonUI {
 		} else {
 		
 
-		// Check whether the button is a toolbar button; see JoxyToolBarUI
-		if (b.getClientProperty("isToolbarButton") == null) {
-		    if (b.getModel().isPressed()) {
-				PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-			} else {
-				// If mouse is over the component, draw hover indicator
-				if (b.getModel().isRollover()) {
-					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+		if (b.isContentAreaFilled()) {
+			// Check whether the button is a toolbar button; see JoxyToolBarUI
+			if (b.isContentAreaFilled()) {
+			    if (b.getModel().isPressed()) {
+					PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				} else {
-					// If it has the focus, draw focus indicator
-					if (b.isFocusOwner()) {
-						FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					// If mouse is over the component, draw hover indicator
+					if (b.getModel().isRollover()) {
+						HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 					} else {
-						// No blue borders necessary, so draw shadow
-						g2.setColor(new Color(0, 0, 0, 40));
-						g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-						g2.setColor(new Color(0, 0, 0, 20));
-						g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-						g2.fill(new RoundRectangle2D.Double(2, 4, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+						// If it has the focus, draw focus indicator
+						if (b.isFocusOwner()) {
+							FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+						} else {
+							// No blue borders necessary, so draw shadow
+							g2.setColor(new Color(0, 0, 0, 40));
+							g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+							g2.setColor(new Color(0, 0, 0, 20));
+							g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+							g2.fill(new RoundRectangle2D.Double(2, 4, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+						}
 					}
+					
+					ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				}
-				
-				ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-			}
-		} else {
-			if (b.getModel().isPressed()) {
-				DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
-				// If mouse is over the component, draw hover indicator; note it is a special indicator
-				// for toolbar buttons
-				if (b.getModel().isRollover()) {
-					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				if (b.getModel().isPressed()) {
+					DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				} else {
+					// If mouse is over the component, draw hover indicator; note it is a special indicator
+					// for toolbar buttons
+					if (b.getModel().isRollover()) {
+						ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					}
 				}
 			}
 		}
@@ -189,11 +192,13 @@ public class JoxyButtonUI extends BasicButtonUI {
 		// larger to account for the larger decorations.
 		// If you consider this ugly... you are right.
 		Dimension dim = super.getPreferredSize(c);
+		
 		dim.width += 10;
 		dim.height += 8;
 		
-		// [ws] KDE-knoppen die niet in de werkbalk staan, zijn wat breder...
-		if (c.getClientProperty("isToolbarButton") == null) {
+		// Only add to the size if the button has its background painted; i.e. if it is
+		// not a toolbar button
+		if (((AbstractButton) c).isContentAreaFilled()) {
 			dim.width += 14;
 		}
 		
