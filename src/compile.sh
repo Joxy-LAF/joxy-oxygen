@@ -89,7 +89,7 @@ JAVA_LB_PATH=`$CMD | awk -F: -v ORS="$LIST_SEP" '{for (i = 1; i <= NF; i++) prin
 # START OF COMPILE PIECE
 echo "$NM: [II] Now compiling..."
 
-CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -fPIC -lQtGui -lQtCore -o libnativeTextRenderer.so joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h"
+CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -lQtGui -lQtCore -o libnativeTextRenderer.so joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h"
 if [ $VERBOSE -eq 1 ]
 then
   echo "$NM: [II] Running '$CMD'..."
