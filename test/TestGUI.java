@@ -150,6 +150,9 @@ public class TestGUI {
 		disabledButton.setEnabled(false);
 		tab2.add(disabledButton);
 		tab2.add(new JButton("Notice that the focus works well"));
+		JButton j3 = new JButton("This button has no background painted");
+		j3.setContentAreaFilled(false);
+		tab2.add(j3);
 		tab2.add(new JTextField("Oh wait, this is not a button!"));
 		tab2.add(new JButton("Sadly, there is no animation yet"));
 		tab2.add(new JButton("<html><center>Another button containing <b>HTML</b>. We have <font color=red>font colors</font>! And &lt;br&gt;!<br>" +
