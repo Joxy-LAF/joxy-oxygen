@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -117,6 +118,15 @@ public class TestGUI {
 			}
 		});
 		tab1.add(j);
+		JButton j2 = new JButton("Open a color chooser");
+		j2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JColorChooser.showDialog(frame, "A color chooser", Color.BLACK);
+			}
+		});
+		tab1.add(j2);
 		tab1.add(new JTextField("Some text field..."));
 		tab1.add(new JToggleButton("A toggle button"));
 		Vector<String> items = new Vector<String>();
