@@ -73,19 +73,24 @@ public class Utils {
 	 * files exist. When {@code !Utils.isLinux()}, this method always returns false
 	 * and does not even try to look for configuration files.
 	 * 
+	 * TODO testing and updating Javadoc if it works
+	 * 
 	 * @return True if the window manager in use is KDE, false otherwise.
 	 */
 	public static boolean isKDE() {
 		if (!Utils.isLinux()) {
 			return false;
 		}
-		// We are going to check if some config files exist. If so, 
+	/*	// We are going to check if some config files exist. If so, 
 		// this machine probably runs KDE.
 		if (kdeglobals1.exists() || kdeglobals2.exists() || kdeglobals3.exists() ||
 				oxygenrc1.exists() || oxygenrc2.exists() || oxygenrc3.exists()) {
 			return true;
-		}
 		return false;
+		}*/
+		
+		// Look at environment variable KDE_FULL_SESSION
+		return System.getenv("KDE_FULL_SESSION") != null;
 	}
 	
 	/**
