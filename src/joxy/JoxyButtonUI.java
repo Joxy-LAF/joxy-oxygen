@@ -193,9 +193,11 @@ public class JoxyButtonUI extends BasicButtonUI {
 		dim.width += 10;
 		dim.height += 8;
 		
-		// Only add to the size if the button has its background painted; i.e. if it is
-		// not a toolbar button
-		if (((AbstractButton) c).isContentAreaFilled()) {
+		// Only add to the size if the button has its background painted, i.e. if it is
+		// not a toolbar button, and if it has text on it, i.e. if it is not an icon-only button.
+		if (((AbstractButton) c).isContentAreaFilled()
+				&& !(((AbstractButton) c).getText() == null)
+				&& !((AbstractButton) c).getText().equals("")) {
 			dim.width += 14;
 		}
 		
