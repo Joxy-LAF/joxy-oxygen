@@ -9,11 +9,14 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JTabbedPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
@@ -23,6 +26,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
+import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 
 import joxy.painter.ButtonSlabPainter;
 import joxy.painter.FocusIndicatorPainter;
@@ -94,7 +98,33 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			}
 		};
 		
+		// A scroll listener to enable scrolling through the elements of the combo box
+		MouseWheelListener scrollListener = new MouseWheelListener() {
+			
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+
+					if (e.getWheelRotation() == 1) {
+						int currentIndex = comboBox.getSelectedIndex();
+						if (currentIndex < comboBox.getItemCount() - 1) {
+							comboBox.setSelectedIndex(currentIndex + 1);
+						}
+					}
+
+					if (e.getWheelRotation() == -1) {
+						int currentIndex = comboBox.getSelectedIndex();
+						if (currentIndex > 0) {
+							comboBox.setSelectedIndex(currentIndex - 1);
+						}
+					}
+
+				}
+			}
+		};
+		
 		comboBox.addMouseListener(mouseListener);
+		comboBox.addMouseWheelListener(scrollListener);
 	}
 	
 	@Override
