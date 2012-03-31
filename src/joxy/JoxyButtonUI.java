@@ -109,12 +109,10 @@ public class JoxyButtonUI extends BasicButtonUI {
 		/*  }  */
 		}
 		} else {
-		
 
-		if (b.isContentAreaFilled()) {
 			// Check whether the button is a toolbar button; see JoxyToolBarUI
 			if (b.isContentAreaFilled()) {
-			    if (b.getModel().isPressed()) {
+				if (b.getModel().isPressed()) {
 					PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				} else {
 					// If mouse is over the component, draw hover indicator
@@ -133,7 +131,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 							g2.fill(new RoundRectangle2D.Double(2, 4, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
 						}
 					}
-					
+
 					ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				}
 			} else {
@@ -147,7 +145,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 					}
 				}
 			}
-		}
 
 		
 		// TODO Draw disabled buttons differently
