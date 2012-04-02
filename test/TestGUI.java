@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -138,6 +139,7 @@ public class TestGUI {
 		JComboBox box = new JComboBox(items);
 		box.setEditable(true);
 		tab1.add(box);
+		tab1.add(new JSpinner());
 		t.addTab("Selection of components", tab1);
 		
 		JPanel tab2 = new JPanel();
