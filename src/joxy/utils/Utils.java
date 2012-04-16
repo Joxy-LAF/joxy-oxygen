@@ -1,6 +1,7 @@
 package joxy.utils;
 
 import java.awt.Font;
+import java.awt.TrayIcon.MessageType;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,8 @@ import javax.swing.plaf.FontUIResource;
 
 /**
  * General class providing basic utilities for the Joxy Look and Feel.
+ * Note: this should become kind-of the public API for application developers wishing to improve
+ * their application's LAF when using Joxy. But at the moment it contains primarily internals...
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -458,5 +461,32 @@ public class Utils {
 		Output.warning("Searched on places:");
 		Output.warning("  /usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
 		return null;
+	}
+
+	/**
+	 * Displays a notification by using the <code>notify-send</code> program.
+	 * @param title The title. KDE programs usually put their title in this field.
+	 * @param text The text to put in the notification.
+	 * @param type The type of notification as a MessageType.
+	 */
+	public static void displayNotification(String title, String text, MessageType type) {
+		String icon = "";
+		switch (type) {
+		case INFO:
+			icon = "--icon=/usr/share/icons/oxygen/48x48/status/dialog-information.png";
+			break;
+		case WARNING:
+			icon = "--icon=/usr/share/icons/oxygen/48x48/status/dialog-warning.png";
+			break;
+		case ERROR:
+			icon = "--icon=/usr/share/icons/oxygen/48x48/status/dialog-error.png";
+		}
+		
+		ProcessBuilder pb = new ProcessBuilder("notify-send", icon, title, text);
+		try {
+			pb.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

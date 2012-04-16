@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import joxy.utils.Utils;
+
 public class TestGUI {
 	
 	static JFrame frame;
@@ -203,6 +205,7 @@ public class TestGUI {
 		JOptionPane.showMessageDialog(frame, "Oh no, something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
 		//JOptionPane.showConfirmDialog(frame, "This is a question.", "Question", JOptionPane.YES_NO_CANCEL_OPTION);
 		
+		// The generic Java method to send a notification
 		TrayIcon trayIcon = null;
 		try {
 			trayIcon = new TrayIcon(ImageIO.read(new File("/usr/share/icons/oxygen/22x22/actions/document-new.png")));
@@ -215,5 +218,8 @@ public class TestGUI {
 			e1.printStackTrace();
 		}
 		trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
+		
+		// The Joxy method
+		Utils.displayNotification("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
 	}
 }
