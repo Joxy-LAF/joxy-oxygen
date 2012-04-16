@@ -218,8 +218,7 @@ public class TestGUI {
 			e1.printStackTrace();
 		}
 		trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
-		
-		// The Joxy method
-		Utils.displayNotification("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
+		trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
+		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
 	}
 }

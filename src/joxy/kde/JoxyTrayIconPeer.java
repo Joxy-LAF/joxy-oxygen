@@ -34,7 +34,7 @@ public class JoxyTrayIconPeer implements TrayIconPeer {
 
 	@Override
 	public void displayMessage(String caption, String text, String messageType) {
-		Utils.displayNotification(caption, text, MessageType.INFO);
+		Utils.displayNotification(caption, text, MessageType.valueOf(messageType));
 	}
 
 	@Override
