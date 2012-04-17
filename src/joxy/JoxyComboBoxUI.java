@@ -16,7 +16,6 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
@@ -26,8 +25,6 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
-import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
-
 import joxy.painter.ButtonSlabPainter;
 import joxy.painter.FocusIndicatorPainter;
 import joxy.painter.HoverIndicatorPainter;

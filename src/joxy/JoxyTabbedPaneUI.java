@@ -17,7 +17,6 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;

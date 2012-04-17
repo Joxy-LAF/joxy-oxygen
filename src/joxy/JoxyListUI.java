@@ -1,7 +1,5 @@
 package joxy;
 
-import java.awt.Color;
-
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicListUI;

@@ -10,8 +10,6 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import joxy.utils.Utils;
-
 public class TestGUI {
 	
 	static JFrame frame;

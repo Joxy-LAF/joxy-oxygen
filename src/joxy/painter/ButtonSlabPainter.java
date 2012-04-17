@@ -6,11 +6,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.UIManager;
-
-import joxy.JoxyRootPaneUI;
-import joxy.utils.ColorUtils;
-
 /**
  * Painter for a button slab. A button slab is the shape that makes up a button.
  */

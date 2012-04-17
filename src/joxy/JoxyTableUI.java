@@ -1,15 +1,8 @@
 package joxy;
 
-import java.awt.Component;
-
-import javax.swing.DebugGraphics;
 import javax.swing.JComponent;
-import javax.swing.JTable;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTableUI;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 public class JoxyTableUI extends BasicTableUI {
 	

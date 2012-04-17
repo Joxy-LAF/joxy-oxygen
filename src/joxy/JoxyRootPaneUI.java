@@ -18,7 +18,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import joxy.utils.ColorUtils;
-import joxy.utils.Output;
 import joxy.utils.ColorUtils.ShadeRoles;
 
 /**

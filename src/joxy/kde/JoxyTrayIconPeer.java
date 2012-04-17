@@ -8,7 +8,6 @@ import java.awt.peer.*;
 
 import joxy.utils.Utils;
 
-@SuppressWarnings("restriction")
 public class JoxyTrayIconPeer implements TrayIconPeer {
 
 	private String tooltip = "";

@@ -5,8 +5,6 @@ import javax.swing.JScrollPane;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
 
-import joxy.utils.Output;
-
 public class JoxyScrollPaneUI extends BasicScrollPaneUI {
 	
     public static ComponentUI createUI(JComponent c) {
