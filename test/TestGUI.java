@@ -80,6 +80,7 @@ public class TestGUI {
 
 		JButton j = new JButton("Open a file chooser");
 		j.setForeground(Color.RED);
+		j.setToolTipText("A tooltip");
 		j.setFont(new Font("Times new Roman", Font.PLAIN, 14));
 		j.addActionListener(new ActionListener() {
 			
@@ -91,6 +92,7 @@ public class TestGUI {
 		});
 		tab1.add(j);
 		JButton j2 = new JButton("Open a color chooser");
+		j2.setToolTipText("<html>Another tooltip, this time with <big>HTML</big>");
 		j2.addActionListener(new ActionListener() {
 			
 			@Override
