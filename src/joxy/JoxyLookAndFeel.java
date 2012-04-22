@@ -140,6 +140,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"TextFieldUI", "joxy.JoxyTextFieldUI",
 				"ToggleButtonUI", "joxy.JoxyToggleButtonUI",
 				"ToolBarUI", "joxy.JoxyToolBarUI",
+				"ToolTipUI", "joxy.JoxyToolTipUI",
 				"ViewportUI", "joxy.JoxyViewportUI"
 		});
 		

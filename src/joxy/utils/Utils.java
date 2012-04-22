@@ -167,6 +167,10 @@ public class Utils {
 				"List.gridColor", stringToColorUI("128,128,128"),
 				"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 				"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+				
+				// Tool tips
+				"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
+				"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
 			};
 		} else { // ...else, we use a default color scheme
 			// TODO: Create a default colormap here [tca 18-nov-2011] if we are going to support non-KDE platforms [wso 18-nov-2011]
@@ -228,6 +232,8 @@ public class Utils {
 				"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 				// List settings
 				"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+				// ToolTip settings
+				"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
