@@ -10,17 +10,45 @@ import java.util.Hashtable;
  */
 public class JoxyGraphics {
 	
+	/**
+	 * Whether text rendering should be done by a call to Qt (instead of doing it in Java).
+	 */
 	public static final boolean NATIVE_TEXT_RENDERING = true;
 	
+	/**
+	 * Whether the native text rendering is actually loaded.
+	 */
+	private static boolean couldInitializeNative = false;
+	
+	/**
+	 * Whether Qt-rendered text should be cached. This has no meaning when NATIVE_TEXT_RENDERING = false.
+	 */
+	public static final boolean TEXT_CACHING = false;
+	
+	/**
+	 * HashTable used for the caching,
+	 */
 	private static Hashtable<String, BufferedImage> imageCache;
 
 	static {
 		if (NATIVE_TEXT_RENDERING){
-			System.loadLibrary("nativeTextRenderer");
+			try {
+				System.loadLibrary("nativeTextRenderer");
+				couldInitializeNative = true;
+			} catch (Throwable t) {
+				Output.warning("Native text rendering requested (joxy.utils.JoxyGraphics.NATIVE_TEXT_RENDERING == true), " +
+						"but could not initialize the native library code. Native text rendering will be switched off " +
+						"and the exception will be printed now.");
+				t.printStackTrace();
+			}
 			
-			initializeNative();
-			
-			imageCache = new Hashtable<String, BufferedImage>();
+			if (couldInitializeNative) {
+				initializeNative();
+				
+				if (TEXT_CACHING) {
+					imageCache = new Hashtable<String, BufferedImage>();
+				}
+			}
 		}
 	}
 	
@@ -34,15 +62,19 @@ public class JoxyGraphics {
 	 * @param y   The y-coordinate of the lower side of the text.
 	 */
 	public static void drawString(Graphics2D g2, String str, float x, float y) {
-	    if (NATIVE_TEXT_RENDERING) {
-	    	// Try to use the cache.
-	    	String key = str + "/" + g2.getFont().getName() + "/" + g2.getFont().getSize() + "/" + g2.getColor().getRGB();
-	    	BufferedImage img = imageCache.get(key);
+	    if (NATIVE_TEXT_RENDERING && couldInitializeNative) {
+	    	
+	    	String key = null;
+	    	BufferedImage img = null;
+	    	
+			if (TEXT_CACHING) {
+		    	// Try to use the cache.
+		    	key = str + "/" + g2.getFont().getName() + "/" + g2.getFont().getSize() + "/" + g2.getColor().getRGB();
+		    	img = imageCache.get(key);
+			}
 	    	
 	    	// If not in cache, call native method to create it, and put it in the cache.
-	    	if (img == null) {
-	    		// Output.debug("Native text rendering called for \"" + key + "\"");
-	    		
+	    	if (!TEXT_CACHING || img == null) {
 	    		int width = g2.getFontMetrics().stringWidth(str);
 	    		
 	    		if (width <= 0) {
@@ -53,8 +85,10 @@ public class JoxyGraphics {
 				
 				// TODO size is an ugly hack...
 				drawStringNative(str, img, width, g2.getFont().getFamily(), (int)(g2.getFont().getSize() / 1.4f + 0.5f), g2.getColor().getRGB());
-				
-				imageCache.put(key, img);
+
+				if (TEXT_CACHING) {
+					imageCache.put(key, img);
+				}
 	    	}
 	    	
 			g2.drawImage(img, (int) x, (int) y - 10, null);
