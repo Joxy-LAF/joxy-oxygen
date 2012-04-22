@@ -190,6 +190,13 @@ public class JoxyButtonUI extends BasicButtonUI {
 		// If you consider this ugly... you are right.
 		Dimension dim = super.getPreferredSize(c);
 		
+		// [ws] Fix for bug with NullPointerExceptions
+		// It seems that if the super implementation returns null, we can safely
+		// return null as well.
+		if (dim == null) {
+			return null;
+		}
+		
 		dim.width += 10;
 		dim.height += 8;
 		
