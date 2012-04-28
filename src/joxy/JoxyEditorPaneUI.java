@@ -31,6 +31,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 	}
 
 	public JoxyEditorPaneUI(JComponent c) {
+		super();
 		editor = (JEditorPane) c;
 	}
 	
