@@ -25,10 +25,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
-import joxy.painter.ButtonSlabPainter;
-import joxy.painter.FocusIndicatorPainter;
-import joxy.painter.HoverIndicatorPainter;
-import joxy.painter.PressedButtonSlabPainter;
+import joxy.painter.*;
 
 public class JoxyComboBoxUI extends BasicComboBoxUI {
 	
@@ -191,12 +188,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		g2.setColor(Color.WHITE);
-		g2.fill(new RoundRectangle2D.Double(0, 0, comboBox.getWidth() - 1, comboBox.getHeight() - 1, ARC, ARC));
-
-		g2.setStroke(new BasicStroke(1.2f));
-		g2.setColor(new Color(140, 140, 140));
-		g2.draw(new RoundRectangle2D.Double(0, 0, comboBox.getWidth(), comboBox.getHeight(), ARC, ARC));
+		InputFieldPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
 	}
 	
 	@Override

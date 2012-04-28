@@ -12,6 +12,8 @@ import javax.swing.JEditorPane;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicEditorPaneUI;
 
+import joxy.painter.InputFieldPainter;
+
 public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 
 	/**
@@ -50,12 +52,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		g2.setColor(Color.WHITE);
-		g2.fill(new RoundRectangle2D.Double(0, 0, editor.getWidth() - 1, editor.getHeight() - 1, ARC, ARC));
-
-		g2.setStroke(new BasicStroke(1.2f));
-		g2.setColor(new Color(140, 140, 140));
-		g2.draw(new RoundRectangle2D.Double(0, 0, editor.getWidth(), editor.getHeight(), ARC, ARC));
+		InputFieldPainter.paint(g2, 1, 1, editor.getWidth() - 2, editor.getHeight() - 2);
 
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
     }

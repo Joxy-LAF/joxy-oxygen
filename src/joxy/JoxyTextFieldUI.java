@@ -30,6 +30,8 @@ import javax.swing.text.Position;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
+import joxy.painter.InputFieldPainter;
+
 /**
  * Class overriding the default TextFieldUI (BasicTextFieldUI) to provide a good
  * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
@@ -373,12 +375,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		g2.setColor(Color.WHITE);
-		g2.fill(new RoundRectangle2D.Double(0, 0, textField.getWidth() - 1, textField.getHeight() - 1, ARC, ARC));
-
-		g2.setStroke(new BasicStroke(1.2f));
-		g2.setColor(new Color(140, 140, 140));
-		g2.draw(new RoundRectangle2D.Double(0, 0, textField.getWidth(), textField.getHeight(), ARC, ARC));
+		InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
 
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
     }
