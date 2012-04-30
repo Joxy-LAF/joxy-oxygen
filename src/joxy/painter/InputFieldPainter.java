@@ -24,12 +24,14 @@ public class InputFieldPainter {
 	 * @param height Height of the shape.
 	 */
 	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
-		// Rounded rectangle with dark blue border
-		//g2.setColor(new Color(58, 167, 221));
+		// background
+		g2.setColor(new Color(225, 225, 225));
+		g2.fill(new RoundRectangle2D.Double(x, y + 1, width, height / 2, ARC, ARC));
 		g2.setColor(Color.WHITE);
-		g2.fill(new RoundRectangle2D.Double(x, y, width, height, ARC, ARC));
+		g2.fill(new RoundRectangle2D.Double(x, y + 2, width, height - 2, ARC, ARC));
 
-		g2.setStroke(new BasicStroke(1.2f));
+		// border
+		g2.setStroke(new BasicStroke(0.5f));
 		g2.setColor(new Color(140, 140, 140));
 		g2.draw(new RoundRectangle2D.Double(x, y, width, height, ARC, ARC));
 	}
