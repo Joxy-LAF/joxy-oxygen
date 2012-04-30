@@ -89,7 +89,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		// speed is important here
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 		
-		int splitY = (int) Math.min(300, .75 * c.getHeight());
+		int splitY = (int) Math.min(300 - 23, .75 * (c.getHeight() + 23));
 		
 		// determine colors to use
 		Color color = UIManager.getColor("Window.background");
@@ -103,7 +103,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			Graphics2D imgg2 = (Graphics2D) (newGradient.getGraphics());
 		    Color backgroundTopColor = getBackgroundTopColor(color);
 	        Color backgroundBottomColor = getBackgroundBottomColor(color);
-			imgg2.setPaint(new GradientPaint(0, 0, backgroundTopColor, 0, splitY, backgroundBottomColor));
+			imgg2.setPaint(new GradientPaint(0, -23, backgroundTopColor, 0, splitY, backgroundBottomColor));
 			imgg2.fillRect(0, 0, 1, c.getHeight());
 			backgroundCache.put(c.getHeight(), newGradient);
 			g2.drawImage(newGradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
