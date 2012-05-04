@@ -11,12 +11,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.AbstractButton;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
@@ -56,24 +51,11 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
     }
     
 	@Override
-	public void installUI(JComponent c) {
-		super.installUI(c);
+	protected void installDefaults(AbstractButton b) {
+		super.installDefaults(b);
 		
-		c.setFont(UIManager.getFont("Button.font"));
-	}
-
-	@Override
-	protected void installDefaults(AbstractButton b) {}
-	
-	@Override
-	public Dimension getPreferredSize(JComponent c) {
-		// Simply pick the preferred size of the BasicToggleButtonUI and make it
-		// larger to account for the larger decorations.
-		// If you consider this ugly... you are right.
-		Dimension dim = super.getPreferredSize(c);
-		dim.width += 10;
-		dim.height += 8;
-		return dim;
+		b.setBorder(BorderFactory.createEmptyBorder());
+		b.setFont(UIManager.getFont("Button.font"));
 	}
 	
 	@Override
@@ -183,6 +165,35 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		}
 		}
 	}
+	
+	@Override
+	public Dimension getPreferredSize(JComponent c) {
+		// Simply pick the preferred size of the BasicButtonUI and make it
+		// larger to account for the larger decorations.
+		// If you consider this ugly... you are right.
+		Dimension dim = super.getPreferredSize(c);
+		
+		// [ws] Fix for bug with NullPointerExceptions
+		// It seems that if the super implementation returns null, we can safely
+		// return null as well.
+		if (dim == null) {
+			return null;
+		}
+		
+		dim.width += 10;
+		dim.height += 8;
+		
+		// Only add to the size if the button has its background painted, i.e. if it is
+		// not a toolbar button, and if it has text on it, i.e. if it is not an icon-only button.
+		if (((AbstractButton) c).isContentAreaFilled()
+				&& !(((AbstractButton) c).getText() == null)
+				&& !((AbstractButton) c).getText().equals("")) {
+			dim.width += 14;
+		}
+		
+		return dim;
+	}
+	
 	/**
 	 * This method is copied from the BasicLabelUI class.
 	 * What it does exactly (especially in combination with the "layoutCL" method

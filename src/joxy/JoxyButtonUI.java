@@ -11,12 +11,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.AbstractButton;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicHTML;
@@ -65,7 +60,12 @@ public class JoxyButtonUI extends BasicButtonUI {
 	}
 	
 	@Override
-	protected void installDefaults(AbstractButton b) {}
+	protected void installDefaults(AbstractButton b) {
+		super.installDefaults(b);
+
+		b.setBorder(BorderFactory.createEmptyBorder());
+		b.setFont(UIManager.getFont("Button.font"));
+	}
 	
 	@Override
 	public synchronized void paint(Graphics g, JComponent c) {
@@ -174,13 +174,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2, paintTextR.y + (paintTextR.height + h) / 2 - 3);
 		}
 		}
-	}
-	
-	@Override
-	public void installUI(JComponent c) {
-		super.installUI(c);
-		
-		c.setFont(UIManager.getFont("Button.font"));
 	}
 	
 	@Override
