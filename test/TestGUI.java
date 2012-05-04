@@ -3,12 +3,16 @@ import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+
+import com.sun.awt.AWTUtilities;
 
 public class TestGUI {
 	
@@ -199,6 +203,8 @@ public class TestGUI {
 		
 		frame.setSize(800, 600);
 		frame.setVisible(true);
+		
+		// setWindowOpacity(frame, 0.9);
 
 		JOptionPane.showMessageDialog(frame, "This is some information. Very useful, isn't it?", "Information", JOptionPane.INFORMATION_MESSAGE);
 		JOptionPane.showMessageDialog(frame, "Watch out! There is an error coming...", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -221,4 +227,27 @@ public class TestGUI {
 		trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
 		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
 	}
+	
+	/**
+	 * For integration with Oxygen-Transparent, set the opacity and blur.
+	 * Adapted from <a href=
+	 * @param frame The JFrame to set the transparency on.
+	 * @param opacity The opacity, from 0 to 1.
+	 */
+/*  protected static void setWindowOpacity(Frame frame, double opacity) {
+		try {
+			// long windowId = peer.getWindow();
+			Field peerField = Component.class.getDeclaredField("peer");
+			peerField.setAccessible(true);
+			Class<?> xWindowPeerClass = Class.forName("sun.awt.X11.XWindowPeer");
+			Method getWindowMethod = xWindowPeerClass.getMethod("getWindow", new Class[0]);
+			long windowId = ((Long) getWindowMethod.invoke(peerField.get(frame), new Object[0])).longValue();
+
+			sun.awt.X11.XAtom.get("_NET_WM_WINDOW_OPACITY").setCard32Property(windowId, (int) (0xff * opacity) << 24);
+			sun.awt.X11.XAtom.get("_KDE_NET_WM_BLUR_BEHIND_REGION").setCard32Property(windowId, 32);
+			sun.awt.X11.XAtom.get("_NET_WM_OPAQUE_REGION").setCard32Property(windowId, 32);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	} */
 }
