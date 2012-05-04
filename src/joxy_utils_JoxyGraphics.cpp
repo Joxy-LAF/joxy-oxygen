@@ -39,9 +39,9 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
 }
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jstring fontname, jint fontsize, jint color) {
+  (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jint height, jstring fontname, jint fontsize, jint color) {
 
-    QImage qimage(width, 30, QImage::Format_ARGB32);
+    QImage qimage(width, height, QImage::Format_ARGB32);
     QColor qcolor = QColor::fromRgb(color);
     qcolor.setAlpha(0);
     qimage.fill(qcolor);
@@ -51,12 +51,11 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
     const char* cfontname = env->GetStringUTFChars(fontname, JNI_FALSE);
     painter.setFont(QFont(cfontname, fontsize, 0, false));
     const char* cstr = env->GetStringUTFChars(str, JNI_FALSE);
-    painter.drawText(0, 10, cstr);
+    painter.drawText(0, 0, width + 10, height, Qt::AlignLeft, cstr);
     env->ReleaseStringUTFChars(str, cfontname);
     env->ReleaseStringUTFChars(str, cstr);
 
     // TODO do this with the int[] version, so the for-loop is unnecessary
-    int height = qimage.height();
 
 	for (int i = 0; i < width; i++) {
 	    for (int j = 0; j < height; j++) {

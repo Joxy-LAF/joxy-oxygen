@@ -1,5 +1,6 @@
 package joxy.utils;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
@@ -76,22 +77,29 @@ public class JoxyGraphics {
 	    	// If not in cache, call native method to create it, and put it in the cache.
 	    	if (!TEXT_CACHING || img == null) {
 	    		int width = g2.getFontMetrics().stringWidth(str);
+	    		int height = g2.getFontMetrics().getHeight();
 	    		
 	    		if (width <= 0) {
 	    			width = 1;
 	    		}
 	    		
-				img = new BufferedImage(width, 30, BufferedImage.TYPE_INT_ARGB_PRE);
+	    		if (height <= 0) {
+	    			height = 1;
+	    		}
+	    		
+				img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
 				
 				// TODO size is an ugly hack...
-				drawStringNative(str, img, width, g2.getFont().getFamily(), (int)(g2.getFont().getSize() / 1.4f + 0.5f), g2.getColor().getRGB());
+				drawStringNative(str, img, width, height, g2.getFont().getFamily(), (int)(g2.getFont().getSize() / 1.4f + 0.5f), g2.getColor().getRGB());
 
 				if (TEXT_CACHING) {
 					imageCache.put(key, img);
 				}
 	    	}
 	    	
-			g2.drawImage(img, (int) x, (int) y - 10, null);
+	    	// Because of the crappy cooperation between Java and Qt, there is an
+	    	// offset of 3 (or 4 perhaps, we are not sure yet) pixels needed.
+			g2.drawImage(img, (int) x, (int) y - img.getHeight() + 3, null);
 	    	
 	    } else {
 	    	g2.drawString(str, x, y);
@@ -109,9 +117,10 @@ public class JoxyGraphics {
 	 * @param str Some string.
 	 * @param image Some image.
 	 * @param width The width of the image given.
+	 * @param height The height of the image given.
 	 * @param font The name of the font to draw in.
 	 * @param fontSize The font size.
 	 * @param color The color, as RGB integer value, to draw in.
 	 */
-	private static native void drawStringNative(String str, BufferedImage image, int width, String font, int fontSize, int color);
+	private static native void drawStringNative(String str, BufferedImage image, int width, int height, String font, int fontSize, int color);
 }

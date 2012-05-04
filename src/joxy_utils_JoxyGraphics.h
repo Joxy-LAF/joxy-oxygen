@@ -9,6 +9,8 @@ extern "C" {
 #endif
 #undef joxy_utils_JoxyGraphics_NATIVE_TEXT_RENDERING
 #define joxy_utils_JoxyGraphics_NATIVE_TEXT_RENDERING 1L
+#undef joxy_utils_JoxyGraphics_TEXT_CACHING
+#define joxy_utils_JoxyGraphics_TEXT_CACHING 0L
 /*
  * Class:     joxy_utils_JoxyGraphics
  * Method:    initializeNative
@@ -20,10 +22,10 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
 /*
  * Class:     joxy_utils_JoxyGraphics
  * Method:    drawStringNative
- * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;ILjava/lang/String;II)V
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;IILjava/lang/String;II)V
  */
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *, jclass, jstring, jobject, jint, jstring, jint, jint);
+  (JNIEnv *, jclass, jstring, jobject, jint, jint, jstring, jint, jint);
 
 #ifdef __cplusplus
 }
