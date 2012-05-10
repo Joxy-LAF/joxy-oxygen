@@ -13,6 +13,7 @@ import javax.swing.UIManager;
  */
 public class FocusIndicatorPainter {
 
+	private static Color focus = UIManager.getColor("Button.focus");
 	private static final int ARC = 8;
 	
 	/**
@@ -23,15 +24,15 @@ public class FocusIndicatorPainter {
 	 * @param y y-coordinate for the left upper corner.
 	 * @param width Width of the shape.
 	 * @param height Height of the shape.
+	 * @param opacity Opacity of the focus indicator, with 0 completely transparent, and 255 completely opaque.
 	 */
-	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
+	public static void paint(Graphics2D g2, float x, float y, float width, float height, int opacity) {
 		// Rounded rectangle with dark blue border
 		//g2.setColor(new Color(58, 167, 221));
-		Color focus = UIManager.getColor("Button.focus"); // [ws] TODO moet dit naar de initialisatie?
-		g2.setColor(focus);
+		g2.setColor(new Color(focus.getRed(), focus.getGreen(), focus.getBlue(), opacity));
 		g2.setStroke(new BasicStroke(2f));
 		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, ARC, ARC));
-		g2.setColor(new Color(focus.getRed(), focus.getGreen(), focus.getBlue(), 128));
+		g2.setColor(new Color(focus.getRed(), focus.getGreen(), focus.getBlue(), opacity / 2));
 		g2.setStroke(new BasicStroke(5f));
 		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, ARC, ARC));
 	}

@@ -150,12 +150,12 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			// If mouse is over the component, draw hover indicator
 			if (hovered) { // [ws] TODO!
 				HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-						comboBox.getHeight() - 4);
+						comboBox.getHeight() - 4, 255);
 			} else {
 				// If it has the focus, draw focus indicator
 				if (comboBox.isFocusOwner()) {
 					FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-							comboBox.getHeight() - 4);
+							comboBox.getHeight() - 4, 255);
 				} else {
 					// No blue borders necessary, so draw shadow
 					g2.setColor(new Color(0, 0, 0, 40));

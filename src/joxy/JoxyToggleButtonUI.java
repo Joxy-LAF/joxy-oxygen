@@ -107,11 +107,11 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 			} else {
 				// If mouse is over the component, draw hover indicator
 				if (b.getModel().isRollover()) {
-					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
 				} else {
 					// If it has the focus, draw focus indicator
 					if (b.isFocusOwner()) {
-						FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+						FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
 					} else {
 						// No blue borders necessary, so draw shadow
 						g2.setColor(new Color(0, 0, 0, 40));

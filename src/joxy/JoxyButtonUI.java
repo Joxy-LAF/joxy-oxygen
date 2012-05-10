@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -52,6 +53,13 @@ public class JoxyButtonUI extends BasicButtonUI {
 	/** Whether to use the new code for painting buttons */
 	private static final boolean USE_NEW_BUTTON_CODE = false;
 	
+	/** Amount of hover and focus, from 0 to 255 */
+	private int hoverAmount = 0, focusAmount = 0;
+	
+	private boolean hovering = false;
+	
+	private Timer hoverTimer;
+	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
 		((AbstractButton) c).setRolloverEnabled(true);
@@ -67,6 +75,60 @@ public class JoxyButtonUI extends BasicButtonUI {
 		b.setFont(UIManager.getFont("Button.font"));
 	}
 	
+	@Override
+	protected void installListeners(AbstractButton b) {
+		super.installListeners(b);
+		
+		MouseListener hoverListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hoverTimer.start();
+			}
+		};
+		
+		b.addMouseListener(hoverListener);
+		
+		createTimers(b);
+	}
+	
+	private void createTimers(final AbstractButton b) {
+		hoverTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (b.getModel().isRollover()) {
+					hoverAmount += 60;
+				} else {
+					hoverAmount -= 60;
+				}
+				if (hoverAmount > 255) {
+					hoverAmount = 255;
+					hoverTimer.stop();
+				}
+				if (hoverAmount < 0) {
+					hoverAmount = 0;
+					hoverTimer.stop();
+				}
+				b.repaint();
+			}
+		});
+	}
+
 	@Override
 	public synchronized void paint(Graphics g, JComponent c) {
 		AbstractButton b = (AbstractButton) c;
@@ -115,23 +177,18 @@ public class JoxyButtonUI extends BasicButtonUI {
 				if (b.getModel().isPressed()) {
 					PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				} else {
-					// If mouse is over the component, draw hover indicator
-					if (b.getModel().isRollover()) {
-						HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-					} else {
-						// If it has the focus, draw focus indicator
-						if (b.isFocusOwner()) {
-							FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-						} else {
-							// No blue borders necessary, so draw shadow
-							g2.setColor(new Color(0, 0, 0, 40));
-							g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-							g2.setColor(new Color(0, 0, 0, 20));
-							g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-							g2.fill(new RoundRectangle2D.Double(2, 4, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-						}
-					}
+					// shadow
+					g2.setColor(new Color(0, 0, 0, 80));
+					g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+					g2.setColor(new Color(0, 0, 0, 40));
+					g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 2, ARC+6, ARC+6));
 
+					// decorations
+					FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
+					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
+					
+					// slab
 					ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				}
 			} else {
