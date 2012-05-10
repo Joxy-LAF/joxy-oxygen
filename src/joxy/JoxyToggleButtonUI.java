@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -42,6 +43,16 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 	private static Rectangle boundRectangle = new Rectangle();
 	/** Whether to use the new code for painting buttons */
 	private static final boolean USE_NEW_BUTTON_CODE = false;
+
+	/** Amount of hover and focus, from 0 to 255 */
+	private int hoverAmount = 0, focusAmount = 0;
+	
+	/** Timers for the animation */
+	private Timer hoverTimer, focusTimer;
+	
+	/** Listeners for the animation */
+	private MouseListener hoverListener;
+	private FocusListener focusListener;
 	
     public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -56,6 +67,102 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		
 		b.setBorder(BorderFactory.createEmptyBorder());
 		b.setFont(UIManager.getFont("Button.font"));
+	}
+	
+	@Override
+	protected void installListeners(AbstractButton b) {
+		super.installListeners(b);
+		
+		hoverListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hoverTimer.start();
+			}
+		};
+		b.addMouseListener(hoverListener);
+		
+		focusListener = new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusTimer.start();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusTimer.start();
+			}
+		};
+		b.addFocusListener(focusListener);
+		
+		createTimers(b);
+	}
+	
+	@Override
+	protected void uninstallListeners(AbstractButton b) {
+		super.uninstallListeners(b);
+		
+		b.removeMouseListener(hoverListener);
+		b.removeFocusListener(focusListener);
+	}
+	
+	private void createTimers(final AbstractButton b) {
+		hoverTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (b.getModel().isRollover()) {
+					hoverAmount += 60;
+				} else {
+					hoverAmount -= 60;
+				}
+				if (hoverAmount > 255) {
+					hoverAmount = 255;
+					hoverTimer.stop();
+				}
+				if (hoverAmount < 0) {
+					hoverAmount = 0;
+					hoverTimer.stop();
+				}
+				b.repaint();
+			}
+		});
+		
+		focusTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (b.hasFocus()) {
+					focusAmount += 60;
+				} else {
+					focusAmount -= 60;
+				}
+				if (focusAmount > 255) {
+					focusAmount = 255;
+					focusTimer.stop();
+				}
+				if (focusAmount < 0) {
+					focusAmount = 0;
+					focusTimer.stop();
+				}
+				b.repaint();
+			}
+		});
 	}
 	
 	@Override
@@ -105,23 +212,18 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		    if (b.getModel().isPressed() || b.getModel().isSelected()) {
 		    	DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
-				// If mouse is over the component, draw hover indicator
-				if (b.getModel().isRollover()) {
-					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
-				} else {
-					// If it has the focus, draw focus indicator
-					if (b.isFocusOwner()) {
-						FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
-					} else {
-						// No blue borders necessary, so draw shadow
-						g2.setColor(new Color(0, 0, 0, 40));
-						g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-						g2.setColor(new Color(0, 0, 0, 20));
-						g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-						g2.fill(new RoundRectangle2D.Double(2, 4, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-					}
-				}
+				// shadow
+				g2.setColor(new Color(0, 0, 0, 80));
+				g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+				g2.setColor(new Color(0, 0, 0, 40));
+				g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 2, ARC+6, ARC+6));
+
+				// decorations
+				FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
+				HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 				
+				// slab
 				ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			}
 		} else {
@@ -130,9 +232,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 			} else {
 				// If mouse is over the component, draw hover indicator; note it is a special indicator
 				// for toolbar buttons
-				if (b.getModel().isRollover()) {
-					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
-				}
+				ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 			}
 		}
 
