@@ -12,6 +12,7 @@ import javax.swing.UIManager;
  */
 public class ToolbarHoverIndicatorPainter {
 
+	private static Color hover = UIManager.getColor("Button.focus");
 	private static final int ARC = 8;
 	
 	/**
@@ -22,11 +23,11 @@ public class ToolbarHoverIndicatorPainter {
 	 * @param y y-coordinate for the left upper corner.
 	 * @param width Width of the shape.
 	 * @param height Height of the shape.
+	 * @param opacity Opacity of the hover indicator, with 0 completely transparent, and 255 completely opaque.
 	 */
-	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
-		Color focus = UIManager.getColor("Button.hover"); // [ws] TODO moet dit naar de initialisatie?
-		g2.setColor(new Color(focus.getRed(), focus.getGreen(), focus.getBlue(), 128));
-		g2.setStroke(new BasicStroke(1.5f));
+	public static void paint(Graphics2D g2, float x, float y, float width, float height, int opacity) {
+		g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), opacity / 2));
+		g2.setStroke(new BasicStroke(1.1f));
 		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, ARC, ARC));
 	}
 

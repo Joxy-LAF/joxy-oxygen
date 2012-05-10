@@ -27,8 +27,6 @@ public class HoverIndicatorPainter {
 	 * @param opacity Opacity of the hover indicator, with 0 completely transparent, and 255 completely opaque.
 	 */
 	public static void paint(Graphics2D g2, float x, float y, float width, float height, int opacity) {
-		// Rounded rectangle with dark blue border
-		//g2.setColor(new Color(58, 167, 221));
 		g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), opacity));
 		g2.setStroke(new BasicStroke(2f));
 		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, ARC, ARC));

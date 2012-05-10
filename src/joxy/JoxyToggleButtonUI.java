@@ -131,7 +131,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 				// If mouse is over the component, draw hover indicator; note it is a special indicator
 				// for toolbar buttons
 				if (b.getModel().isRollover()) {
-					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, 255);
 				}
 			}
 		}
