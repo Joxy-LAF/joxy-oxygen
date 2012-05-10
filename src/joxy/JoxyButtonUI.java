@@ -56,9 +56,8 @@ public class JoxyButtonUI extends BasicButtonUI {
 	/** Amount of hover and focus, from 0 to 255 */
 	private int hoverAmount = 0, focusAmount = 0;
 	
-	private boolean hovering = false;
-	
-	private Timer hoverTimer;
+	/** Timers for the animation */
+	private Timer hoverTimer, focusTimer;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -100,8 +99,21 @@ public class JoxyButtonUI extends BasicButtonUI {
 				hoverTimer.start();
 			}
 		};
-		
 		b.addMouseListener(hoverListener);
+		
+		FocusListener focusListener = new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusTimer.start();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusTimer.start();
+			}
+		};
+		b.addFocusListener(focusListener);
 		
 		createTimers(b);
 	}
@@ -123,6 +135,27 @@ public class JoxyButtonUI extends BasicButtonUI {
 				if (hoverAmount < 0) {
 					hoverAmount = 0;
 					hoverTimer.stop();
+				}
+				b.repaint();
+			}
+		});
+		
+		focusTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (b.hasFocus()) {
+					focusAmount += 60;
+				} else {
+					focusAmount -= 60;
+				}
+				if (focusAmount > 255) {
+					focusAmount = 255;
+					focusTimer.stop();
+				}
+				if (focusAmount < 0) {
+					focusAmount = 0;
+					focusTimer.stop();
 				}
 				b.repaint();
 			}
@@ -185,6 +218,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 2, ARC+6, ARC+6));
 
 					// decorations
+					System.out.println(focusAmount);
 					FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
 					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 					
