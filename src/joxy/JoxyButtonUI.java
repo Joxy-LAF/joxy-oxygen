@@ -31,8 +31,23 @@ import joxy.utils.TileSet;
 
 
 /**
- * Class overriding the default ButtonUI (BasicButtonUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JButton.
+ * 
+ * <p>This class is a bit messy, because there are two approaches being
+ * developed: both translating the Oxygen C++ code, and just trying around.
+ * The latter is default, for trying the translated code, set
+ * USE_NEW_BUTTON_CODE to true. However, this is not finished yet.</p>
+ * 
+ * <p>The JoxyButtonUI supports animations for the focus and hovered states.
+ * This means that the hover/focus indicator will fade in and out when it
+ * appears and disappears again. This is done with two variables, hoverAmount
+ * and focusAmount, and two Timers, hoverTimer and focusTimer. These timers
+ * are normally stopped, but if the hoverListener or the focusListener, created
+ * in the installListeners() method, fires, these timers are activated, and
+ * start modifying the hover and focus amounts. The button will be continuously
+ * repainted, until the animation stops &mdash; then the timers will stop
+ * themselves (to prevent them from using resources when there is no
+ * animation).</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -218,7 +233,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 2, ARC+6, ARC+6));
 
 					// decorations
-					System.out.println(focusAmount);
 					FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
 					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 					
