@@ -74,6 +74,10 @@ public class JoxyButtonUI extends BasicButtonUI {
 	/** Timers for the animation */
 	private Timer hoverTimer, focusTimer;
 	
+	/** Listeners for the animation */
+	private MouseListener hoverListener;
+	private FocusListener focusListener;
+	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
 		((AbstractButton) c).setRolloverEnabled(true);
@@ -93,7 +97,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 	protected void installListeners(AbstractButton b) {
 		super.installListeners(b);
 		
-		MouseListener hoverListener = new MouseListener() {
+		hoverListener = new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {}
@@ -116,7 +120,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 		};
 		b.addMouseListener(hoverListener);
 		
-		FocusListener focusListener = new FocusListener() {
+		focusListener = new FocusListener() {
 			
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -131,6 +135,14 @@ public class JoxyButtonUI extends BasicButtonUI {
 		b.addFocusListener(focusListener);
 		
 		createTimers(b);
+	}
+	
+	@Override
+	protected void uninstallListeners(AbstractButton b) {
+		super.uninstallListeners(b);
+		
+		b.removeMouseListener(hoverListener);
+		b.removeFocusListener(focusListener);
 	}
 	
 	private void createTimers(final AbstractButton b) {
