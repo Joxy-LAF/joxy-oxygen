@@ -242,7 +242,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 					g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
 					g2.setColor(new Color(0, 0, 0, 40));
 					g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 2, ARC+6, ARC+6));
+					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 3, ARC+3, ARC+3));
 
 					// decorations
 					FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
