@@ -76,7 +76,7 @@ public class JoxyGraphics {
 	    	
 	    	// If not in cache, call native method to create it, and put it in the cache.
 	    	if (!TEXT_CACHING || img == null) {
-	    		int width = g2.getFontMetrics().stringWidth(str);
+	    		int width = g2.getFontMetrics().stringWidth(str) + 2;
 	    		int height = g2.getFontMetrics().getHeight();
 	    		
 	    		if (width <= 0) {
@@ -99,7 +99,7 @@ public class JoxyGraphics {
 	    	
 	    	// Because of the crappy cooperation between Java and Qt, there is an
 	    	// offset of 3 (or 4 perhaps, we are not sure yet) pixels needed.
-			g2.drawImage(img, (int) x, (int) y - img.getHeight() + 3, null);
+			g2.drawImage(img, (int) x + 1, (int) y - img.getHeight() + 3, null);
 	    	
 	    } else {
 	    	g2.drawString(str, x, y);
