@@ -208,10 +208,14 @@ public class JoxyRadioButtonUI extends BasicRadioButtonUI {
 		// the circle
 		if (b.getModel().isPressed()) { // [ws] TODO only for KDE 4.8
 			g2.setColor(new Color(0, 0, 0, 50));
+			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 			g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
+			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 		} else if (b.getModel().isSelected()) {
 			g2.setColor(Color.BLACK);
+			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 			g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
+			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 		}
 		
 		// Draw text

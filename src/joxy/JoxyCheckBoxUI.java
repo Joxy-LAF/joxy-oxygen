@@ -213,13 +213,17 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 		if (b.getModel().isPressed()) { // [ws] TODO only for KDE 4.8
 			g2.setColor(new Color(0, 0, 0, 50));
 			g2.setStroke(new BasicStroke(1.5f));
+			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 			g2.drawLine(4, 9, 7, 12);
 			g2.drawLine(7, 12, 13, 5);
+			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 		} else if (b.getModel().isSelected()) {
 			g2.setColor(Color.BLACK);
 			g2.setStroke(new BasicStroke(1.5f));
+			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 			g2.drawLine(4, 9, 7, 12);
 			g2.drawLine(7, 12, 13, 5);
+			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 		}
 		
 		// Draw text
