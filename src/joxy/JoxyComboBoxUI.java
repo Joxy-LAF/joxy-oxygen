@@ -1,30 +1,14 @@
 package joxy;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.ListCellRenderer;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
-import javax.swing.plaf.basic.BasicArrowButton;
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicComboPopup;
-import javax.swing.plaf.basic.ComboPopup;
+import javax.swing.plaf.basic.*;
+
 import joxy.painter.*;
 
 public class JoxyComboBoxUI extends BasicComboBoxUI {
@@ -33,7 +17,20 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	 *  the corners of the rounded rectangles. */
 	public static final int ARC = 8;
 	
-	protected boolean hovered = false;
+	/** Amount of hover and focus, from 0 to 255 */
+	private int hoverAmount = 0, focusAmount = 0;
+	
+	/** Timers for the animation */
+	private Timer hoverTimer, focusTimer;
+	
+	/** Listeners for the animation */
+	private MouseListener hoverListener;
+	private FocusListener focusListener;
+	
+	private boolean hovered = false;
+	
+	/** Listeners for scrolling */
+	private MouseWheelListener scrollListener;
 	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyComboBoxUI();
@@ -60,20 +57,8 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	protected void installListeners() {
 		super.installListeners();
 		
-		MouseListener mouseListener = new MouseListener() {
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				hovered = false;
-				comboBox.repaint();
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				hovered = true;
-				comboBox.repaint();
-			}
-			
+		hoverListener = new MouseListener() {
+
 			// [ws] TODO The following repaints are just workarounds for some non-repainting problems
 			// that probably need fixing elsewhere
 			@Override
@@ -90,10 +75,39 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			public void mouseClicked(MouseEvent e) {
 				comboBox.repaint();
 			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				hovered = true;
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hovered = false;
+				hoverTimer.start();
+			}
 		};
+		comboBox.addMouseListener(hoverListener);
+		
+		focusListener = new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				focusTimer.start();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusTimer.start();
+			}
+		};
+		comboBox.addFocusListener(focusListener);
+		
+		createTimers(comboBox);
 		
 		// A scroll listener to enable scrolling through the elements of the combo box
-		MouseWheelListener scrollListener = new MouseWheelListener() {
+		scrollListener = new MouseWheelListener() {
 			
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
@@ -117,8 +131,60 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			}
 		};
 		
-		comboBox.addMouseListener(mouseListener);
 		comboBox.addMouseWheelListener(scrollListener);
+	}
+	
+	private void createTimers(final JComboBox comboBox) {
+		hoverTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (hovered) {
+					hoverAmount += 60;
+				} else {
+					hoverAmount -= 60;
+				}
+				if (hoverAmount > 255) {
+					hoverAmount = 255;
+					hoverTimer.stop();
+				}
+				if (hoverAmount < 0) {
+					hoverAmount = 0;
+					hoverTimer.stop();
+				}
+				comboBox.repaint();
+			}
+		});
+		
+		focusTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (comboBox.hasFocus()) {
+					focusAmount += 60;
+				} else {
+					focusAmount -= 60;
+				}
+				if (focusAmount > 255) {
+					focusAmount = 255;
+					focusTimer.stop();
+				}
+				if (focusAmount < 0) {
+					focusAmount = 0;
+					focusTimer.stop();
+				}
+				comboBox.repaint();
+			}
+		});
+	}
+	
+	@Override
+	protected void uninstallListeners() {
+		super.uninstallListeners();
+		
+		comboBox.removeMouseListener(hoverListener);
+		comboBox.removeFocusListener(focusListener);
+		comboBox.removeMouseWheelListener(scrollListener);
 	}
 	
 	@Override
@@ -147,27 +213,16 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			PressedButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 					comboBox.getHeight() - 4);
 		} else {
-			// If mouse is over the component, draw hover indicator
-			if (hovered) { // [ws] TODO!
-				HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-						comboBox.getHeight() - 4, 255);
-			} else {
-				// If it has the focus, draw focus indicator
-				if (comboBox.isFocusOwner()) {
-					FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-							comboBox.getHeight() - 4, 255);
-				} else {
-					// No blue borders necessary, so draw shadow
-					g2.setColor(new Color(0, 0, 0, 40));
-					g2.fill(new RoundRectangle2D.Double(2, 2, comboBox.getWidth() - 4,
-							comboBox.getHeight() - 4, ARC, ARC));
-					g2.setColor(new Color(0, 0, 0, 20));
-					g2.fill(new RoundRectangle2D.Double(2, 3, comboBox.getWidth() - 4,
-							comboBox.getHeight() - 4, ARC, ARC));
-					g2.fill(new RoundRectangle2D.Double(2, 4, comboBox.getWidth() - 4,
-							comboBox.getHeight() - 4, ARC, ARC));
-				}
-			}
+			// shadow
+			g2.setColor(new Color(0, 0, 0, 80));
+			g2.fill(new RoundRectangle2D.Double(2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, ARC, ARC));
+			g2.setColor(new Color(0, 0, 0, 40));
+			g2.fill(new RoundRectangle2D.Double(2, 3, comboBox.getWidth() - 4, comboBox.getHeight() - 4, ARC, ARC));
+			g2.fill(new RoundRectangle2D.Double(1, 3, comboBox.getWidth() - 2, comboBox.getHeight() - 2, ARC+6, ARC+6));
+	
+			// decorations
+			FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, focusAmount);
+			HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, hoverAmount);
 
 			ButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
 					comboBox.getHeight() - 4);
