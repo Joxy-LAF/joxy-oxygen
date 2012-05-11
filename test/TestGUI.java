@@ -81,6 +81,9 @@ public class TestGUI {
 		JProgressBar pr2 = new JProgressBar();
 		pr2.setIndeterminate(true);
 		tab1.add(pr2);
+		
+		tab1.add(new JCheckBox("A check box"));
+		tab1.add(new JRadioButton("A radio button"));
 
 		JButton j = new JButton("Open a file chooser");
 		j.setForeground(Color.RED);
