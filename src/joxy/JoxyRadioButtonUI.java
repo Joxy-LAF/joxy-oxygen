@@ -220,7 +220,8 @@ public class JoxyRadioButtonUI extends BasicRadioButtonUI {
 		
 		// Draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		g2.setColor(b.getForeground());
+		// Set text color. In the disabled state, a button has a different text color
+		g2.setColor(b.getModel().isEnabled() ? b.getForeground() : UIManager.getColor("Button.foregroundInactive"));
 		View v = (View) c.getClientProperty(BasicHTML.propertyKey);
 		if (v != null) { // Text contains HTML
 			v.paint(g2, textRect);
