@@ -27,7 +27,6 @@ import joxy.painter.HoverIndicatorPainter;
 import joxy.utils.ColorUtils;
 import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.JoxyGraphics;
-import joxy.utils.Output;
 import joxy.utils.TileSet;
 
 

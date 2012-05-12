@@ -1,6 +1,5 @@
 package joxy.kde;
 
-import java.awt.AWTException;
 import java.awt.TrayIcon;
 
 import java.awt.TrayIcon.MessageType;
@@ -12,7 +11,7 @@ public class JoxyTrayIconPeer implements TrayIconPeer {
 
 	private String tooltip = "";
 	
-	public JoxyTrayIconPeer(TrayIcon target) throws AWTException {
+	public JoxyTrayIconPeer(TrayIcon target) {
 		// Well... probably should do something?
 	}
 

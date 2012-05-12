@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.UIManager;
-
 /**
  * Painter for an input field such as a text field.
  */

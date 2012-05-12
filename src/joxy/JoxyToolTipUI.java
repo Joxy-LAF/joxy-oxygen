@@ -13,8 +13,6 @@ import javax.swing.text.View;
 
 import joxy.utils.JoxyGraphics;
 
-import sun.swing.SwingUtilities2;
-
 public class JoxyToolTipUI extends BasicToolTipUI {
 	
 	/**

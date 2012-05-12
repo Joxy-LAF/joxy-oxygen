@@ -1,12 +1,7 @@
 package joxy;
 
-import java.beans.PropertyChangeEvent;
-
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTextPaneUI;
 
 public class JoxyTextPaneUI extends JoxyEditorPaneUI {
 	
