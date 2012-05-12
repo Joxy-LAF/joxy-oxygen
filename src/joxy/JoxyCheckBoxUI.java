@@ -210,7 +210,7 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 		ButtonSlabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
 		
 		// the circle
-		if (b.getModel().isPressed()) { // [ws] TODO only for KDE 4.8
+		if (b.getModel().isPressed() || !b.isEnabled()) { // [ws] TODO only for KDE 4.8
 			g2.setColor(new Color(0, 0, 0, 50));
 			g2.setStroke(new BasicStroke(1.5f));
 			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
