@@ -128,7 +128,7 @@ public class TestGUI {
 		tab2.add(new JButton("This button is a little longer"));
 		tab2.add(new JButton("Buttons scale appropiately"));
 		tab2.add(new JButton("<html><s>This is a button containing HTML.</s> The previous text should be striped."));
-		JButton disabledButton = new JButton("This button is disabled. Yes, I know you didn't see that. We don't draw that yet...");
+		JButton disabledButton = new JButton("This button is disabled, but you noticed that, didn't you? No, there is no focus if you hover me.");
 		disabledButton.setEnabled(false);
 		tab2.add(disabledButton);
 		tab2.add(new JButton("Notice that the focus works well"));
@@ -189,10 +189,12 @@ public class TestGUI {
 		t.addTab("JTable (in a JScrollPane)", scrollpane);
 		
 		Vector<String> vect = new Vector<String>();
-		vect.add("Hoi");
-		vect.add("Hallo");
-		vect.add("Dag");
-		vect.add("Doei");
+		vect.add("These ...");
+		vect.add("... are ...");
+		vect.add("... items ...");
+		vect.add("... in ...");
+		vect.add("... a ...");
+		vect.add("... JList.");
 		JList list = new JList(vect);
 		t.addTab("JList", list);
 		

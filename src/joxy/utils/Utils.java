@@ -133,6 +133,7 @@ public class Utils {
 				"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
 				"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
 				"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Button.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 				"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
 				
 				// Window shadow

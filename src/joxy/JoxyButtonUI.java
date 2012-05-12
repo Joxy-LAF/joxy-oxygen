@@ -27,6 +27,7 @@ import joxy.painter.HoverIndicatorPainter;
 import joxy.utils.ColorUtils;
 import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.JoxyGraphics;
+import joxy.utils.Output;
 import joxy.utils.TileSet;
 
 
@@ -259,14 +260,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 					// for toolbar buttons
 					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 				}
-			}
-
-		
-		// TODO Draw disabled buttons differently
-		if (!b.getModel().isEnabled()) {
-			
-		}
-		
+			}		
 		
 		// Layout the button, i.e. determine the place for icon and text
 		FontMetrics f = b.getFontMetrics(b.getFont());
@@ -279,7 +273,8 @@ public class JoxyButtonUI extends BasicButtonUI {
 		
 		// Draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		g2.setColor(b.getForeground());
+		// Set text color. In the disabled state, a button has a different text color
+		g2.setColor(b.getModel().isEnabled() ? b.getForeground() : UIManager.getColor("Button.foregroundInactive"));
 		View v = (View) c.getClientProperty(BasicHTML.propertyKey);
 		if (v != null) { // Text contains HTML
 			v.paint(g2, paintTextR);
