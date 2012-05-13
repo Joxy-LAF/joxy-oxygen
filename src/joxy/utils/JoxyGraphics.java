@@ -33,7 +33,7 @@ public class JoxyGraphics {
 	static {
 		if (NATIVE_TEXT_RENDERING){
 			try {
-				System.loadLibrary("nativeTextRenderer");
+				System.loadLibrary("joxy");
 				couldInitializeNative = true;
 			} catch (Throwable t) {
 				Output.warning("Native text rendering requested (joxy.utils.JoxyGraphics.NATIVE_TEXT_RENDERING == true), " +

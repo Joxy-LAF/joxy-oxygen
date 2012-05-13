@@ -7,15 +7,31 @@
 #include <QtGui/qcolor.h>
 #include <QtGui/qimage.h>
 #include <QtGui/qpainter.h>
-#include <kfiledialog.h>
+#include <kcmdlineargs.h>
+#include <kapplication.h>
 
-int argc = 0;
-char** argv = NULL;
-QApplication a(argc, argv);
+bool initialized = false;
+KApplication* a;
 jmethodID mid;
+
+// Initialization
+
+void init() {
+	initialized = true;
+	int argc = 0;
+	char** argv;
+	KCmdLineArgs::init(argc, argv, "joxy", "Joxy", ki18n("0.0.3"), "Some description");
+	a = new KApplication();
+}
+
+// Native code for joxy.utils.JoxyGraphics
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
   (JNIEnv *env, jclass cl) {
+
+	if (!initialized) {
+		init();
+	}
 
 	jclass cls = env->FindClass("java/awt/image/BufferedImage");
 
@@ -34,6 +50,10 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
   (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jint height, jstring fontname, jint fontsize, jint color) {
+
+	if (!initialized) {
+		init();
+	}
 
     QImage qimage(width, height, QImage::Format_ARGB32);
     QColor qcolor = QColor::fromRgb(color);
@@ -62,3 +82,5 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
 	    }
 	}
 }
+
+// Native code for joxy.JoxyFileChooserUI
