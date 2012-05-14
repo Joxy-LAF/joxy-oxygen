@@ -35,6 +35,8 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 		super(b);
 	}
 	
+	private static native void openFileChooser();
+	
 	// This is a way to get an icon for some files. That is however quite a stupid way
 	// that mostly doesn't work.
 	@Override

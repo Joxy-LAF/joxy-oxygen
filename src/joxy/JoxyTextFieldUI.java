@@ -15,16 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.FieldView;
-import javax.swing.text.GlyphView;
-import javax.swing.text.ParagraphView;
-import javax.swing.text.Position;
-import javax.swing.text.View;
-import javax.swing.text.ViewFactory;
+import javax.swing.text.*;
 
 import joxy.painter.InputFieldPainter;
 
@@ -49,7 +40,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	JTextField textField;
 	
 	public static ComponentUI createUI(JComponent c) {
-		//c.setOpaque(false);
+		c.setOpaque(false);
 		return new JoxyTextFieldUI(c);
 	}
 
@@ -363,6 +354,36 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
         }
 
     }
+    
+    /**
+	 * {@inheritDoc}
+	 * 
+	 * <p>This method has been copied from the superclass, but the background
+	 * is always painted, also if the field is non-opaque.</p>
+	 */
+	@Override
+	protected void paintSafely(Graphics g) {
+		paintBackground(g);
+		
+		Highlighter highlighter = textField.getHighlighter();
+        Caret caret = textField.getCaret();
+        
+        // paint the highlights
+        if (highlighter != null) {
+            highlighter.paint(g);
+        }
+        
+        // paint the view hierarchy
+        Rectangle alloc = getVisibleEditorRect();
+        if (alloc != null) {
+            getRootView(textField).paint(g, alloc);
+        }
+        
+        // paint the caret
+        if (caret != null) {
+            caret.paint(g);
+        }
+	}
     
     @Override
     protected void paintBackground(Graphics g) {
