@@ -1,14 +1,11 @@
 import java.awt.*;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Vector;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class TestGUI {
 	
@@ -22,17 +19,7 @@ public class TestGUI {
 					UIManager.setLookAndFeel("joxy.JoxyLookAndFeel");
 					//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 					//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnsupportedLookAndFeelException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
@@ -207,13 +194,13 @@ public class TestGUI {
 		
 		// setWindowOpacity(frame, 0.9);
 
-		JOptionPane.showMessageDialog(frame, "This is some information. Very useful, isn't it?", "Information", JOptionPane.INFORMATION_MESSAGE);
-		JOptionPane.showMessageDialog(frame, "Watch out! There is an error coming...", "Warning", JOptionPane.WARNING_MESSAGE);
-		JOptionPane.showMessageDialog(frame, "Oh no, something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+		//JOptionPane.showMessageDialog(frame, "This is some information. Very useful, isn't it?", "Information", JOptionPane.INFORMATION_MESSAGE);
+		//JOptionPane.showMessageDialog(frame, "Watch out! There is an error coming...", "Warning", JOptionPane.WARNING_MESSAGE);
+		//JOptionPane.showMessageDialog(frame, "Oh no, something went wrong!", "Error", JOptionPane.ERROR_MESSAGE);
 		//JOptionPane.showConfirmDialog(frame, "This is a question.", "Question", JOptionPane.YES_NO_CANCEL_OPTION);
 		
 		// The generic Java method to send a notification
-		TrayIcon trayIcon = null;
+/*		TrayIcon trayIcon = null;
 		try {
 			trayIcon = new TrayIcon(ImageIO.read(new File("/usr/share/icons/oxygen/22x22/actions/document-new.png")));
 		} catch (IOException e1) {
@@ -226,7 +213,21 @@ public class TestGUI {
 		}
 		trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
 		trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
-		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
+		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);*/
+		
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode("Java LAFs");
+		JTree tree = new JTree(node);
+		t.addTab("A JTree", new JScrollPane(tree));
+		node.add(new DefaultMutableTreeNode("Metal"));
+		node.add(new DefaultMutableTreeNode("Motif"));
+		node.add(new DefaultMutableTreeNode("Windows"));
+		node.add(new DefaultMutableTreeNode("Aqua"));
+		node.add(new DefaultMutableTreeNode("GTK+"));
+		DefaultMutableTreeNode joxy = new DefaultMutableTreeNode("Joxy");
+		node.add(joxy);
+		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.1"));
+		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.2"));
+		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.3"));
 	}
 	
 	/**
