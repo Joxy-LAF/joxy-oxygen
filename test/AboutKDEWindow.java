@@ -2,14 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 
 public class AboutKDEWindow extends JFrame {
@@ -31,7 +28,11 @@ public class AboutKDEWindow extends JFrame {
 		cp.setLayout(new BorderLayout(10, 10));
 		
 		cp.add(new UpperPanel(), BorderLayout.PAGE_START);
-		cp.add(new LeftPanel(), BorderLayout.LINE_START);
+		try {
+			cp.add(new LeftPanel(), BorderLayout.LINE_START);
+		} catch (IOException e) {
+			System.out.println("Konqi image not found");
+		}
 		cp.add(new ContentPanel(), BorderLayout.CENTER);
 		cp.add(new LowerPanel(), BorderLayout.PAGE_END);
 	}
@@ -54,8 +55,8 @@ public class AboutKDEWindow extends JFrame {
 		/** Serial version UID */
 		private static final long serialVersionUID = -6478578696701775202L;
 
-		public LeftPanel() {
-			super(new ImageIcon("konqi.png"));
+		public LeftPanel() throws IOException {
+			super(new ImageIcon(ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"))));
 		}
 	}
 	
