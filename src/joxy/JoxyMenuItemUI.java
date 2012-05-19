@@ -1,13 +1,8 @@
 package joxy;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -179,6 +174,7 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		
 		// draw text
 		FontMetrics f = menuItem.getFontMetrics(menuItem.getFont());
+		int h = f.getHeight();
 		
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		g2.setColor(Color.BLACK);
@@ -187,11 +183,17 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		if (v != null) { // Text contains HTML
 			v.paint(g2, textRect);
 		} else { // No HTML, draw ourselves
-			int w = f.stringWidth(menuItem.getText());
-			int h = f.getHeight();
 			// TODO [ws] That 3 added to the x coordinate is to be consistent with JoxyMenuUI.
 			JoxyGraphics.drawString(g2, menuItem.getText(), textRect.x, textRect.y + (textRect.height + h) / 2 - 3);
 		}
+		
+		// draw accelerator
+		if (menuItem.getAccelerator() != null) {
+			int w = f.stringWidth(getAccText("+"));
+			JoxyGraphics.drawString(g2, getAccText("+"), accRect.x - w, accRect.y + (accRect.height + h) / 2 - 3);
+		}
+		
+		// don't draw the arrow for JMenuItems, since they don't have a submenu
 	}
 
 	/**
@@ -218,5 +220,40 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		// position the text (width does not matter -- we ignore it)
 		int textX = Math.max(22, iconHeight) + 5;
 		textRect = new Rectangle(textX, 0, 10, menuItem.getHeight());
+		
+		// position the arrow
+		int arrowWidth = 4;
+		int arrowHeight = 7;
+		int arrowX = menuItem.getWidth() - arrowWidth - 7;
+		arrowRect = new Rectangle(arrowX, (menuItem.getHeight() - arrowHeight) / 2, arrowWidth, arrowHeight);
+		
+		// position the accelerator
+		accRect = new Rectangle(arrowX - 5, 0, 0, menuItem.getHeight());
 	}
+	
+	/**
+	 * Return a human-readable representation of the accelerator text.
+	 * Copied from MenuItemLayoutHelper.
+	 * @param acceleratorDelimiter The string used to delimit the various parts
+	 * of the accelerator, such as "+".
+	 * @return A string such as "Ctrl+O".
+	 */
+	private String getAccText(String acceleratorDelimiter) {
+        String accText = "";
+        KeyStroke accelerator = menuItem.getAccelerator();
+        if (accelerator != null) {
+            int modifiers = accelerator.getModifiers();
+            if (modifiers > 0) {
+                accText = KeyEvent.getKeyModifiersText(modifiers);
+                accText += acceleratorDelimiter;
+            }
+            int keyCode = accelerator.getKeyCode();
+            if (keyCode != 0) {
+                accText += KeyEvent.getKeyText(keyCode);
+            } else {
+                accText += accelerator.getKeyChar();
+            }
+        }
+        return accText;
+    }
 }

@@ -1,13 +1,8 @@
 package joxy;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.*;
@@ -36,10 +31,6 @@ public class JoxyMenuUI extends BasicMenuUI {
 	/** The width and height of the arcs that form up
 	 *  the corners of the rounded rectangles. */
 	public static final int ARC = 8;
-	/** The Rectangle to paint the icon in. */
-    private Rectangle paintIconR = new Rectangle();
-	/** The Rectangle to paint the text in. */
-    private Rectangle paintTextR = new Rectangle();
 
 	/** Amount of hover and focus, from 0 to 255 */
 	private int hoverAmount = 0;
@@ -53,6 +44,9 @@ public class JoxyMenuUI extends BasicMenuUI {
 	
 	private boolean hovered = false;
 	private boolean menuOpen = false;
+	
+	/** Rectangles for the layout */
+	protected Rectangle iconRect, textRect, accRect, arrowRect;
     
 	public static ComponentUI createUI(JComponent c) {
 		JoxyMenuUI menuUI = new JoxyMenuUI();
@@ -158,100 +152,144 @@ public class JoxyMenuUI extends BasicMenuUI {
 	
 	@Override
 	public void paint(Graphics g, JComponent c) {
-		// TODO Auto-generated method stub
-		//super.paint(g, c);
-		
-		JMenu m = (JMenu) c;
+		JMenuItem mi = (JMenuItem) c;
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-
 		// draw the hover
-		MenuItemBackgroundPainter.paint(g2, 2, 1, m.getWidth() - 4, m.getHeight() - 3, hoverAmount);
+		MenuItemBackgroundPainter.paint(g2, 2, 1, mi.getWidth() - 4, mi.getHeight() - 3, hoverAmount);
 		
-		// TODO Draw disabled buttons differently
-		if (!m.getModel().isEnabled()) {
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		
+		if (isTopLevelMenu()) {
 			
-		}
-		
-		
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		// Layout the menu, i.e. determine the place for icon and text
-		FontMetrics f = m.getFontMetrics(m.getFont());
-		String clippedText = layout(m, f, c.getWidth(), c.getHeight());
-		
-		// Draw icon
-		if (m.getIcon() != null) {
-			m.getIcon().paintIcon(m, g2, paintIconR.x, paintIconR.y);
-		}
-		
-		// Draw text
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-		g2.setColor(Color.BLACK);
-		g2.setFont(m.getFont());
-		View v = (View) c.getClientProperty(BasicHTML.propertyKey);
-		if (v != null) { // Text contains HTML
-			v.paint(g2, paintTextR);
-		} else { // No HTML, draw ourselves
-			int w = f.stringWidth(clippedText);
+			// draw text
+			FontMetrics f = menuItem.getFontMetrics(menuItem.getFont());
+			int w = f.stringWidth(menuItem.getText());
 			int h = f.getHeight();
-			// TODO [ws] That 3 added to the x coordinate is a temporary fix for the disalignment of menu bar items.
-			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2 + 3, paintTextR.y + (paintTextR.height + h) / 2 - 3);
+			
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+			g2.setColor(Color.BLACK);
+			g2.setFont(mi.getFont());
+			View v = (View) c.getClientProperty(BasicHTML.propertyKey);
+			if (v != null) { // Text contains HTML
+				v.paint(g2, textRect);
+			} else { // No HTML, draw ourselves
+				// TODO [ws] That 3 added to the x coordinate is to be consistent with JoxyMenuUI.
+				JoxyGraphics.drawString(g2, menuItem.getText(), (menuItem.getWidth() - w) / 2, (menuItem.getHeight() + h) / 2 - 3);
+			}
+						
+		} else {
+			// layout the item
+			layout();
+			
+			// draw icon
+			if (mi.getIcon() != null) {
+				mi.getIcon().paintIcon(mi, g2, iconRect.x, iconRect.y);
+			}
+			
+			// draw text
+			FontMetrics f = menuItem.getFontMetrics(menuItem.getFont());
+			int h = f.getHeight();
+			
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+			g2.setColor(Color.BLACK);
+			g2.setFont(mi.getFont());
+			View v = (View) c.getClientProperty(BasicHTML.propertyKey);
+			if (v != null) { // Text contains HTML
+				v.paint(g2, textRect);
+			} else { // No HTML, draw ourselves
+				// TODO [ws] That 3 added to the x coordinate is to be consistent with JoxyMenuUI.
+				JoxyGraphics.drawString(g2, menuItem.getText(), textRect.x, textRect.y + (textRect.height + h) / 2 - 3);
+			}
+			
+			// draw accelerator
+			if (menuItem.getAccelerator() != null) {
+				int w = f.stringWidth(getAccText("+"));
+				JoxyGraphics.drawString(g2, getAccText("+"), accRect.x - w, accRect.y + (accRect.height + h) / 2 - 3);
+			}
+			
+			// draw arrow
+			g2.setColor(Color.BLACK);
+			g2.setStroke(new BasicStroke(1.25f));
+			
+			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMinY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
+			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMaxY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
 		}
+	}
+
+	/**
+	 * Layout the menu item. Fortunately in KDE this is slightly simpler than in
+	 * the default Java LAFs: if there is no icon (also if there is no icon on all
+	 * the items in a menu), there is just space maintained as if there was an icon.
+	 * That means that if there is no icon, we just are able to assume there is one,
+	 * so it is not necessary to look if others do have an icon.
+	 * 
+	 * Note: this only makes sense for non-toplevel menus.
+	 */
+	protected void layout() {
+		
+		// simply put the icon on the left side of the item, and vertically centered
+		int iconWidth, iconHeight;
+		
+		if (menuItem.getIcon() != null) {
+			iconWidth = menuItem.getIcon().getIconWidth();
+			iconHeight = menuItem.getIcon().getIconHeight();
+		} else {
+			iconWidth = 0;
+			iconHeight = 0;
+		}
+		
+		iconRect = new Rectangle(4, (menuItem.getHeight() - iconHeight) / 2, iconWidth, iconHeight);
+		
+		// position the text (width does not matter -- we ignore it)
+		int textX = Math.max(22, iconHeight) + 5;
+		textRect = new Rectangle(textX, 0, 10, menuItem.getHeight());
+		
+		// position the arrow
+		int arrowWidth = 4;
+		int arrowHeight = 7;
+		int arrowX = menuItem.getWidth() - arrowWidth - 7;
+		arrowRect = new Rectangle(arrowX, (menuItem.getHeight() - arrowHeight) / 2, arrowWidth, arrowHeight);
+		
+		// position the accelerator
+		accRect = new Rectangle(arrowX - 5, 0, 0, menuItem.getHeight());
 	}
 	
 	/**
-	 * This method is copied from the BasicLabelUI class.
-	 * What it does exactly (especially in combination with the "layoutCL" method
-	 * that is also copied from BasicLabelUI) we don't quite understand, but hey,
-	 * it works...
+	 * Returns true iff this menu is a top-level menu.
+	 * @return Whether this menu has a JMenuBar as a parent.
 	 */
-	private String layout(JMenu m, FontMetrics fm, int width, int height) {
-		Insets insets = m.getInsets(null);
-		String text = m.getText();
-		Icon icon = (m.isEnabled()) ? m.getIcon() : m.getDisabledIcon();
-		Rectangle paintViewR = new Rectangle();
-		paintViewR.x = insets.left;
-		paintViewR.y = insets.top;
-		paintViewR.width = width - (insets.left + insets.right);
-		paintViewR.height = height - (insets.top + insets.bottom);
-		paintIconR.x = paintIconR.y = paintIconR.width = paintIconR.height = 0;
-		paintTextR.x = paintTextR.y = paintTextR.width = paintTextR.height = 0;
-		return layoutCL(m, fm, text, icon, paintViewR, paintIconR,
-				paintTextR);
+	protected boolean isTopLevelMenu() {
+		return menuItem.getParent() instanceof JMenuBar;
 	}
 	
-    /**
-     * Forwards the call to SwingUtilities.layoutCompoundLabel().
-     * This method is here so that a subclass could do Label specific
-     * layout and to shorten the method name a little.
-     *
-     * @see SwingUtilities#layoutCompoundLabel
-     */
-    protected String layoutCL(
-        JMenu m,
-        FontMetrics fontMetrics,
-        String text,
-        Icon icon,
-        Rectangle viewR,
-        Rectangle iconR,
-        Rectangle textR)
-    {
-        return SwingUtilities.layoutCompoundLabel(
-            m,
-            fontMetrics,
-            text,
-            icon,
-            m.getVerticalAlignment(),
-            m.getHorizontalAlignment(),
-            m.getVerticalTextPosition(),
-            m.getHorizontalTextPosition(),
-            viewR,
-            iconR,
-            textR,
-            m.getIconTextGap());
+	/**
+	 * Return a human-readable representation of the accelerator text.
+	 * Copied from MenuItemLayoutHelper.
+	 * @param acceleratorDelimiter The string used to delimit the various parts
+	 * of the accelerator, such as "+".
+	 * @return A string such as "Ctrl+O".
+	 */
+	private String getAccText(String acceleratorDelimiter) {
+        String accText = "";
+        KeyStroke accelerator = menuItem.getAccelerator();
+        if (accelerator != null) {
+            int modifiers = accelerator.getModifiers();
+            if (modifiers > 0) {
+                accText = KeyEvent.getKeyModifiersText(modifiers);
+                accText += acceleratorDelimiter;
+            }
+            int keyCode = accelerator.getKeyCode();
+            if (keyCode != 0) {
+                accText += KeyEvent.getKeyText(keyCode);
+            } else {
+                accText += accelerator.getKeyChar();
+            }
+        }
+        return accText;
     }
 }
