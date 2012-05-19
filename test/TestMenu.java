@@ -1,11 +1,9 @@
+import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 
 public class TestMenu extends JMenuBar {
@@ -28,6 +26,7 @@ public class TestMenu extends JMenuBar {
 		fileMenu.add(fileSubmenu);
 		fileMenu.addSeparator();
 		JMenuItem quitItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+		quitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
 		quitItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
