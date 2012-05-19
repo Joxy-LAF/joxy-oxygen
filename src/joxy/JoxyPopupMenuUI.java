@@ -68,6 +68,5 @@ public class JoxyPopupMenuUI extends BasicPopupMenuUI {
     	g2.setColor(Color.WHITE);
 		g2.setStroke(new BasicStroke(0.25f));
 		g2.draw(new RoundRectangle2D.Float(6, 4, c.getWidth() - 13, c.getHeight() - 13, ARC, ARC));
-
     }
 }

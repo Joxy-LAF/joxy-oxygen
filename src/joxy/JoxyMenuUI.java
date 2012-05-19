@@ -7,20 +7,30 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicMenuUI;
 import javax.swing.text.View;
 
+import joxy.painter.MenuItemBackgroundPainter;
 import joxy.utils.JoxyGraphics;
 
+/**
+ * Joxy's UI delegate for the JMenu.
+ * 
+ * <p>JMenus support animation, see {@link JoxyButtonUI} for more
+ * explanation on this. In JMenus we have a MenuListener that controls the
+ * animation for the "selected" state.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyMenuUI extends BasicMenuUI {
 
 	/** The width and height of the arcs that form up
@@ -30,18 +40,120 @@ public class JoxyMenuUI extends BasicMenuUI {
     private Rectangle paintIconR = new Rectangle();
 	/** The Rectangle to paint the text in. */
     private Rectangle paintTextR = new Rectangle();
+
+	/** Amount of hover and focus, from 0 to 255 */
+	private int hoverAmount = 0;
+	
+	/** Timers for the animation */
+	private Timer hoverTimer;
+	
+	/** Listeners for the animation */
+	private MouseListener hoverListener;
+	private MenuListener menuOpenListener;
+	
+	private boolean hovered = false;
+	private boolean menuOpen = false;
     
 	public static ComponentUI createUI(JComponent c) {
 		JoxyMenuUI menuUI = new JoxyMenuUI();
 		return menuUI;
 	}
 	
+
 	@Override
-	public void installUI(JComponent c) {
-		super.installUI(c);
-		c.setOpaque(false);
-		((JMenu) c).setRolloverEnabled(true);
-		c.setFont(UIManager.getFont("Button.font"));
+	protected void installDefaults() {
+		super.installDefaults();
+
+		menuItem.setOpaque(false);
+		menuItem.setRolloverEnabled(true);
+		menuItem.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		menuItem.setFont(UIManager.getFont("Button.font"));
+	}
+	
+	@Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		hoverListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				hovered = true;
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hovered = false;
+				hoverTimer.start();
+			}
+		};
+		menuItem.addMouseListener(hoverListener);
+		
+		menuOpenListener = new MenuListener() {
+			
+			@Override
+			public void menuSelected(MenuEvent e) {
+				menuOpen = true;
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				menuOpen = false;
+				hoverTimer.start();
+			}
+			
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				menuOpen = false;
+				hoverTimer.start();
+			}
+		};
+		
+		((JMenu) menuItem).addMenuListener(menuOpenListener);
+		
+		createTimers();
+	}
+	
+	@Override
+	protected void uninstallListeners() {
+		super.uninstallListeners();
+		
+		menuItem.removeMouseListener(hoverListener);
+		((JMenu) menuItem).removeMenuListener(menuOpenListener);
+	}
+	
+	private void createTimers() {
+		hoverTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (hovered || menuOpen) {
+					hoverAmount += 40;
+				} else {
+					hoverAmount -= 40;
+				}
+				if (hoverAmount > 150) {
+					hoverAmount = 150;
+					hoverTimer.stop();
+				}
+				if (hoverAmount < 0) {
+					hoverAmount = 0;
+					hoverTimer.stop();
+				}
+				menuItem.repaint();
+			}
+		});
 	}
 	
 	@Override
@@ -56,19 +168,9 @@ public class JoxyMenuUI extends BasicMenuUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		// If mouse is over the component, fill it blue
-		if (m.getModel().isRollover() || m.getModel().isSelected()) { // [ws] en hier is het weer selected!
-			// Rounded rectangle with dark blue border
-			Color focus = UIManager.getColor("Button.focus"); // [ws] TODO moet dit naar de initialisatie?
-			g2.setColor(focus.darker()); // TODO dit zal met ColorSchemes moeten, tijd om naar de originele code te kijken
-			g2.fill(new RoundRectangle2D.Double(2, 1, c.getWidth() - 5, c.getHeight() - 5, ARC, ARC));
-			// Rounded rectangle with very light blue border
-			g2.setColor(focus.brighter());
-			g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 5, c.getHeight() - 5, ARC, ARC));
-			// Rounded rectangle with light blue border
-			g2.setColor(focus);
-			g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 5, c.getHeight() - 5, ARC, ARC));
-		}
+
+		// draw the hover
+		MenuItemBackgroundPainter.paint(g2, 2, 1, m.getWidth() - 4, m.getHeight() - 3, hoverAmount);
 		
 		// TODO Draw disabled buttons differently
 		if (!m.getModel().isEnabled()) {

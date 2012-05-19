@@ -79,7 +79,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 	private FocusListener focusListener;
 	
 	public static ComponentUI createUI(JComponent c) {
-		c.setOpaque(false);
 		((AbstractButton) c).setRolloverEnabled(true);
 		JoxyButtonUI ui = new JoxyButtonUI();
 		return ui;
@@ -89,6 +88,8 @@ public class JoxyButtonUI extends BasicButtonUI {
 	protected void installDefaults(AbstractButton b) {
 		super.installDefaults(b);
 
+		b.setOpaque(false);
+		b.setRolloverEnabled(true);
 		b.setBorder(BorderFactory.createEmptyBorder());
 		b.setFont(UIManager.getFont("Button.font"));
 	}
