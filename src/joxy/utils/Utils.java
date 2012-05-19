@@ -172,6 +172,14 @@ public class Utils {
 				// Tool tips
 				"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
 				"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
+				
+				// Tree
+				"Tree.background", stringToColorUI("255,255,255"),
+				"Tree.alternateRowColor", stringToColorUI("240,240,240"),
+				"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Tree.gridColor", stringToColorUI("128,128,128"),
+				"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			};
 		} else { // ...else, we use a default color scheme
 			// TODO: Create a default colormap here [tca 18-nov-2011] if we are going to support non-KDE platforms [wso 18-nov-2011]
@@ -235,6 +243,9 @@ public class Utils {
 				"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 				// ToolTip settings
 				"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+				// Tree settings
+				"Tree.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+				"Tree.paintLines", true,
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
