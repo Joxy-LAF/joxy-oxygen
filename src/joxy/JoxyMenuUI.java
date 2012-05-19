@@ -213,6 +213,7 @@ public class JoxyMenuUI extends BasicMenuUI {
 			}
 			
 			// draw arrow
+			g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 			g2.setColor(Color.BLACK);
 			g2.setStroke(new BasicStroke(1.25f));
 			
