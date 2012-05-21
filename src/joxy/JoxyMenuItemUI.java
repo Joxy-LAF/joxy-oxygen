@@ -86,7 +86,6 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		if (accTextWidth > 0) {
 			accTextWidth += 40; // extra space between accelerator and text
 		}
-		Output.debug(accTextWidth);
 		// For the width, we take the maximum of the width as defined by the super
 		// and the width of the text plus the icon space plus some little space between text and accelerator
 		int minW = Math.max((super.getPreferredSize(c) != null ? super.getPreferredSize(c).width : 0),
