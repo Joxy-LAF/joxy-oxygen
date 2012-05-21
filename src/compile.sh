@@ -3,6 +3,8 @@
 # Scriptname
 NM=`basename $0`
 
+OUTPUT="libjoxy.so"
+
 # Read params
 VERBOSE=0
 G_VERBOSE=""
@@ -89,7 +91,7 @@ JAVA_LB_PATH=`$CMD | awk -F: -v ORS="$LIST_SEP" '{for (i = 1; i <= NF; i++) prin
 # START OF COMPILE PIECE
 echo "$NM: [II] Now compiling..."
 
-CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -o libnativeTextRenderer.so joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h -lQtGui -lQtCore"
+CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -o "${OUTPUT}" joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h -lQtGui -lQtCore"
 if [ $VERBOSE -eq 1 ]
 then
   echo "$NM: [II] Running '$CMD'..."
@@ -98,7 +100,7 @@ $CMD
 
 if [ $? -eq 0 ]
 then
-  echo "$NM: [II] Done. File 'libnativeTextRenderer.so' created."
+  echo "$NM: [II] Done. File '${OUTPUT}' created."
   echo -e "$NM: [II] You should move this file to the Java library path. \n  Currently, the following directories are present in your Java library path:$LIST_SEP$JAVA_LB_PATH\n  You should pick one of these folders to move the shared library to."
 else
   echo "$NM: [EE] Compiling not succesfull. Please check g++ output or Joxy wiki."

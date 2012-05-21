@@ -15,6 +15,7 @@ import javax.swing.text.View;
 
 import joxy.painter.MenuItemBackgroundPainter;
 import joxy.utils.JoxyGraphics;
+import joxy.utils.Output;
 
 /**
  * Joxy's UI delegate for the JMenu.
@@ -53,7 +54,6 @@ public class JoxyMenuUI extends BasicMenuUI {
 		return menuUI;
 	}
 	
-
 	@Override
 	protected void installDefaults() {
 		super.installDefaults();

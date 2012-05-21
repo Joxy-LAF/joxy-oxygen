@@ -13,6 +13,7 @@ import javax.swing.text.View;
 
 import joxy.painter.MenuItemBackgroundPainter;
 import joxy.utils.JoxyGraphics;
+import joxy.utils.Output;
 
 /**
  * Joxy's UI delegate for the JMenuItem.
@@ -63,6 +64,35 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
      * @param i Type of the menu item
      */
 	public JoxyMenuItemUI(int i) {
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * <p>This method is overridden, so that the width will actually
+	 * be big enough for both the MenuItem text and the accelerator
+	 * to fit in non-toplevel menus.</p>
+	 */
+	@Override
+	public Dimension getPreferredSize(JComponent c) {
+		// We will use the offset of the text as well, this may have not been set
+		if (textRect == null) {
+			layout();
+		}
+		JMenuItem mi = (JMenuItem) c;
+		FontMetrics f = menuItem.getFontMetrics(menuItem.getFont());
+		int textWidth = f.stringWidth(mi.getText());
+		int accTextWidth = f.stringWidth(getAccText("+"));
+		if (accTextWidth > 0) {
+			accTextWidth += 40; // extra space between accelerator and text
+		}
+		Output.debug(accTextWidth);
+		// For the width, we take the maximum of the width as defined by the super
+		// and the width of the text plus the icon space plus some little space between text and accelerator
+		int minW = Math.max((super.getPreferredSize(c) != null ? super.getPreferredSize(c).width : 0),
+							textWidth + accTextWidth + textRect.x);
+		int minH = (super.getPreferredSize(c) != null ? super.getPreferredSize(c).height : f.getHeight());
+		return (super.getPreferredSize(c) != null ? new Dimension(minW, minH) : null);
 	}
 	
 	@Override

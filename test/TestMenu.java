@@ -49,6 +49,7 @@ public class TestMenu extends JMenuBar {
 		JMenu helpMenu = new JMenu("Help");
 		helpMenu.setMnemonic(KeyEvent.VK_H);
 		JMenuItem item = new JMenuItem("About KDE", KeyEvent.VK_A);
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
 		item.addActionListener(new ActionListener() {
 			
 			@Override
