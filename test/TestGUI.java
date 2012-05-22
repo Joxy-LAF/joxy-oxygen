@@ -228,6 +228,8 @@ public class TestGUI {
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.1"));
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.2"));
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.3"));
+		
+		t.addTab("A JSplitPane", new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JLabel("left"), new JLabel("right")));
 	}
 	
 	/**
