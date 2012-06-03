@@ -1,9 +1,13 @@
 import java.awt.*;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -218,7 +222,7 @@ public class TestGUI {
 		//JOptionPane.showConfirmDialog(frame, "This is a question.", "Question", JOptionPane.YES_NO_CANCEL_OPTION);
 		
 		// The generic Java method to send a notification
-/*		TrayIcon trayIcon = null;
+		TrayIcon trayIcon = null;
 		try {
 			trayIcon = new TrayIcon(ImageIO.read(new File("/usr/share/icons/oxygen/22x22/actions/document-new.png")));
 		} catch (IOException e1) {
@@ -231,7 +235,7 @@ public class TestGUI {
 		}
 		trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
 		trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
-		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);*/
+		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
 		
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode("Java LAFs");
 		JTree tree = new JTree(node);

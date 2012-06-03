@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -326,13 +327,21 @@ public class Utils {
 			defaultsHashMap.put("[InactiveShadow]Size", "25");
 			defaultsHashMap.put("[InactiveShadow]UseOuterColor", "false");
 			defaultsHashMap.put("[InactiveShadow]VerticalOffset", "0.2");
+			defaultsHashMap.put("[Windeco]FrameBorder", "Normal");
+			defaultsHashMap.put("[Windeco]BlendColor", "Radial Gradient"); // transition, can be "Solid Color"
+			defaultsHashMap.put("[Windeco]ButtonSize", "normal");
+			defaultsHashMap.put("[Windeco]DrawSeparator", "false");	// border between windowdecoration and window content
+			defaultsHashMap.put("[Windeco]DrawTitleOutline", "false"); // active windowdecoration will have a different color
+			defaultsHashMap.put("[Windeco]SizeGripMode", "normal");
+			defaultsHashMap.put("[Windeco]TabsEnabled", "true");
+			defaultsHashMap.put("[Windeco]TitleAlignment", "center");
+			defaultsHashMap.put("[Windeco]UseAnimations", "true");
+			defaultsHashMap.put("[Windeco]UseOxygenShadows", "true");
 		}
 		String result = defaultsHashMap.get(key);
 		if (result == null || result.length() == 0) {
 			String string = (result == null) ? "there is no default value" : "the default value is empty";
 			Output.warning("No value found for key \"" + key + "\", but " + string + ".");
-		} else {
-			Output.debug("No value found for key \"" + key + "\", set to default: \"" + result + "\".");
 		}
 		return result;
 	}
@@ -410,14 +419,14 @@ public class Utils {
 		if (kdeglobals3.exists())  kdeglobals = kdeglobals3;
 		// Read content into string and split on newlines
 		Pattern p = Pattern.compile("\\n+");
-		String[] kdeglobalsLines = p.split(readFileAsString(kdeglobals));
+		String[] kdeglobalsLines = (kdeglobals == null ? new String[0] : p.split(readFileAsString(kdeglobals)));
 		// Check where oxygenrc config file is
 		File oxygenrc = null;
 		if (oxygenrc1.exists())  oxygenrc = oxygenrc1;
 		if (oxygenrc2.exists())  oxygenrc = oxygenrc2;
 		if (oxygenrc3.exists())  oxygenrc = oxygenrc3;
 		// Read content into string and split on newlines
-		String[] oxygenrcLines = p.split(readFileAsString(oxygenrc));
+		String[] oxygenrcLines = (oxygenrc == null ? new String[0] : p.split(readFileAsString(oxygenrc)));
 		// Save the concatenation of the two files globally
 		kdeConfigLines = concatArrays(kdeglobalsLines, oxygenrcLines);
 	}
@@ -471,15 +480,37 @@ public class Utils {
 	 * @return The created ImageIcon.
 	 */
 	public static ImageIcon getOxygenIcon(String name, int size) {
-        File file = new File("/usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
+		String oxygenFolderName = "/usr/share/icons/oxygen/"+ size + "x" + size + "/";
+        File file = new File(oxygenFolderName + name + ".png");
 
         if (file.exists()) {
-            return new ImageIcon("/usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
+            return new ImageIcon(file.getPath());
         }
         
+        // File not found? Try other folders
+        String folderName = name.split("/")[0];
+        String realFileName = name.split("/")[name.split("/").length - 1];
+        File oxygenFolder = new File(oxygenFolderName);
+        ArrayList<String> looked = new ArrayList<String>();
+        if (oxygenFolder.exists() && oxygenFolder.isDirectory()) {
+        	File[] subFolders = oxygenFolder.listFiles();
+        	for (File subFolder : subFolders) {
+        		if (subFolder.getName().equals(folderName))  continue;
+        		File possibleFile = new File(subFolder.getAbsolutePath() + "/" + realFileName + ".png");
+        		if (possibleFile.exists()) {
+        			return new ImageIcon(possibleFile.getPath());
+        		}
+        		looked.add(possibleFile.getPath());
+        	}
+        }
+        
+        // Still not found...
 		Output.warning("Could not find " + name + " icon");
 		Output.warning("Searched on places:");
 		Output.warning("  /usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
+		for (String lookedAt : looked) {
+			Output.warning("  " + lookedAt);
+		}
 		return null;
 	}
 
