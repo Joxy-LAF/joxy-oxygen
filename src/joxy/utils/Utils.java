@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import javax.crypto.spec.PSource;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.ColorUIResource;
@@ -418,14 +417,14 @@ public class Utils {
 		if (kdeglobals3.exists())  kdeglobals = kdeglobals3;
 		// Read content into string and split on newlines
 		Pattern p = Pattern.compile("\\n+");
-		String[] kdeglobalsLines = p.split(readFileAsString(kdeglobals));
+		String[] kdeglobalsLines = (kdeglobals == null ? new String[0] : p.split(readFileAsString(kdeglobals)));
 		// Check where oxygenrc config file is
 		File oxygenrc = null;
 		if (oxygenrc1.exists())  oxygenrc = oxygenrc1;
 		if (oxygenrc2.exists())  oxygenrc = oxygenrc2;
 		if (oxygenrc3.exists())  oxygenrc = oxygenrc3;
 		// Read content into string and split on newlines
-		String[] oxygenrcLines = p.split(readFileAsString(oxygenrc));
+		String[] oxygenrcLines = (oxygenrc == null ? new String[0] : p.split(readFileAsString(oxygenrc)));
 		// Save the concatenation of the two files globally
 		kdeConfigLines = concatArrays(kdeglobalsLines, oxygenrcLines);
 	}
