@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -81,6 +83,20 @@ public class TestGUI {
 			}
 		});
 		tab1.add(j);
+
+		JButton jawt = new JButton("Open an AWT file chooser");
+		jawt.setForeground(Color.BLUE);
+		jawt.setToolTipText("A tooltip");
+		jawt.setFont(new Font("Times new Roman", Font.PLAIN, 14));
+		jawt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				java.awt.FileDialog f = new FileDialog(frame);
+				f.show();
+			}
+		});
+		tab1.add(jawt);
 		JButton j2 = new JButton("Open a color chooser");
 		j2.setToolTipText("<html>Another tooltip, this time with <big>HTML</big>");
 		j2.addActionListener(new ActionListener() {
@@ -103,6 +119,8 @@ public class TestGUI {
 		box.setEditable(true);
 		tab1.add(box);
 		tab1.add(new JSpinner());
+		tab1.add(new JFormattedTextField("A formatted text field"));
+		tab1.add(new JPasswordField(10));
 		t.addTab("Selection of components", tab1);
 		
 		JPanel tab2 = new JPanel();
@@ -238,7 +256,7 @@ public class TestGUI {
 	 * @param frame The JFrame to set the transparency on.
 	 * @param opacity The opacity, from 0 to 1.
 	 */
-/*  protected static void setWindowOpacity(Frame frame, double opacity) {
+    protected static void setWindowOpacity(Frame frame, double opacity) {
 		try {
 			// long windowId = peer.getWindow();
 			Field peerField = Component.class.getDeclaredField("peer");
@@ -253,5 +271,5 @@ public class TestGUI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	} */
+	} 
 }
