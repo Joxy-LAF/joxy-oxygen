@@ -150,6 +150,38 @@ public class JoxyMenuUI extends BasicMenuUI {
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * <p>This method is overridden, so that the width will actually
+	 * be big enough for both the MenuItem text and the accelerator
+	 * to fit in non-toplevel menus.</p>
+	 * 
+	 * <p>Only in non-toplevel menus, we take accelerators into account.</p>
+	 * 
+	 * @see JoxyMenuItemUI
+	 */
+	@Override
+	public Dimension getPreferredSize(JComponent c) {
+		// We will use the offset of the text as well, this may have not been set
+		if (textRect == null) {
+			layout();
+		}
+		JMenuItem mi = (JMenuItem) c;
+		FontMetrics f = menuItem.getFontMetrics(menuItem.getFont());
+		int textWidth = f.stringWidth(mi.getText());
+		// For the width, we take the maximum of the width as defined by the super
+		// and the width of the text plus the icon space
+		// Note that a toplevel menu will not have an icon and therefore, we do not take into account space
+		// for it.
+		// Also note that a JMenu cannot have an accelerator, it will throw a RuntimeException if you try
+		// to add one! Hence, we do not have to take an accelerator into account...
+		int minW = Math.max((super.getPreferredSize(c) != null ? super.getPreferredSize(c).width : 0),
+							textWidth + (isTopLevelMenu() ? 0 : textRect.x));
+		int minH = (super.getPreferredSize(c) != null ? super.getPreferredSize(c).height : f.getHeight());
+		return (super.getPreferredSize(c) != null ? new Dimension(minW, minH) : null);
+	}
+	
 	@Override
 	public void paint(Graphics g, JComponent c) {
 		JMenuItem mi = (JMenuItem) c;
