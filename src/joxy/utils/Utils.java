@@ -246,6 +246,8 @@ public class Utils {
 				// Tree settings
 				"Tree.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 				"Tree.paintLines", true,
+				// Password field settings
+				"PasswordField.echoChar", "o",
 			};
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
