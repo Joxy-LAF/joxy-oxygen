@@ -72,9 +72,6 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 		// and initComponentDefaults() in that order.
 		UIDefaults defs = super.getDefaults();
 		
-		// for testing purposes
-		Output.debug(defs);
-		
 		return defs;
 	}
 	
