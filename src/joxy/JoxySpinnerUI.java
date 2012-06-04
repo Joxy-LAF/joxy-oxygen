@@ -1,13 +1,15 @@
 package joxy;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.JComponent;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSpinnerUI;
+
+import joxy.painter.InputFieldPainter;
 
 /**
  * Class overriding the default Spinner (BasicSpinnerUI) to provide a good
@@ -64,6 +66,19 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 	}
 	
 	@Override
+	public void paint(Graphics g, JComponent c) {
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		InputFieldPainter.paint(g2, 2, 2, spinner.getWidth() - 4, spinner.getHeight() - 4);
+		
+		super.paint(g, c);
+	}
+	
+	@Override
 	protected Component createNextButton() {
 		JoxyArrowButton b = new JoxyArrowButton(SwingConstants.NORTH);
 		installNextButtonListeners(b);
@@ -75,5 +90,16 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 		JoxyArrowButton b = new JoxyArrowButton(SwingConstants.SOUTH);
 		installPreviousButtonListeners(b);
 		return b;
+	}
+	
+	@Override
+	protected JComponent createEditor() {
+		JComponent e = super.createEditor();
+		
+		if (e instanceof DefaultEditor) {
+			((DefaultEditor) e).getTextField().putClientProperty("joxy.isEditor", true);
+		}
+		
+		return e;
 	}
 }

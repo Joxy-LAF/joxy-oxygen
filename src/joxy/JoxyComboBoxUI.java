@@ -311,4 +311,15 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
         // ugly! these coordinates should not be fixed, compare super
         currentValuePane.paintComponent(g,c,comboBox, 5, 0, comboBox.getWidth() - 20, comboBox.getHeight());
 	}
+	
+	@Override
+	protected ComboBoxEditor createEditor() {
+		ComboBoxEditor e = super.createEditor();
+		
+		if (e.getEditorComponent() instanceof JTextField) {
+			((JTextField) e.getEditorComponent()).putClientProperty("joxy.isEditor", true);
+		}
+		
+		return e;
+	}
 }
