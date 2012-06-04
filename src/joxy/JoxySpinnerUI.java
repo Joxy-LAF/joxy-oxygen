@@ -30,6 +30,14 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 	}
 	
 	@Override
+	protected void installDefaults() {
+		super.installDefaults();
+		
+		spinner.setBorder(null);
+		spinner.setOpaque(false);
+	}
+	
+	@Override
 	protected void installListeners() {
 		super.installListeners();
 		
