@@ -118,6 +118,10 @@ public class Utils {
 	 *         a valid array of key/value pairs.
 	 */
 	public static Object[] getKDEColorMap() {
+		
+		// [ws] Debug
+		Output.print("Entering getKDEColorMap()");
+		
 		// By default, we return an empty map (this value will never
 		// be returned, but we should start with something)
 		Object[] colorMap = new Object[0];
@@ -186,6 +190,10 @@ public class Utils {
 			// TODO: Create a default colormap here [tca 18-nov-2011] if we are going to support non-KDE platforms [wso 18-nov-2011]
 			//       Note: we can use defaultsHashMap?! [tca 18-nov-2011]
 		}
+		
+		// [ws] Debug
+		Output.print("Exiting getKDEColorMap()");
+		
 		return colorMap;
 	}
 
@@ -202,6 +210,10 @@ public class Utils {
 	 *         a valid array of key/value pairs.
 	 */
 	public static Object[] getKDEPropertiesMap() {
+		
+		// [ws] Debug
+		Output.print("Entering getKDEPropertiesMap()");
+		
 		// By default, we return an empty map (this value will never
 		// be returned, but we should start with something)
 		Object[] propMap = new Object[0];
@@ -253,6 +265,10 @@ public class Utils {
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
 		}
+		
+		// [ws] Debug
+		Output.print("Exiting getKDEPropertiesMap()");
+		
 		return propMap;
 	}
 	
@@ -262,6 +278,10 @@ public class Utils {
 	 * @return Array of key/value pairs with icons.
 	 */
 	public static Object[] getKDEIconsMap() {
+		
+		// [ws] Debug
+		Output.print("Entering getKDEIconsMap()");
+		
 		// By default, we return an empty map (this value will never
 		// be returned, but we should start with something)
 		Object[] propMap = new Object[0];
@@ -292,6 +312,10 @@ public class Utils {
 		} else { // ...else, we use default properties
 			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
 		}
+		
+		// [ws] Debug
+		Output.print("Exiting getKDEIconsMap()");
+		
 		return propMap;
 	}
 	
