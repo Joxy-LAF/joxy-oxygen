@@ -1,5 +1,6 @@
 package joxy.utils;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.TrayIcon.MessageType;
 import java.io.BufferedInputStream;
@@ -37,9 +38,9 @@ public class Utils {
 	private static File kdeglobals2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
 	private static File kdeglobals3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
 	// Possible locations of the oxygenrc config file
-	private static File oxygenrc1 = new File(homeDir + fileSep + ".kde"     + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc1 = new File(homeDir + fileSep + ".kblade"     + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc2 = new File(homeDir + fileSep + ".kblademod4" + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc3 = new File(homeDir + fileSep + ".kblade4"    + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
 	/** Contents of the kdeglobals config file, initially not set */
 	private static String[] kdeConfigLines = null;
 	/** HashMap with default values */
@@ -346,12 +347,21 @@ public class Utils {
 			defaultsHashMap.put("[Colors:Button]DecorationFocus", "58,167,221");
 			defaultsHashMap.put("[Colors:Button]ForegroundInactive", "137,136,135");
 			defaultsHashMap.put("[Colors:Button]ForegroundNormal", "34,31,30");
+			defaultsHashMap.put("[Colors:Selection]BackgroundNormal", "28,120,190");
+			defaultsHashMap.put("[Colors:Selection]ForegroundNormal", "251,251,251");
+			defaultsHashMap.put("[Colors:Tooltip]BackgroundNormal", "29,29,29");
+			defaultsHashMap.put("[Colors:Tooltip]ForegroundNormal", "251,251,251");
+			defaultsHashMap.put("[Colors:Window]BackgroundNormal", "201,201,202");
 			defaultsHashMap.put("[General]font", "Ubuntu,9");
 			defaultsHashMap.put("[InactiveShadow]InnerColor", "0,0,0");
 			defaultsHashMap.put("[InactiveShadow]OuterColor", "0,0,0");
 			defaultsHashMap.put("[InactiveShadow]Size", "25");
 			defaultsHashMap.put("[InactiveShadow]UseOuterColor", "false");
 			defaultsHashMap.put("[InactiveShadow]VerticalOffset", "0.2");
+			defaultsHashMap.put("[KDE]contrast", "3");
+			defaultsHashMap.put("[Locale]Country", "us");
+			defaultsHashMap.put("[Locale]DateFormat", "%d %B %Y");
+			defaultsHashMap.put("[Locale]Language", "en");
 			defaultsHashMap.put("[Windeco]FrameBorder", "Normal");
 			defaultsHashMap.put("[Windeco]BlendColor", "Radial Gradient"); // transition, can be "Solid Color"
 			defaultsHashMap.put("[Windeco]ButtonSize", "normal");
@@ -463,6 +473,12 @@ public class Utils {
 	 * @return The ColorUIResource generated.
 	 */
 	private static ColorUIResource stringToColorUI(String str) {
+		
+		if (str == null) {
+			Output.warning("stringToColorUI called with null argument");
+			return new ColorUIResource(0, 0, 0);
+		}
+		
 		str = str.toLowerCase();
 		if (str.matches("\\d{1,3},\\d{1,3},\\d{1,3}")) { // "KDE-format"
 			int r = Integer.valueOf(str.split(",")[0]);
@@ -490,6 +506,11 @@ public class Utils {
 	private static FontUIResource stringToFontUI(String str) {
 		//assert str.matches("\\[^,]*,\\d{1,10},*") :
 		//	"stringToFontUI: the input string, \"" + str + "\", does not match the pattern name,size,other_stuff.";
+		
+		if (str == null) {
+			Output.warning("stringToFontUI called with null argument");
+			return new FontUIResource(new Font("DejaVu Sans", 14, Font.PLAIN));
+		}
 		
 		String name = str.split(",")[0];
 		int style = Font.PLAIN;
