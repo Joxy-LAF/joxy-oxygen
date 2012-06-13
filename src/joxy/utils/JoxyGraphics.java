@@ -13,7 +13,7 @@ public class JoxyGraphics {
 	/**
 	 * Whether text rendering should be done by a call to Qt (instead of doing it in Java).
 	 */
-	public static final boolean NATIVE_TEXT_RENDERING = true;
+	public static final boolean NATIVE_TEXT_RENDERING = false;
 	
 	/**
 	 * Whether the native text rendering is actually loaded.
