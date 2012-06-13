@@ -342,9 +342,10 @@ public class Utils {
 			defaultsHashMap.put("[ActiveShadow]UseOuterColor", "true");
 			defaultsHashMap.put("[ActiveShadow]VerticalOffset", "0.1");
 			defaultsHashMap.put("[Colors:Button]BackgroundNormal", "223,220,217");
-			defaultsHashMap.put("[Colors:Button]DecorationFocus", "58,167,221");
-			defaultsHashMap.put("[Colors:Button]ForegroundNormal", "34,31,30");
 			defaultsHashMap.put("[Colors:Button]DecorationHover", "110,214,255");
+			defaultsHashMap.put("[Colors:Button]DecorationFocus", "58,167,221");
+			defaultsHashMap.put("[Colors:Button]ForegroundInactive", "137,136,135");
+			defaultsHashMap.put("[Colors:Button]ForegroundNormal", "34,31,30");
 			defaultsHashMap.put("[General]font", "Ubuntu,9");
 			defaultsHashMap.put("[InactiveShadow]InnerColor", "0,0,0");
 			defaultsHashMap.put("[InactiveShadow]OuterColor", "0,0,0");
