@@ -8,6 +8,8 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.UIManager;
 
+import joxy.utils.Output;
+
 /**
  * Painter for the hover background of a menu item.
  */
@@ -37,8 +39,12 @@ public class MenuItemBackgroundPainter {
 		g2.fill(new RoundRectangle2D.Double(x + 1, y + 1, width - 2, height - 2, ARC, ARC));
 		
 		// TODO no idea how these colors are originally implemented, but this works pretty well
-		Color focusTop = new Color(focus.getRed() - 20, focus.getGreen() - 20, focus.getBlue() - 20, opacity);
-		Color focusBottom = new Color(focus.getRed() + 20, focus.getGreen() + 20, focus.getBlue() + 20, opacity);
+		Color focusTop = new Color(Math.max(focus.getRed() - 20, 0),
+								   Math.max(focus.getGreen() - 20, 0),
+								   Math.max(focus.getBlue() - 20, 0), opacity);
+		Color focusBottom = new Color(Math.min(focus.getRed() + 20, 255),
+									  Math.min(focus.getGreen() + 20, 255),
+									  Math.min(focus.getBlue() + 20, 255), opacity);
 		
 		GradientPaint borderPaint = new GradientPaint(0, y, focusTop, 0, y + height, focusBottom);
 		g2.setPaint(borderPaint);

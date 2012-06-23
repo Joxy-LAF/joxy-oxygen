@@ -1,6 +1,5 @@
 package joxy.utils;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.TrayIcon.MessageType;
 import java.io.BufferedInputStream;
@@ -54,6 +53,7 @@ public class Utils {
 	 * This method is copied from <a href="http://stackoverflow.com/questions/80476/how-to-concatenate-two-arrays-in-java">
 	 * StackOverflow</a>, answer of <i>Joachim Sauer</i> and then slightly adjusted.
 	 * 
+	 * @param  <T>    The type of both arrays.
 	 * @param  first  The first array.
 	 * @param  second The second array.
 	 * @return An array consisting of the concatenation of first and second.
@@ -74,11 +74,10 @@ public class Utils {
 	
 	/**
 	 * Returns true if the window manager used on the machine the program
-	 * is running on is KDE. This is determined by checking if some configuration
-	 * files exist. When {@code !Utils.isLinux()}, this method always returns false
-	 * and does not even try to look for configuration files.
-	 * 
-	 * TODO testing and updating Javadoc if it works
+	 * is running on is KDE. This is determined by checking if the environment
+	 * variable {@code KDE_FULL_SESSION} is set. When {@code !Utils.isLinux()},
+	 * this method always returns false and does not even try to do another
+	 * check.
 	 * 
 	 * @return True if the window manager in use is KDE, false otherwise.
 	 */
@@ -86,13 +85,6 @@ public class Utils {
 		if (!Utils.isLinux()) {
 			return false;
 		}
-	/*	// We are going to check if some config files exist. If so, 
-		// this machine probably runs KDE.
-		if (kdeglobals1.exists() || kdeglobals2.exists() || kdeglobals3.exists() ||
-				oxygenrc1.exists() || oxygenrc2.exists() || oxygenrc3.exists()) {
-			return true;
-		return false;
-		}*/
 		
 		// Look at environment variable KDE_FULL_SESSION
 		return System.getenv("KDE_FULL_SESSION") != null;
@@ -119,82 +111,68 @@ public class Utils {
 	 *         a valid array of key/value pairs.
 	 */
 	public static Object[] getKDEColorMap() {
-		
-		// [ws] Debug
-		Output.print("Entering getKDEColorMap()");
-		
 		// By default, we return an empty map (this value will never
 		// be returned, but we should start with something)
 		Object[] colorMap = new Object[0];
-		// If on KDE, we detect the color scheme of the user...
-		if (Utils.isKDE()) {
-			// If the contents of the config file are not read already,
-			// do it now
-			if (kdeConfigLines == null) {
-				readKDEConfigFiles();
-			}
-			// Now we create a colorMap from this
-			colorMap = new Object[] {
-				// Button colors
-				"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
-				"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
-				"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-				"Button.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
-				"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
-				
-				// Window shadow
-				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
-				"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
-				"Shadow.activeSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
-				"Shadow.activeUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
-				"Shadow.activeVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
-				"Shadow.inactiveInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
-				"Shadow.inactiveOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
-				"Shadow.inactiveSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
-				"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
-				"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
-				// Selection color
-				"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-				"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-				// Window colors
-				"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
-
-				// Table
-				"Table.background", stringToColorUI("255,255,255"),
-				"Table.alternateRowColor", stringToColorUI("240,240,240"),
-				"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-				"Table.gridColor", stringToColorUI("128,128,128"),
-				"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-				"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-				
-				// List
-				"List.background", stringToColorUI("255,255,255"),
-				"List.alternateRowColor", stringToColorUI("240,240,240"),
-				"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-				"List.gridColor", stringToColorUI("128,128,128"),
-				"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-				"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-				
-				// Tool tips
-				"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
-				"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
-				
-				// Tree
-				"Tree.background", stringToColorUI("255,255,255"),
-				"Tree.alternateRowColor", stringToColorUI("240,240,240"),
-				"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-				"Tree.gridColor", stringToColorUI("128,128,128"),
-				"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-				"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			};
-		} else { // ...else, we use a default color scheme
-			// TODO: Create a default colormap here [tca 18-nov-2011] if we are going to support non-KDE platforms [wso 18-nov-2011]
-			//       Note: we can use defaultsHashMap?! [tca 18-nov-2011]
+		// If the contents of the config file are not read already,
+		// do it now
+		if (kdeConfigLines == null) {
+			readKDEConfigFiles();
 		}
-		
-		// [ws] Debug
-		Output.print("Exiting getKDEColorMap()");
-		
+		// Now we create a colorMap from this
+		colorMap = new Object[] {
+			// Button colors
+			"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
+			"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
+			"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+			"Button.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+			"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
+			
+			// Window shadow
+			"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
+			"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
+			"Shadow.activeSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
+			"Shadow.activeUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
+			"Shadow.activeVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
+			"Shadow.inactiveInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
+			"Shadow.inactiveOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
+			"Shadow.inactiveSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
+			"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
+			"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
+			// Selection color
+			"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			// Window colors
+			"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
+
+			// Table
+			"Table.background", stringToColorUI("255,255,255"),
+			"Table.alternateRowColor", stringToColorUI("240,240,240"),
+			"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+			"Table.gridColor", stringToColorUI("128,128,128"),
+			"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			
+			// List
+			"List.background", stringToColorUI("255,255,255"),
+			"List.alternateRowColor", stringToColorUI("240,240,240"),
+			"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+			"List.gridColor", stringToColorUI("128,128,128"),
+			"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			
+			// Tool tips
+			"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
+			"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
+			
+			// Tree
+			"Tree.background", stringToColorUI("255,255,255"),
+			"Tree.alternateRowColor", stringToColorUI("240,240,240"),
+			"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+			"Tree.gridColor", stringToColorUI("128,128,128"),
+			"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+		};	
 		return colorMap;
 	}
 
@@ -210,66 +188,54 @@ public class Utils {
 	 *         {@code UIDefaults.putDefaults()}. This method will always return
 	 *         a valid array of key/value pairs.
 	 */
-	public static Object[] getKDEPropertiesMap() {
-		
-		// [ws] Debug
-		Output.print("Entering getKDEPropertiesMap()");
-		
+	@SuppressWarnings("boxing")
+	public static Object[] getKDEPropertiesMap() {		
 		// By default, we return an empty map (this value will never
 		// be returned, but we should start with something)
 		Object[] propMap = new Object[0];
-		// If on KDE, we detect the properties of the user...
-		if (Utils.isKDE()) {
-			// If the contents of the config file are not read already,
-			// do it now
-			if (kdeConfigLines == null) {
-				readKDEConfigFiles();
-			}
-			// Now we create a propMap from this
-			propMap = new Object[] {
-				// Button settings
-				"Button.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// Editor pane settings
-				"EditorPane.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// General settings
-				"General.contrast", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[KDE]", "contrast")),
-				// Language settings
-				"Locale.country", getKDEConfigValue(kdeConfigLines, "[Locale]", "Country"),
-				"Locale.dateFormat", getKDEConfigValue(kdeConfigLines, "[Locale]", "DateFormat"),
-				"Locale.language", getKDEConfigValue(kdeConfigLines, "[Locale]", "Language"), // by ':' separated list of languages, first is preferred language
-				"OptionPane.buttonOrientation", SwingConstants.RIGHT,
-				// [ws] dit kan worden gebruikt worden met de Java-locale
-				// Window decoration settings
-				"Window.blendColor", getKDEConfigValue(kdeConfigLines, "[Windeco]", "BlendColor"),
-				"Window.buttonSize", getKDEConfigValue(kdeConfigLines, "[Windeco]", "ButtonSize"),
-				"Window.drawSeparator", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawSeparator"),
-				"Window.drawTitleOutline", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawTitleOutline"),
-				"Window.frameBorder", getKDEConfigValue(kdeConfigLines, "[Windeco]", "FrameBorder"),
-				"Window.sizeGripMode", getKDEConfigValue(kdeConfigLines, "[Windeco]", "SizeGripMode"),
-				"Window.tabsEnabled", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TabsEnabled"),
-				"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
-				"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
-				"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows"),
-				// Table settings
-				"Table.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// List settings
-				"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// ToolTip settings
-				"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				// Tree settings
-				"Tree.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-				"Tree.paintLines", true,
-				// Password field settings
-				"PasswordField.echoChar", "o",
-			};
-		} else { // ...else, we use default properties
-			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
+		// If the contents of the config file are not read already,
+		// do it now
+		if (kdeConfigLines == null) {
+			readKDEConfigFiles();
 		}
-		
-		// [ws] Debug
-		Output.print("Exiting getKDEPropertiesMap()");
-		
+		// Now we create a propMap from this
+		propMap = new Object[] {
+			// Button settings
+			"Button.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// Editor pane settings
+			"EditorPane.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// General settings
+			"General.contrast", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[KDE]", "contrast")),
+			// Language settings
+			"Locale.country", getKDEConfigValue(kdeConfigLines, "[Locale]", "Country"),
+			"Locale.dateFormat", getKDEConfigValue(kdeConfigLines, "[Locale]", "DateFormat"),
+			"Locale.language", getKDEConfigValue(kdeConfigLines, "[Locale]", "Language"), // by ':' separated list of languages, first is preferred language
+			"OptionPane.buttonOrientation", SwingConstants.RIGHT,
+			// [ws] dit kan worden gebruikt worden met de Java-locale
+			// Window decoration settings
+			"Window.blendColor", getKDEConfigValue(kdeConfigLines, "[Windeco]", "BlendColor"),
+			"Window.buttonSize", getKDEConfigValue(kdeConfigLines, "[Windeco]", "ButtonSize"),
+			"Window.drawSeparator", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawSeparator"),
+			"Window.drawTitleOutline", getKDEConfigValue(kdeConfigLines, "[Windeco]", "DrawTitleOutline"),
+			"Window.frameBorder", getKDEConfigValue(kdeConfigLines, "[Windeco]", "FrameBorder"),
+			"Window.sizeGripMode", getKDEConfigValue(kdeConfigLines, "[Windeco]", "SizeGripMode"),
+			"Window.tabsEnabled", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TabsEnabled"),
+			"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
+			"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
+			"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows"),
+			// Table settings
+			"Table.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// List settings
+			"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// ToolTip settings
+			"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// Tree settings
+			"Tree.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			"Tree.paintLines", true,
+			// Password field settings
+			"PasswordField.echoChar", "o",
+		};
 		return propMap;
 	}
 	
@@ -278,45 +244,30 @@ public class Utils {
 	 * 
 	 * @return Array of key/value pairs with icons.
 	 */
-	public static Object[] getKDEIconsMap() {
-		
-		// [ws] Debug
-		Output.print("Entering getKDEIconsMap()");
-		
+	public static Object[] getKDEIconsMap() {		
 		// By default, we return an empty map (this value will never
-		// be returned, but we should start with something)
-		Object[] propMap = new Object[0];
-		// If on KDE, we detect the properties of the user...
-		if (Utils.isKDE()) {
-			
-			propMap = new Object[] {
-			    // JFileChooser
-				"FileView.directoryIcon", getOxygenIcon("places/folder", 16),
-				"FileView.fileIcon", getOxygenIcon("mimetypes/unknown", 16),
-				"FileView.computerIcon", getOxygenIcon("devices/computer", 16),
-				"FileView.hardDriveIcon", getOxygenIcon("devices/drive-harddisk", 16),
-				"FileView.floppyDriveIcon", getOxygenIcon("devices/media-floppy", 16),
-				"FileChooser.newFolderIcon", getOxygenIcon("actions/folder-new", 22),
-				"FileChooser.upFolderIcon", getOxygenIcon("actions/go-up", 22),
-				"FileChooser.homeFolderIcon", getOxygenIcon("places/user-home", 22),
-				"FileChooser.detailsViewIcon", getOxygenIcon("actions/view-list-details", 16),
-				"FileChooser.listViewIcon", getOxygenIcon("actions/view-list-icons", 16),
-				// JOptionPane
-				"OptionPane.informationIcon", getOxygenIcon("status/dialog-information", 64),
-				"OptionPane.warningIcon", getOxygenIcon("status/dialog-warning", 64),
-				"OptionPane.errorIcon", getOxygenIcon("status/dialog-error", 64),
-				"OptionPane.yesIcon", getOxygenIcon("actions/dialog-information", 16),
-				"OptionPane.noIcon", getOxygenIcon("actions/dialog-information", 16),
-				"OptionPane.cancelIcon", getOxygenIcon("actions/dialog-cancel", 16),
-				"OptionPane.okIcon", getOxygenIcon("actions/dialog-ok", 16),
-			};
-		} else { // ...else, we use default properties
-			// TODO: Create a default property map here, see todo above [tca 18-nov-2011] if we are going to support non-KDE platforms
-		}
-		
-		// [ws] Debug
-		Output.print("Exiting getKDEIconsMap()");
-		
+		// be returned, but we should start with something)		
+		Object[] propMap = new Object[] {
+		    // JFileChooser
+			"FileView.directoryIcon", getOxygenIcon("places/folder", 16),
+			"FileView.fileIcon", getOxygenIcon("mimetypes/unknown", 16),
+			"FileView.computerIcon", getOxygenIcon("devices/computer", 16),
+			"FileView.hardDriveIcon", getOxygenIcon("devices/drive-harddisk", 16),
+			"FileView.floppyDriveIcon", getOxygenIcon("devices/media-floppy", 16),
+			"FileChooser.newFolderIcon", getOxygenIcon("actions/folder-new", 22),
+			"FileChooser.upFolderIcon", getOxygenIcon("actions/go-up", 22),
+			"FileChooser.homeFolderIcon", getOxygenIcon("places/user-home", 22),
+			"FileChooser.detailsViewIcon", getOxygenIcon("actions/view-list-details", 16),
+			"FileChooser.listViewIcon", getOxygenIcon("actions/view-list-icons", 16),
+			// JOptionPane
+			"OptionPane.informationIcon", getOxygenIcon("status/dialog-information", 64),
+			"OptionPane.warningIcon", getOxygenIcon("status/dialog-warning", 64),
+			"OptionPane.errorIcon", getOxygenIcon("status/dialog-error", 64),
+			"OptionPane.yesIcon", getOxygenIcon("actions/dialog-information", 16),
+			"OptionPane.noIcon", getOxygenIcon("actions/dialog-information", 16),
+			"OptionPane.cancelIcon", getOxygenIcon("actions/dialog-cancel", 16),
+			"OptionPane.okIcon", getOxygenIcon("actions/dialog-ok", 16),
+		};	
 		return propMap;
 	}
 	
@@ -437,7 +388,7 @@ public class Utils {
 			// Something went wrong while reading file, according to specification return empty string
 			return "";
 		} finally {
-	        if (f != null) try { f.close(); } catch (IOException ignored) { }
+	        if (f != null) try { f.close(); } catch (IOException ignored) { /* ignored */ }
 	    }
 	    return new String(buffer);
 	}
@@ -472,10 +423,11 @@ public class Utils {
 	 * @param str The string to convert.
 	 * @return The ColorUIResource generated.
 	 */
+	@SuppressWarnings("boxing")
 	private static ColorUIResource stringToColorUI(String str) {
 		
 		if (str == null) {
-			Output.warning("stringToColorUI called with null argument");
+			Output.warning("called with null argument");
 			return new ColorUIResource(0, 0, 0);
 		}
 		
@@ -514,7 +466,8 @@ public class Utils {
 		
 		String name = str.split(",")[0];
 		int style = Font.PLAIN;
-		// TODO This is a hack: Java font sizes seem to be smaller than KDE font sizes
+		// This is a hack: Java font sizes seem to be smaller than KDE font sizes
+		@SuppressWarnings("boxing")
 		int size = (int) (Integer.valueOf(str.split(",")[1]) * 1.4f);
 		return new FontUIResource(name, style, size);
 	}
@@ -523,6 +476,9 @@ public class Utils {
 	 * Gets an icon from the Oxygen theme from the /usr/share/icons/oxygen folder.
 	 * Issues a warning and returns null if the icon cannot be found.
 	 * @param name The name of the icon, without extension; for example actions/go-previous.
+	 * @param size The size of the icon you want. Note that this is given as an integer only
+	 *             because all icons are squared. For example, giving '32' as parameter will
+	 *             cause this method to look for a '32x32' size icon.
 	 * @return The created ImageIcon.
 	 */
 	public static ImageIcon getOxygenIcon(String name, int size) {
@@ -577,6 +533,8 @@ public class Utils {
 			break;
 		case ERROR:
 			icon = "--icon=/usr/share/icons/oxygen/48x48/status/dialog-error.png";
+		case NONE:
+			break;
 		}
 		
 		ProcessBuilder pb = new ProcessBuilder("notify-send", icon, title, text);
