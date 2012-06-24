@@ -535,6 +535,7 @@ public class Utils {
 			break;
 		case ERROR:
 			icon = "--icon=/usr/share/icons/oxygen/48x48/status/dialog-error.png";
+			break;
 		case NONE:
 			break;
 		}
