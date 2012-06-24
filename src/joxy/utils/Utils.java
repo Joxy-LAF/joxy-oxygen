@@ -463,7 +463,7 @@ public class Utils {
 		
 		if (str == null) {
 			Output.warning("stringToFontUI called with null argument");
-			return new FontUIResource(new Font("DejaVu Sans", 14, Font.PLAIN));
+			return new FontUIResource(new Font("DejaVu Sans", Font.PLAIN, 14));
 		}
 		
 		String name = str.split(",")[0];
