@@ -13,7 +13,7 @@ public class JoxyGraphics {
 	/**
 	 * Whether text rendering should be done by a call to Qt (instead of doing it in Java).
 	 */
-	public static final boolean NATIVE_TEXT_RENDERING = false;
+	public static final boolean NATIVE_TEXT_RENDERING = true;
 	
 	/**
 	 * Whether the native text rendering is actually loaded.
@@ -113,6 +113,8 @@ public class JoxyGraphics {
 
 	/**
 	 * Paints the given string onto the given image.
+	 * 
+	 * TODO new parameter for the style attribute
 	 * @param str Some string.
 	 * @param image Some image.
 	 * @param width The width of the image given.
