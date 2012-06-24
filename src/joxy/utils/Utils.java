@@ -235,6 +235,8 @@ public class Utils {
 			"Tree.paintLines", true,
 			// Password field settings
 			"PasswordField.echoChar", "o",
+			// Special setting for Netbeans
+			"NbMainWindow.showCustomBackground", true,
 		};
 		return propMap;
 	}
