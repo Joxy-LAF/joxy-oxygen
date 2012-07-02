@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPasswordFieldUI;
-import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.*;
 
 import joxy.painter.InputFieldPainter;

@@ -8,8 +8,6 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.UIManager;
 
-import joxy.utils.Output;
-
 /**
  * Painter for the hover background of a menu item.
  */

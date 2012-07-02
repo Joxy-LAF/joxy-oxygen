@@ -9,7 +9,6 @@ import javax.swing.plaf.basic.BasicFormattedTextFieldUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.*;
 
-import joxy.JoxyTextFieldUI.I18nFieldView;
 import joxy.painter.InputFieldPainter;
 
 public class JoxyFormattedTextFieldUI extends BasicFormattedTextFieldUI {

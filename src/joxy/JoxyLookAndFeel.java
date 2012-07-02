@@ -6,7 +6,6 @@ import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.swing.text.DefaultEditorKit;
 
-import joxy.utils.Output;
 import joxy.utils.Utils;
 
 

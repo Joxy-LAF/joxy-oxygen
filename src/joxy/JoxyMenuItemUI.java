@@ -2,9 +2,6 @@ package joxy;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicHTML;
@@ -13,7 +10,6 @@ import javax.swing.text.View;
 
 import joxy.painter.MenuItemBackgroundPainter;
 import joxy.utils.JoxyGraphics;
-import joxy.utils.Output;
 
 /**
  * Joxy's UI delegate for the JMenuItem.
