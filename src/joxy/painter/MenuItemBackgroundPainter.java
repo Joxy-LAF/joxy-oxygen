@@ -8,7 +8,11 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.UIManager;
 
+import joxy.utils.ColorUtils;
+import joxy.utils.HCYColor;
 import joxy.utils.Output;
+import joxy.utils.Utils;
+import joxy.utils.ColorUtils.ShadeRoles;
 
 /**
  * Painter for the hover background of a menu item.
@@ -28,10 +32,13 @@ public class MenuItemBackgroundPainter {
 	 */
 	public static void paint(Graphics2D g2, float x, float y, float width, float height, int opacity) {
 		
-		Color focus = UIManager.getColor("Button.focus");
+		Color focus = UIManager.getColor("MenuItem.hover");
 		
-		if (false) { // TODO should be: whether subtle highlights are used
+		if (UIManager.getString("MenuItem.highlight").equals(Utils.MENU_HIGHLIGHT_STRONG)) {
 			focus = focus.darker(); // TODO should be: something with tint
+		} else if (UIManager.getString("MenuItem.highlight").equals(Utils.MENU_HIGHLIGHT_DARK)) {
+			// TODO: [tc] I think the color is linked to the gradient in the menu... suppose we should take that into account.
+			focus = ColorUtils.shadeScheme(UIManager.getColor("Window.background"), ShadeRoles.MidShade, UIManager.getInt("General.contrast"));
 		}
 		
 		focus = new Color(focus.getRed(), focus.getGreen(), focus.getBlue(), opacity);
