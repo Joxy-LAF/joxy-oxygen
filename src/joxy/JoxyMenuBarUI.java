@@ -1,8 +1,6 @@
 package joxy;
 
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.LookAndFeel;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicMenuBarUI;

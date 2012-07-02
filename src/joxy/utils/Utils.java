@@ -235,6 +235,8 @@ public class Utils {
 			"Tree.paintLines", true,
 			// Password field settings
 			"PasswordField.echoChar", "o",
+			// Menu settings
+			"Menu.submenuPopupOffsetX", -11,
 			// Special setting for Netbeans
 			"NbMainWindow.showCustomBackground", true,
 		};
