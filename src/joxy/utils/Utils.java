@@ -27,6 +27,29 @@ import javax.swing.plaf.FontUIResource;
  */
 public class Utils {
 	
+	//-- CONSTANTS ------------------------------------------------------------
+	/**
+	 * This value is used for the key [Style]MenuHighlightMode to
+	 * denote a dark highlightcolour should be used. Note that
+	 * if a user has selected this (or, did not alter the default
+	 * value) then there will be no key in the KDE configuration
+	 * files. This key is then set by default by this class
+	 * however.
+	 */
+	public static final String MENU_HIGHLIGHT_DARK = "MM_DARK";
+	/**
+	 * The value used in the KDE configuration files to describe
+	 * a subtle highlight should be used for highlighting of menuitems.
+	 * This value is used for the key [Style]MenuHighlightMode.
+	 */
+	public static final String MENU_HIGHLIGHT_SUBTLE = "MM_SUBTLE";
+	/**
+	 * The value used in the KDE configuration files to describe
+	 * a strong highlight should be used for highlighting of menuitems.
+	 * This value is used for the key [Style]MenuHighlightMode.
+	 */
+	public static final String MENU_HIGHLIGHT_STRONG = "MM_STRONG";
+	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Path to home directory of the user */
 	private static String homeDir = System.getProperty("user.home");
@@ -37,9 +60,9 @@ public class Utils {
 	private static File kdeglobals2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
 	private static File kdeglobals3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
 	// Possible locations of the oxygenrc config file
-	private static File oxygenrc1 = new File(homeDir + fileSep + ".kblade"     + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc2 = new File(homeDir + fileSep + ".kblademod4" + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc3 = new File(homeDir + fileSep + ".kblade4"    + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc1 = new File(homeDir + fileSep + ".kde"     + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
+	private static File oxygenrc3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
 	/** Contents of the kdeglobals config file, initially not set */
 	private static String[] kdeConfigLines = null;
 	/** HashMap with default values */
@@ -161,6 +184,9 @@ public class Utils {
 			"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 			"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			
+			// Menu
+			"MenuItem.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			
 			// Tool tips
 			"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
 			"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
@@ -228,6 +254,8 @@ public class Utils {
 			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// List settings
 			"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			// Menu settings
+			"MenuItem.highlight", getKDEConfigValue(kdeConfigLines, "[Style]", "MenuHighlightMode"),
 			// ToolTip settings
 			"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Tree settings
@@ -315,6 +343,7 @@ public class Utils {
 			defaultsHashMap.put("[Locale]Country", "us");
 			defaultsHashMap.put("[Locale]DateFormat", "%d %B %Y");
 			defaultsHashMap.put("[Locale]Language", "en");
+			defaultsHashMap.put("[Style]MenuHighlightMode", "MM_DARK");
 			defaultsHashMap.put("[Windeco]FrameBorder", "Normal");
 			defaultsHashMap.put("[Windeco]BlendColor", "Radial Gradient"); // transition, can be "Solid Color"
 			defaultsHashMap.put("[Windeco]ButtonSize", "normal");
