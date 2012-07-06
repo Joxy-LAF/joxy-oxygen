@@ -179,6 +179,7 @@ public class Utils {
 			// List
 			"List.background", stringToColorUI("255,255,255"),
 			"List.alternateRowColor", stringToColorUI("240,240,240"),
+			"List.dropLineColor", stringToColorUI("255,255,255"),
 			"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 			"List.gridColor", stringToColorUI("128,128,128"),
 			"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
