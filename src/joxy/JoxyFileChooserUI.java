@@ -1,8 +1,10 @@
 package joxy;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.FileNameMap;
 import java.net.URLConnection;
+import java.util.Scanner;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.swing.Icon;
@@ -111,6 +113,32 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 					}
 
 					newIcon = Utils.getOxygenIcon("mimetypes/" + mimeType, 16);
+				} else { // f is a directory
+					
+					// if there is a .directory file in it, see whether there is an icon to use
+					File directoryFile = new File(f.getAbsolutePath() + "/.directory");
+					
+					if (directoryFile.exists()) {
+						Scanner s = null;
+						
+						// TODO when switching to Java 7, use try-with-resources
+						try {
+							s = new Scanner(directoryFile);
+							
+							while (s.hasNextLine()) {
+								String line = s.nextLine();
+								if (line.startsWith("Icon=")) {
+									newIcon = Utils.getOxygenIcon("places/" + line.substring(5).trim(), 16);
+								}
+							}
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						} finally {
+							if (s != null) {
+								s.close();
+							}
+						}
+					}
 				}
 				
 				return newIcon == null ? icon : newIcon;
