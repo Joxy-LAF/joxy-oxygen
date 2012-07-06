@@ -19,7 +19,7 @@ import javax.swing.plaf.basic.DefaultMenuLayout;
 
 public class JoxyPopupMenuUI extends BasicPopupMenuUI {
 	
-	private static final int ARC = 10;
+	private static final int ARC = 6;
 	
     public static ComponentUI createUI(JComponent c) {
         return new JoxyPopupMenuUI();

@@ -264,6 +264,8 @@ public class Utils {
 			// Password field settings
 			"PasswordField.echoChar", "o",
 			// Menu settings
+			"Menu.menuPopupOffsetX", -4,
+			"Menu.menuPopupOffsetY", -4,
 			"Menu.submenuPopupOffsetX", -11,
 			// Special setting for Netbeans
 			"NbMainWindow.showCustomBackground", true,
