@@ -233,9 +233,9 @@ public class TestGUI {
 		} catch (AWTException e1) {
 			e1.printStackTrace();
 		}
-		trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
-		trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
-		trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
+		//trayIcon.displayMessage("Joxy", "This is the Joxy test GUI. Do you see this notification?", MessageType.INFO);
+		//trayIcon.displayMessage("Joxy", "And a warning!", MessageType.WARNING);
+		//trayIcon.displayMessage("Joxy", "And an error!", MessageType.ERROR);
 		
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode("Java LAFs");
 		JTree tree = new JTree(node);
