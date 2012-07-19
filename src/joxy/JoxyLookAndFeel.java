@@ -134,6 +134,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"SpinnerUI", "joxy.JoxySpinnerUI",
 				"SplitPaneUI", "joxy.JoxySplitPaneUI",
 				"TabbedPaneUI", "joxy.JoxyTabbedPaneUI",
+				"TableHeaderUI", "joxy.JoxyTableHeaderUI",
 				"TableUI", "joxy.JoxyTableUI",
 				"TextAreaUI", "joxy.JoxyTextAreaUI",
 				"TextFieldUI", "joxy.JoxyTextFieldUI",
