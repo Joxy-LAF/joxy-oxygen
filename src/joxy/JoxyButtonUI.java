@@ -68,8 +68,11 @@ public class JoxyButtonUI extends BasicButtonUI {
 	/** Whether to use the new code for painting buttons */
 	private static final boolean USE_NEW_BUTTON_CODE = false;
 	
-	/** Amount of hover and focus, from 0 to 255 */
-	private int hoverAmount = 0, focusAmount = 0;
+	/**
+	 * Amount of hover and focus, from 0 to 255. These are not private so that they
+	 * can be used in the JoxyArrowButton.
+	 */
+	int hoverAmount = 0, focusAmount = 0;
 	
 	/** Timers for the animation */
 	private Timer hoverTimer, focusTimer;
