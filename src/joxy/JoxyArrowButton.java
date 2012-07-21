@@ -39,11 +39,20 @@ public class JoxyArrowButton extends BasicArrowButton {
 			height = 3.5;
 		}
 		
-		Rectangle2D paintRect = new Rectangle2D.Double(center.getX() - width / 2, center.getY() - height / 2, width, height);
+		// white shadow
+		Rectangle2D paintRect = new Rectangle2D.Double(center.getX() - width / 2, center.getY() - height / 2 + 0.8f, width, height);
+		g2.setColor(Color.WHITE);
+		g2.setStroke(new BasicStroke(1.25f));
+		paintArrow(g2, paintRect);
 		
+		// black arrow
+		paintRect = new Rectangle2D.Double(center.getX() - width / 2, center.getY() - height / 2, width, height);
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(1.25f));
-		
+		paintArrow(g2, paintRect);
+	}
+	
+	private void paintArrow(Graphics2D g2, Rectangle2D paintRect) {
 		switch (direction) {
 		
 		case NORTH:
