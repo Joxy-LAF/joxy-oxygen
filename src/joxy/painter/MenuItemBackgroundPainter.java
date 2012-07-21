@@ -1,18 +1,13 @@
 package joxy.painter;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.UIManager;
 
 import joxy.utils.ColorUtils;
-import joxy.utils.HCYColor;
-import joxy.utils.Output;
-import joxy.utils.Utils;
 import joxy.utils.ColorUtils.ShadeRoles;
+import joxy.utils.Utils;
 
 /**
  * Painter for the hover background of a menu item.
