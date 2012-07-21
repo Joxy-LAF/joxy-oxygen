@@ -248,6 +248,8 @@ public class JoxyMenuUI extends BasicMenuUI {
 			
 			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMinY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
 			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMaxY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
+			
+			// TODO paint the "fading" effect of the highlight instead of the normal one
 		}
 	}
 
@@ -300,18 +302,18 @@ public class JoxyMenuUI extends BasicMenuUI {
 	/**
 	 * Return a human-readable representation of the accelerator text.
 	 * Copied from MenuItemLayoutHelper.
-	 * @param acceleratorDelimiter The string used to delimit the various parts
+	 * @param delimiter The string used to delimit the various parts
 	 * of the accelerator, such as "+".
 	 * @return A string such as "Ctrl+O".
 	 */
-	private String getAccText(String acceleratorDelimiter) {
+	private String getAccText(String delimiter) {
         String accText = "";
         KeyStroke accelerator = menuItem.getAccelerator();
         if (accelerator != null) {
             int modifiers = accelerator.getModifiers();
             if (modifiers > 0) {
                 accText = KeyEvent.getKeyModifiersText(modifiers);
-                accText += acceleratorDelimiter;
+                accText += delimiter;
             }
             int keyCode = accelerator.getKeyCode();
             if (keyCode != 0) {

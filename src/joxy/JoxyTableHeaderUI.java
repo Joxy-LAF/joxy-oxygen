@@ -3,7 +3,6 @@ package joxy;
 import java.awt.*;
 
 import javax.swing.JComponent;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
