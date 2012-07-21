@@ -47,7 +47,11 @@ public class JoxyArrowButton extends BasicArrowButton {
 		// black arrow
 		paintRect = new Rectangle2D.Double(center.getX() - width / 2, center.getY() - height / 2, width, height);
 		if (isEnabled()) {
-			g2.setColor(ColorUtils.mix(Color.BLACK, UIManager.getColor("Button.hover"), ((JoxyButtonUI) getUI()).hoverAmount / 255f));
+			if (getName() != null && getName().equals("ComboBox.arrowButton")) {
+				g2.setColor(Color.BLACK);
+			} else {
+				g2.setColor(ColorUtils.mix(Color.BLACK, UIManager.getColor("Button.hover"), ((JoxyButtonUI) getUI()).hoverAmount / 255f));
+			}
 		} else {
 			g2.setColor(Color.GRAY);
 		}
