@@ -1,17 +1,39 @@
 package joxy;
 
 import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import joxy.painter.DarkEngravingPainter;
+import joxy.painter.HoverIndicatorPainter;
 import joxy.painter.ScrollThumbPainter;
 
+/**
+ * Joxy's UI delegate for the JScrollBar.
+ * 
+ * <p>The JoxyScrollBarUI supports a hover animation for the thumb, see
+ * {@link JoxyButtonUI} for more explanation on this.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyScrollBarUI extends BasicScrollBarUI {
 	
+	/** Amount of hover, from 0 to 255 */
+	private int hoverAmount = 0;
+	
+	/** Timer for the animation */
+	private Timer hoverTimer;
+
+	/** Listener for the animation */
+	private MouseMotionListener hoverListener;
+	
+	/** Whether the mouse is hovering over the thumb */
+	private boolean hovering;
+			
     public static ComponentUI createUI(JComponent c) {
         return new JoxyScrollBarUI();
     }
@@ -21,6 +43,54 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
     	super.installDefaults();
     	
     	scrollbar.setOpaque(false);
+    }
+    @Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		hoverListener = new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				hoverTimer.start();
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {}
+		};
+		scrollbar.addMouseMotionListener(hoverListener);
+
+		createTimers();
+    }
+    
+    @Override
+	protected void uninstallListeners() {
+		super.uninstallListeners();
+		
+		scrollbar.removeMouseMotionListener(hoverListener);
+	}
+    
+    private void createTimers() {
+		hoverTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JoxyScrollBarUI.super.isThumbRollover()) {
+					hoverAmount += 60;
+				} else {
+					hoverAmount -= 60;
+				}
+				if (hoverAmount > 255) {
+					hoverAmount = 255;
+					hoverTimer.stop();
+				}
+				if (hoverAmount < 0) {
+					hoverAmount = 0;
+					hoverTimer.stop();
+				}
+				scrollbar.repaint();
+			}
+		});
     }
     
     @Override
@@ -40,7 +110,8 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-    	ScrollThumbPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 4);
+    	HoverIndicatorPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 4, hoverAmount);
+    	ScrollThumbPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 4, 255 - hoverAmount);
     }
     
     @Override
