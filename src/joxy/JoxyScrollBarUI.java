@@ -30,9 +30,6 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 
 	/** Listener for the animation */
 	private MouseMotionListener hoverListener;
-	
-	/** Whether the mouse is hovering over the thumb */
-	private boolean hovering;
 			
     public static ComponentUI createUI(JComponent c) {
         return new JoxyScrollBarUI();

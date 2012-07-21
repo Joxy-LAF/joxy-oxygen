@@ -70,7 +70,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 	
 	/**
 	 * Amount of hover and focus, from 0 to 255. These are not private so that they
-	 * can be used in the JoxyArrowButton.
+	 * can be used in the {@link JoxyArrowButton}.
 	 */
 	int hoverAmount = 0, focusAmount = 0;
 	
