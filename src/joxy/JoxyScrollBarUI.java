@@ -3,7 +3,9 @@ package joxy;
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.Timer;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
@@ -30,6 +32,9 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 
 	/** Listener for the animation */
 	private MouseMotionListener hoverListener;
+	
+	/** Listener for enabling/disabling the arrow buttons */
+	private AdjustmentListener adjustmentListener;
 			
     public static ComponentUI createUI(JComponent c) {
         return new JoxyScrollBarUI();
@@ -56,6 +61,16 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 			public void mouseDragged(MouseEvent e) {}
 		};
 		scrollbar.addMouseMotionListener(hoverListener);
+		
+		adjustmentListener = new AdjustmentListener() {
+			
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				decrButton.setEnabled(e.getValue() > scrollbar.getMinimum());
+				incrButton.setEnabled(e.getValue() < scrollbar.getMaximum()-scrollbar.getVisibleAmount());
+			}
+		};
+		scrollbar.addAdjustmentListener(adjustmentListener);
 
 		createTimers();
     }
@@ -65,6 +80,7 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 		super.uninstallListeners();
 		
 		scrollbar.removeMouseMotionListener(hoverListener);
+		scrollbar.removeAdjustmentListener(adjustmentListener);
 	}
     
     private void createTimers() {
