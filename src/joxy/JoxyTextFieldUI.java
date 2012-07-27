@@ -1,23 +1,17 @@
 package joxy;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import javax.swing.BorderFactory;
-import javax.swing.BoundedRangeModel;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.*;
 
 import joxy.painter.InputFieldPainter;
+import joxy.utils.Utils;
 
 /**
  * Class overriding the default TextFieldUI (BasicTextFieldUI) to provide a good
@@ -37,7 +31,9 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	/**
 	 * The text field we are painting for.
 	 */
-	JTextField textField;
+	protected JTextField textField;
+	
+	MouseListener clearListener;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -54,9 +50,38 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+	}
+	
+	@Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		clearListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getX() > textField.getWidth() - 20) {
+					textField.setText("");
+				}
+			}
+		};
+		
+		textField.addMouseListener(clearListener);
 	}
 	
 	@Override
@@ -363,7 +388,11 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	 */
 	@Override
 	protected void paintSafely(Graphics g) {
-		paintBackground(g);
+		
+		if (textField.getClientProperty("joxy.isEditor") == null) {
+			paintBackground(g);
+			paintClearButton(g);
+		}
 		
 		Highlighter highlighter = textField.getHighlighter();
         Caret caret = textField.getCaret();
@@ -383,19 +412,28 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
         if (caret != null) {
             caret.paint(g);
         }
+        
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 	}
-    
-    @Override
+	
+	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		if (textField.getClientProperty("joxy.isEditor") == null) {
-		    InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
-		}
-
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
     }
+    
+    private void paintClearButton(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		// TODO this icon should be cached
+		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+		clearIcon.paintIcon(textField, g2, textField.getWidth() - 18, textField.getHeight() / 2 - 8);
+	}
 }
