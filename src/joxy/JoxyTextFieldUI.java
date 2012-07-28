@@ -1,11 +1,11 @@
 package joxy;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.*;
@@ -33,7 +33,33 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	 */
 	protected JTextField textField;
 	
+	/**
+	 * A {@link MouseListener} that clears the contents of the text field when
+	 * the clear button has been pressed.
+	 */
 	MouseListener clearListener;
+	
+	/**
+	 * A {@link DocumentListener} that hides the clear button if there is no
+	 * text in the text field.
+	 */
+	DocumentListener changeListener;
+	
+	/** Timer for the clear button animation */
+	private Timer clearButtonTimer;
+	
+	/**
+	 * The opacity of the clear button. 0 means non-visible, 255 is fully opaque.
+	 */
+	int clearButtonOpacity = 0;
+	
+	/**
+	 * For some reason it doesn't work to add the changeListener to the Document of
+	 * the text field in installListeners(). Therefore we do it in the paint method.
+	 * Of course it only needs to be added once, and therefore we use this variable.
+	 * TODO figure out why just using installListeners() doesn't work
+	 */
+	boolean changeListenerAdded = false;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -75,13 +101,65 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getX() > textField.getWidth() - 20) {
+				if (clearButtonOpacity > 0 && e.getX() > textField.getWidth() - 20
+						          && textField.getClientProperty("joxy.isEditor") == null) {
 					textField.setText("");
 				}
 			}
 		};
 		
 		textField.addMouseListener(clearListener);
+		
+		changeListener = new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+			
+			private void updateClearButton() {
+				clearButtonTimer.start();
+			}
+		};
+		
+		createTimer();
+	}
+	
+	private void createTimer() {
+		clearButtonTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() > 0) {
+					clearButtonOpacity += 70;
+				} else {
+					clearButtonOpacity -= 70;
+				}
+				if (clearButtonOpacity > 255) {
+					clearButtonOpacity = 255;
+					clearButtonTimer.stop();
+				}
+				if (clearButtonOpacity < 0) {
+					clearButtonOpacity = 0;
+					clearButtonTimer.stop();
+				}
+				textField.repaint();
+			}
+		});
+		
+		// start the timer once, to ensure the button is visible if there is text
+		// in the text field initially
+		clearButtonTimer.start();
 	}
 	
 	@Override
@@ -389,9 +467,18 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	@Override
 	protected void paintSafely(Graphics g) {
 		
+		// see comment of changeListenerAdded
+		if (!changeListenerAdded) {
+			changeListenerAdded = true;
+			textField.getDocument().addDocumentListener(changeListener);
+		}
+		
 		if (textField.getClientProperty("joxy.isEditor") == null) {
 			paintBackground(g);
-			paintClearButton(g);
+			
+			if (clearButtonOpacity > 0) {
+				paintClearButton(g, clearButtonOpacity);
+			}
 		}
 		
 		Highlighter highlighter = textField.getHighlighter();
@@ -426,7 +513,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
     }
     
-    private void paintClearButton(Graphics g) {
+    private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -435,5 +522,9 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		// TODO this icon should be cached
 		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
 		clearIcon.paintIcon(textField, g2, textField.getWidth() - 18, textField.getHeight() / 2 - 8);
+		
+		// TODO this is ugly
+		g2.setColor(new Color(255, 255, 255, 255 - opacity));
+		g2.fillRect(textField.getWidth() - 18, textField.getHeight() / 2 - 8, 16, 16);
 	}
 }
