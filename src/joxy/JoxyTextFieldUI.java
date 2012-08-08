@@ -76,7 +76,9 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 25));
+		// [ws] TODO This is bad, since the clear button could not be shown, and then the 25
+		// pixels on the right side are strange
+		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 1, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
 	}
@@ -101,8 +103,18 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				// Clear the text if
+				// 1. the clear button is visible;
+				// 2. the click happened inside the clear button;
+				// 3. the text field is not an editor, for example in an editable JComboBox,
+				//    that manages its own borders et cetera;
+				// 4. the text field is editable (in fact, the clear button should not be
+				//    visible if the field is non-editable, but for some reason that still
+				//    happens).
 				if (clearButtonOpacity > 0 && e.getX() > textField.getWidth() - 20
-						          && textField.getClientProperty("joxy.isEditor") == null) {
+						          && textField.getClientProperty("joxy.isEditor") == null
+						          && textField.isEditable()) {
 					textField.setText("");
 				}
 			}
@@ -473,7 +485,12 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 			textField.getDocument().addDocumentListener(changeListener);
 		}
 		
-		if (textField.getClientProperty("joxy.isEditor") == null) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		if (textField.isEditable() && textField.getClientProperty("joxy.isEditor") == null) {
 			paintBackground(g);
 			
 			if (clearButtonOpacity > 0) {
@@ -507,17 +524,11 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-		
 		InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
     }
     
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
 		// TODO this icon should be cached
 		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
