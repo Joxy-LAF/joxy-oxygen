@@ -13,6 +13,13 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+/**
+ * A graphical user interface containing all kinds of GUI elements, for
+ * testing purposes.
+ * 
+ * <p>To run this from the Joxy JAR file, use the command
+ * <code>java -cp joxy.jar TestGUI</code>.</p>
+ */
 public class TestGUI {
 	
 	static JFrame frame;
@@ -252,6 +259,25 @@ public class TestGUI {
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.3"));
 		
 		t.addTab("A JSplitPane", new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JLabel("left"), new JLabel("right")));
+		
+		JPanel tab5 = new JPanel();
+		
+		JTextField editor1 = new JTextField("JTextField, default");
+		tab5.add(editor1);
+		
+		JTextField editor2 = new JTextField("JTextField, opaque = false");
+		editor2.setOpaque(false);
+		tab5.add(editor2);
+		
+		JTextField editor3 = new JTextField("JTextField, editable = false");
+		editor3.setEditable(false);
+		tab5.add(editor3);
+		
+		JTextField editor4 = new JTextField("JTextField, with border");
+		editor4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tab5.add(editor4);
+		
+		t.addTab("Editor components", tab5);
 	}
 	
 	/**
