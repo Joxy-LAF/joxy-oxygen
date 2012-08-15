@@ -18,8 +18,9 @@ import joxy.utils.JoxyGraphics;
 
 
 /**
- * Class overriding the default JCheckBox (BasicCheckBoxUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JCheckBox.
+ * 
+ * <p>This class is largely copied from {@link JoxyButtonUI}.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke

@@ -5,8 +5,9 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPanelUI;
 
 /**
- * Class overriding the default Panel (BasicPanelUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JPanel.
+ * 
+ * <p>It changes nothing, except for making every panel non-opaque.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke

@@ -5,11 +5,22 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import joxy.utils.ColorUtils;
 
+/**
+ * A {@link JButton} subclass that implements an arrow button.
+ * 
+ * <p>It overrides the paint method to draw an arrow instead of a button. It
+ * has support for the hover animation by using the {@link JoxyButtonUI}
+ * variables that keep track of the hover amount.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyArrowButton extends BasicArrowButton {
 
 	public JoxyArrowButton(int direction) {

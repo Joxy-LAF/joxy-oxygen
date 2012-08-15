@@ -16,10 +16,10 @@ import joxy.painter.RoundFocusIndicatorPainter;
 import joxy.painter.RoundHoverIndicatorPainter;
 import joxy.utils.JoxyGraphics;
 
-
 /**
- * Class overriding the default RadioButton (BasicRadioButtonUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JRadioButton.
+ * 
+ * <p>This class is largely copied from {@link JoxyButtonUI}.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
