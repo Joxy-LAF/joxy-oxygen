@@ -69,12 +69,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 	private static final boolean USE_NEW_BUTTON_CODE = false;
 	
 	/**
-	 * If true, try to give toolbar buttons with no text the name of the
-	 * {@link Action} associated with it.
-	 */
-	private static final boolean TRY_TOOLBAR_BUTTON_TEXT_FROM_ACTION = false;
-	
-	/**
 	 * Amount of hover and focus, from 0 to 255. These are not private so that they
 	 * can be used in the {@link JoxyArrowButton}.
 	 */
@@ -202,17 +196,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 	@Override
 	public synchronized void paint(Graphics g, JComponent c) {
 		AbstractButton b = (AbstractButton) c;
-		
-		if (TRY_TOOLBAR_BUTTON_TEXT_FROM_ACTION && !b.isContentAreaFilled()) {
-			b.setHorizontalAlignment(SwingConstants.TRAILING);
-			b.setVerticalAlignment(SwingConstants.CENTER);
-			
-			if ((b.getText() == null || b.getText().equals("")) && b.getAction() != null) {
-				b.setText(b.getAction().getValue(Action.NAME).toString());
-				b.repaint();
-				return;
-			}
-		}
 		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
