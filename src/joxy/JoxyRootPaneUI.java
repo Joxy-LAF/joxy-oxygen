@@ -84,6 +84,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	 */
 	@Override
 	public void paint(Graphics g, JComponent c) {
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		// speed is important here
