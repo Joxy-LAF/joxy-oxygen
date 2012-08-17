@@ -19,11 +19,14 @@ import joxy.utils.Output;
 import joxy.utils.Utils;
 
 /**
- * A {@link JFileChooser} implementation for Joxy. We create the file chooser completely
- * ourselves, i.e. without using the {@link BasicFileChooserUI}. (Note: we do extend it.)
- * TODO is extending the {@link BasicFileChooserUI} really needed?
- * TODO we temporarily extend {@link MetalFileChooserUI} until we have a real implementation
- * TODO this should be rewritten completely
+ * Joxy's UI delegate for the JFileChooser.
+ * 
+ * <p>We extend Metal's file chooser here, because the basic LAF file chooser
+ * does nothing. However we want to use a real native file chooser in the
+ * future.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
  */
 public class JoxyFileChooserUI extends MetalFileChooserUI {
 	
