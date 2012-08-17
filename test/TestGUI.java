@@ -280,9 +280,16 @@ public class TestGUI {
 		t.addTab("Editor components", tab5);
 		
 		JDesktopPane tab6 = new JDesktopPane();
+		
 		JInternalFrame window1 = new JInternalFrame("A window", true, true, true, true);
 		window1.setBounds(100, 100, 400, 300);
+		window1.setVisible(true);
 		tab6.add(window1);
+		JInternalFrame window2 = new JInternalFrame("Another window", true, true, true, true);
+		window2.setBounds(300, 250, 400, 300);
+		window2.setVisible(true);
+		window2.add(new JButton("Do nothing"));
+		tab6.add(window2);
 		
 		t.addTab("Internal frames", tab6);
 	}
