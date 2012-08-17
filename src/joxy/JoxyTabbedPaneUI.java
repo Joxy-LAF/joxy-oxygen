@@ -61,7 +61,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	public void installUI(final JComponent c) {
 		super.installUI(c);
 
-		tabInsets = new Insets(5, 5, 0, 5);
+		tabInsets = new Insets(5, 6, 0, 6);
 		tabAreaInsets = new Insets(0, 0, 0, 0);
 		c.setFont(UIManager.getFont("Button.font"));
 
