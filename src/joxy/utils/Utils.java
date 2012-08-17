@@ -199,6 +199,9 @@ public class Utils {
 			"Tree.gridColor", stringToColorUI("128,128,128"),
 			"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 			"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			
+			// Desktop pane
+			"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
 		};	
 		return colorMap;
 	}
