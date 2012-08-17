@@ -44,7 +44,7 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
     const char* cfontname = env->GetStringUTFChars(fontname, JNI_FALSE);
     bool italic = (style >= 2);
     bool bold = (style % 2 == 1);
-    painter.setFont(QFont(cfontname, fontsize, 25 * bold + 50, italic));
+    painter.setFont(QFont(cfontname, fontsize, (bold ? 75 : 50), italic));
     const char* cstr = env->GetStringUTFChars(str, JNI_FALSE);
     painter.drawText(0, 0, width + 10, height, Qt::AlignLeft, cstr);
     env->ReleaseStringUTFChars(str, cfontname);
