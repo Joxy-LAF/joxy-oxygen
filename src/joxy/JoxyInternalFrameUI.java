@@ -14,7 +14,6 @@ public class JoxyInternalFrameUI extends BasicInternalFrameUI {
 	
 	public JoxyInternalFrameUI(JInternalFrame b) {
 		super(b);
-		System.out.println("Blub blub");
 	}
 	
 	@Override
