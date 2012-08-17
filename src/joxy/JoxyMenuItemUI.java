@@ -172,7 +172,11 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 					hoverAmount = 0;
 					hoverTimer.stop();
 				}
-				menuItem.repaint();
+				if (menuItem != null) {
+					menuItem.repaint();
+				} else {
+					hoverTimer.stop();
+				}
 			}
 		});
 	}
