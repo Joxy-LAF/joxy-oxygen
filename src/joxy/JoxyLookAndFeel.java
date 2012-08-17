@@ -105,6 +105,11 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 		}
 	}
 	
+	@Override
+	public void uninitialize() {
+		super.uninitialize();
+	}
+	
 	//-- PROTECTED METHODS ----------------------------------------------------
 	/**
 	 * {@inheritDoc}
