@@ -1,5 +1,9 @@
 package joxy;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.ComponentUI;
@@ -19,6 +23,13 @@ public class JoxyInternalFrameUI extends BasicInternalFrameUI {
 	@Override
 	protected void installDefaults() {
 		super.installDefaults();
+		frame.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	}
-
+	
+	@Override
+	public void paint(Graphics g, JComponent c) {
+		super.paint(g, c);
+		
+		frame.getRootPane().getUI().paint(g, c);
+	}
 }
