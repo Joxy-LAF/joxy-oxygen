@@ -278,6 +278,13 @@ public class TestGUI {
 		tab5.add(editor4);
 		
 		t.addTab("Editor components", tab5);
+		
+		JDesktopPane tab6 = new JDesktopPane();
+		JInternalFrame window1 = new JInternalFrame("A window", true, true, true, true);
+		window1.setBounds(100, 100, 400, 300);
+		tab6.add(window1);
+		
+		t.addTab("Internal frames", tab6);
 	}
 	
 	/**
