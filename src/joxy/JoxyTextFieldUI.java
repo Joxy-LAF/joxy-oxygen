@@ -532,6 +532,11 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		
 		// TODO this icon should be cached
 		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+		
+		if (clearIcon == null) {
+			return;
+		}
+		
 		clearIcon.paintIcon(textField, g2, textField.getWidth() - 18, textField.getHeight() / 2 - 8);
 		
 		// TODO this is ugly
