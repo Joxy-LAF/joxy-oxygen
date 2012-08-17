@@ -3,6 +3,7 @@ package joxy;
 import javax.swing.JTextField;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.swing.text.DefaultEditorKit;
 
@@ -89,11 +90,18 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	public void initialize() {
 		super.initialize();
 		
+		LookAndFeelInfo[] installedLafsInfo = UIManager.getInstalledLookAndFeels();
+		for (LookAndFeelInfo lafinfo : installedLafsInfo) {
+			if (lafinfo.getName().equals("Joxy") && lafinfo.getClassName().equals("joxy.JoxyLookAndFeel")) {
+				isInstalled = true;
+				break;
+			}
+		}
+		
 		if (!isInstalled) {
-			isInstalled = true;
-
 			UIManager.installLookAndFeel(new UIManager.LookAndFeelInfo(
 				"Joxy", "joxy.JoxyLookAndFeel"));
+			isInstalled = true;
 		}
 	}
 	
