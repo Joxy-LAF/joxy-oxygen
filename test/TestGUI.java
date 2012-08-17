@@ -96,15 +96,13 @@ public class TestGUI {
 		tab1.add(j);
 
 		JButton jawt = new JButton("Open an AWT file chooser");
-		jawt.setForeground(Color.BLUE);
 		jawt.setToolTipText("A tooltip");
-		jawt.setFont(new Font("Times new Roman", Font.PLAIN, 14));
 		jawt.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				java.awt.FileDialog f = new FileDialog(frame);
-				f.show();
+				f.setVisible(true);
 			}
 		});
 		tab1.add(jawt);
