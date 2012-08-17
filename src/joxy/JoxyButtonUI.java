@@ -147,6 +147,9 @@ public class JoxyButtonUI extends BasicButtonUI {
 		
 		b.removeMouseListener(hoverListener);
 		b.removeFocusListener(focusListener);
+		
+		hoverTimer.stop();
+		focusTimer.stop();
 	}
 	
 	private void createTimers(final AbstractButton b) {

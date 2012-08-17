@@ -150,6 +150,8 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		
 		menuItem.removeMouseListener(hoverListener);
 		menuItem.removeActionListener(actionListener);
+		
+		hoverTimer.stop();
 	}
 	
 	private void createTimers() {
