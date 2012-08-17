@@ -69,7 +69,7 @@ public class JoxyGraphics {
 	    	
 			if (TEXT_CACHING) {
 		    	// Try to use the cache.
-		    	key = str + "/" + g2.getFont().getName() + "/" + g2.getFont().getSize() + "/" + g2.getColor().getRGB();
+		    	key = str + "/" + g2.getFont().getName() + "/" + g2.getFont().getSize() + "/" + g2.getFont().getStyle() + "/" + g2.getColor().getRGB();
 		    	img = imageCache.get(key);
 			}
 	    	
@@ -89,7 +89,7 @@ public class JoxyGraphics {
 				img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
 				
 				// TODO size is an ugly hack...
-				drawStringNative(str, img, width, height, g2.getFont().getFamily(), (int)(g2.getFont().getSize() / 1.4f + 0.5f), g2.getColor().getRGB());
+				drawStringNative(str, img, width, height, g2.getFont().getFamily(), (int)(g2.getFont().getSize() / 1.4f + 0.5f), g2.getFont().getStyle(), g2.getColor().getRGB());
 
 				if (TEXT_CACHING) {
 					imageCache.put(key, img);
@@ -121,7 +121,8 @@ public class JoxyGraphics {
 	 * @param height The height of the image given.
 	 * @param font The name of the font to draw in.
 	 * @param fontSize The font size.
+	 * @param style The style, as Java Font style, to use.
 	 * @param color The color, as RGB integer value, to draw in.
 	 */
-	private static native void drawStringNative(String str, BufferedImage image, int width, int height, String font, int fontSize, int color);
+	private static native void drawStringNative(String str, BufferedImage image, int width, int height, String font, int fontSize, int style, int color);
 }

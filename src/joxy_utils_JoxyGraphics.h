@@ -22,10 +22,10 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
 /*
  * Class:     joxy_utils_JoxyGraphics
  * Method:    drawStringNative
- * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;IILjava/lang/String;II)V
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;IILjava/lang/String;III)V
  */
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *, jclass, jstring, jobject, jint, jint, jstring, jint, jint);
+  (JNIEnv *, jclass, jstring, jobject, jint, jint, jstring, jint, jint, jint);
 
 #ifdef __cplusplus
 }

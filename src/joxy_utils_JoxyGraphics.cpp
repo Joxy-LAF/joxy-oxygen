@@ -7,7 +7,6 @@
 #include <QtGui/qcolor.h>
 #include <QtGui/qimage.h>
 #include <QtGui/qpainter.h>
-#include <kfiledialog.h>
 
 int argc = 0;
 char** argv = NULL;
@@ -33,7 +32,7 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_initializeNative
 }
 
 JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
-  (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jint height, jstring fontname, jint fontsize, jint color) {
+  (JNIEnv *env, jclass cl, jstring str, jobject image, jint width, jint height, jstring fontname, jint fontsize, jint style, jint color) {
 
     QImage qimage(width, height, QImage::Format_ARGB32);
     QColor qcolor = QColor::fromRgb(color);
@@ -43,7 +42,9 @@ JNIEXPORT void JNICALL Java_joxy_utils_JoxyGraphics_drawStringNative
     painter.setPen(QColor::fromRgb(color));
 
     const char* cfontname = env->GetStringUTFChars(fontname, JNI_FALSE);
-    painter.setFont(QFont(cfontname, fontsize, 0, false));
+    boolean italic = (style >= 2);
+    boolean bold = (style % 2 == 1);
+    painter.setFont(QFont(cfontname, fontsize, 25 * bold + 50, italic));
     const char* cstr = env->GetStringUTFChars(str, JNI_FALSE);
     painter.drawText(0, 0, width + 10, height, Qt::AlignLeft, cstr);
     env->ReleaseStringUTFChars(str, cfontname);
