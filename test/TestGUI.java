@@ -132,6 +132,9 @@ public class TestGUI {
 		tab1.add(new JPasswordField(10));
 		t.addTab("Selection of components", tab1);
 		
+		t.addTab("Disabled tab", new JPanel());
+		t.setEnabledAt(1, false);
+		
 		JPanel tab2 = new JPanel();
 		tab2.setPreferredSize(new Dimension(600, 200));
 		tab2.add(new JButton("Test"));
