@@ -38,14 +38,17 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	public static final int ARC = 8;
 	
 	/**
-	 * Indicates whether the selected tab should over-/underflow when it is
+	 * Indicates whether the selected tab should overflow when it is
 	 * scrolled past the begin or end of the tab run. Note that KDE is not consistent
 	 * with respect to this. For example <i>System Settings > Common Appearance
 	 * and Behaviour > Locale > Country/Region & Language</i> does overflow,
 	 * but <i>System Settings > Desktop Effects</i> does not. Perhaps this has
 	 * something to do with the number of tabs.
+	 * 
+	 * <p>If this variable is false, we determine whether to overflow based on the
+	 * number of tabs.</p>
 	 */
-	public static final boolean SCROLL_OVERFLOW = true;
+	public static final boolean FORCE_SCROLL_OVERFLOW = false;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -68,11 +71,13 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
 					
 					if (e.getY() < rects[0].y + rects[0].height) { // [ws] TODO replace with Y that makes more sense...
-					
+						
+						boolean shouldOverflow = FORCE_SCROLL_OVERFLOW || ((JTabbedPane) c).getTabCount() > 3;
+						
 						if (e.getWheelRotation() == 1) {
 							int currentIndex = ((JTabbedPane) c).getSelectedIndex();
 							if (currentIndex == ((JTabbedPane) c).getTabCount() - 1) {
-								if (SCROLL_OVERFLOW) {
+								if (shouldOverflow) {
 									((JTabbedPane) c).setSelectedIndex(0);
 								}
 							} else {
@@ -83,7 +88,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 						if (e.getWheelRotation() == -1) {
 							int currentIndex = ((JTabbedPane) c).getSelectedIndex();
 							if (currentIndex == 0) {
-								if (SCROLL_OVERFLOW) {
+								if (shouldOverflow) {
 									((JTabbedPane) c).setSelectedIndex(((JTabbedPane) c).getTabCount() - 1);
 								}
 							} else {
