@@ -135,6 +135,18 @@ public class TestGUI {
 		t.addTab("Disabled tab", new JPanel());
 		t.setEnabledAt(1, false);
 		
+		JPanel styleTab = new JPanel();
+		JLabel styleBoldLabel = new JLabel("This text is bold.");
+		styleBoldLabel.setFont(styleBoldLabel.getFont().deriveFont(Font.BOLD));
+		styleTab.add(styleBoldLabel);
+		JLabel styleItalicLabel = new JLabel("This text is italic.");
+		styleItalicLabel.setFont(styleItalicLabel.getFont().deriveFont(Font.ITALIC));
+		styleTab.add(styleItalicLabel);
+		JLabel styleBoldItalicLabel = new JLabel("This text is bold and italic.");
+		styleBoldItalicLabel.setFont(styleBoldItalicLabel.getFont().deriveFont(Font.BOLD + Font.ITALIC));
+		styleTab.add(styleBoldItalicLabel);
+		t.addTab("Styling", styleTab);
+		
 		JPanel tab2 = new JPanel();
 		tab2.setPreferredSize(new Dimension(600, 200));
 		tab2.add(new JButton("Test"));
