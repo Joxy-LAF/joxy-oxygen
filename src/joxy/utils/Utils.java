@@ -267,6 +267,8 @@ public class Utils {
 			"Tree.paintLines", true,
 			// Password field settings
 			"PasswordField.echoChar", "o",
+			// Slider settings
+			"Slider.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Menu settings
 			"Menu.menuPopupOffsetX", -4,
 			"Menu.menuPopupOffsetY", -4,
