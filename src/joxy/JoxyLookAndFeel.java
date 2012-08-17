@@ -29,7 +29,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Define the version of Joxy */
-	private final String version = "current";
+	private final String version = "0.1.0";
 	/** Whether Joxy already has been installed in the UIManager. */
 	private static boolean isInstalled = false;
 	
@@ -155,8 +155,6 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"TreeUI", "joxy.JoxyTreeUI",
 				"ViewportUI", "joxy.JoxyViewportUI"
 		});
-		
-		//Output.debug(UIManager.getUI(new JFileChooser()));
 	}
 	
 	/**
@@ -167,7 +165,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	protected void initSystemColorDefaults(UIDefaults table) {
 		super.initSystemColorDefaults(table);
 		// Set the colors to use (either KDE color theme or default Joxy theme)
-		// in stead of the default colors
+		// instead of the default colors
 		table.putDefaults(Utils.getKDEColorMap());
 	}
 	
