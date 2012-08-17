@@ -3,7 +3,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class TestMenu extends JMenuBar {
@@ -39,6 +47,32 @@ public class TestMenu extends JMenuBar {
 		JMenu editMenu = new JMenu("Edit");
 		editMenu.setMnemonic(KeyEvent.VK_E);
 		editMenu.add(new JMenuItem("Settings", KeyEvent.VK_S));
+		JMenuItem changeLAFItem = new JMenuItem("Change LAF");
+		changeLAFItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK | Event.SHIFT_MASK));
+		changeLAFItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LookAndFeelInfo[] lafsinfo = UIManager.getInstalledLookAndFeels();
+				String[] lafs = new String[lafsinfo.length];
+				for (int i = 0; i < lafsinfo.length; i++) {
+					lafs[i] = lafsinfo[i].getName();
+				}
+				int result = JOptionPane.showOptionDialog(null, "Choose the LAF to use.", "The Joxytester - Change LAF",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+						lafs, null);
+				
+				if (result != JOptionPane.CLOSED_OPTION) {
+					try {
+						UIManager.setLookAndFeel(lafsinfo[result].getClassName());
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Something went wrong while setting that LAF. " +
+								"Message: (" + e1.getClass().getName() + "): \"" + e1.getMessage() + "\".",
+								"The Joxytester - Change LAF error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		editMenu.add(changeLAFItem);
 		this.add(editMenu);
 		// Tools
 		JMenu toolsMenu = new JMenu("Tools");
