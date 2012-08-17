@@ -284,6 +284,17 @@ public class TestGUI {
 		JInternalFrame window1 = new JInternalFrame("A window", true, true, true, true);
 		window1.setBounds(100, 100, 400, 300);
 		window1.setVisible(true);
+		JMenuBar menu = new JMenuBar();
+		JMenu menu1 = new JMenu("Foo");
+		menu1.add(new JMenuItem("Fooooooooooo"));
+		menu.add(menu1);
+		JMenu menu2 = new JMenu("Bar");
+		menu2.add(new JMenuItem("Baaaaaaaaaar"));
+		menu.add(menu2);
+		JMenu menu3 = new JMenu("Baz");
+		menu3.add(new JMenuItem("Baaaaaaaaaaz"));
+		menu.add(menu3);
+		window1.setJMenuBar(menu);
 		tab6.add(window1);
 		JInternalFrame window2 = new JInternalFrame("Another window", true, true, true, true);
 		window2.setBounds(300, 250, 400, 300);
