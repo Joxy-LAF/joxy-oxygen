@@ -24,6 +24,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
 import joxy.utils.JoxyGraphics;
+import joxy.utils.Output;
 
 /**
  * Class overriding the default TabbedPaneUI (BasicTabbedPaneUI) to provide a good
@@ -74,27 +75,9 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 						
 						boolean shouldOverflow = FORCE_SCROLL_OVERFLOW || ((JTabbedPane) c).getTabCount() > 3;
 						
-						if (e.getWheelRotation() == 1) {
-							int currentIndex = ((JTabbedPane) c).getSelectedIndex();
-							if (currentIndex == ((JTabbedPane) c).getTabCount() - 1) {
-								if (shouldOverflow) {
-									((JTabbedPane) c).setSelectedIndex(0);
-								}
-							} else {
-								((JTabbedPane) c).setSelectedIndex(currentIndex + 1);
-							}
-						}
-	
-						if (e.getWheelRotation() == -1) {
-							int currentIndex = ((JTabbedPane) c).getSelectedIndex();
-							if (currentIndex == 0) {
-								if (shouldOverflow) {
-									((JTabbedPane) c).setSelectedIndex(((JTabbedPane) c).getTabCount() - 1);
-								}
-							} else {
-								((JTabbedPane) c).setSelectedIndex(currentIndex - 1);
-							}
-						}
+						JTabbedPane tp = (JTabbedPane) c;
+						tp.setSelectedIndex(findFirstEnabledTabIndex(c, tp.getSelectedIndex() + e.getWheelRotation(),
+								e.getWheelRotation(), shouldOverflow));
 					}
 				}
 			}
@@ -105,6 +88,62 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		((JTabbedPane) c).setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
 
+	/**
+	 * Return the index of the first tab that is enabled from the tab at given index.
+	 * The first tab that is checked is the one at the given index, so if that tab
+	 * is enabled, the given index is returned.
+	 * 
+	 * When a tab is disabled, the index is incremented by the given step. This might
+	 * be negative of course. In doing so, the index will "overflow".
+	 * 
+	 * If no tab is enabled, -1 is returned.
+	 * 
+	 * If {@code mayOverflow == false}, the search will not "overflow".
+	 * 
+	 * @param c The JTabbedPane, used for checking if tabs are enabled.
+	 * @param startIndex Index to start search.
+	 * @param step Used in incrementing index.
+	 * @param mayOverflow Indicates if the search may overflow.
+	 * @return The index of an enabled tab, or -1 if all tabs are disabled.
+	 */
+	private int findFirstEnabledTabIndex(JComponent c, int startIndex, int step, boolean mayOverflow) {
+		int curIndex = startIndex;
+		int tabsChecked = 0;
+		JTabbedPane tp = (JTabbedPane) c;
+		
+		// do not allow too big step
+		step = step % tp.getTabCount();
+		
+		// check startindex
+		if (curIndex >= tp.getTabCount() && mayOverflow) {
+			curIndex = (curIndex - tp.getTabCount());
+		} else if (curIndex >= tp.getTabCount()) {
+			return curIndex - step;
+		} else if (curIndex < 0 && mayOverflow) {
+			curIndex = tp.getTabCount() + curIndex;
+		} else if (curIndex < 0) {
+			return curIndex - step;
+		}
+		
+		// start searching
+		while (!tp.isEnabledAt(curIndex) && tabsChecked < tp.getTabCount()) {
+			curIndex += step;
+			tabsChecked++;
+			if (curIndex >= tp.getTabCount() && mayOverflow) {
+				curIndex = (curIndex - tp.getTabCount());
+			} else if (curIndex >= tp.getTabCount()) {
+				curIndex -= step;
+				break;
+			} else if (curIndex < 0 && mayOverflow) {
+				curIndex = tp.getTabCount() + curIndex;
+			} else if (curIndex < 0) {
+				curIndex -= step;
+				break;
+			}
+		}
+		return (tp.isEnabledAt(curIndex) ? curIndex : -1);
+	}
+	
 	@Override
 	public void uninstallUI(JComponent c) {
 		super.uninstallUI(c);
