@@ -1,3 +1,5 @@
+package joxy.test;
+
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;

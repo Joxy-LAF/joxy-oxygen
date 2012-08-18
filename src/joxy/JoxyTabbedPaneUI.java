@@ -275,7 +275,9 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			v.paint(g, textRect);
 		} else {
 			// plain text
-			g2.setColor(tabPane.getForegroundAt(tabIndex));
+			g2.setColor((tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex))
+							? tabPane.getForegroundAt(tabIndex)
+							: tabPane.getBackgroundAt(tabIndex).brighter());
 
 			JoxyGraphics.drawString(g2, title, textRect.x, textRect.y + metrics.getAscent());
 		}

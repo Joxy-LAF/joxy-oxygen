@@ -1,3 +1,5 @@
+package joxy.test;
+
 import java.awt.event.*;
 import javax.swing.*;
 
