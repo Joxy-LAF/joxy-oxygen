@@ -202,6 +202,9 @@ public class Utils {
 			
 			// Desktop pane
 			"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
+			
+			// Tabbed pane
+			"TabbedPane.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 		};	
 		return colorMap;
 	}
