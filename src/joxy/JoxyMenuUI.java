@@ -186,19 +186,27 @@ public class JoxyMenuUI extends BasicMenuUI {
 		JMenuItem mi = (JMenuItem) c;
 		
 		Graphics2D g2 = (Graphics2D) g;
-
-		// draw the hover, with right side gradient
-		BufferedImage hoverImage = new BufferedImage(mi.getWidth(), mi.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics2D g2im = (Graphics2D) hoverImage.getGraphics();
-		g2im.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2im.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		MenuItemBackgroundPainter.paint(g2im, 2, 1, mi.getWidth() - 4, mi.getHeight() - 3, hoverAmount);
-		g2im.setComposite(AlphaComposite.DstIn);
-		GradientPaint gradient = new GradientPaint(mi.getWidth() - 30, 0, new Color(0, 0, 0, 255), mi.getWidth(), 0, new Color(0, 0, 0, 0));
-		g2im.setPaint(gradient);
-		g2im.fillRect(mi.getWidth() - 30, 0, 30, mi.getHeight());
-		g2.drawImage(hoverImage, 0, 0, null);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+
+		if (isTopLevelMenu()) {
+			// draw the hover
+			MenuItemBackgroundPainter.paint(g2, 2, 1, mi.getWidth() - 4, mi.getHeight() - 3, hoverAmount);
+		} else {
+			// draw the hover, with right side gradient
+			BufferedImage hoverImage = new BufferedImage(mi.getWidth(), mi.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+			Graphics2D g2im = (Graphics2D) hoverImage.getGraphics();
+			g2im.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2im.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			
+			MenuItemBackgroundPainter.paint(g2im, 2, 1, mi.getWidth() - 4, mi.getHeight() - 3, hoverAmount);
+			g2im.setComposite(AlphaComposite.DstIn);
+			GradientPaint gradient = new GradientPaint(mi.getWidth() - 30, 0, new Color(0, 0, 0, 255), mi.getWidth(), 0, new Color(0, 0, 0, 0));
+			g2im.setPaint(gradient);
+			g2im.fillRect(mi.getWidth() - 30, 0, 30, mi.getHeight());
+			g2.drawImage(hoverImage, 0, 0, null);
+		}
 		
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		
