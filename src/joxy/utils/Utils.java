@@ -168,6 +168,9 @@ public class Utils {
 			// Window colors
 			"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
 
+			// Tabbed pane
+			"TabbedPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+			
 			// Table
 			"Table.background", stringToColorUI("255,255,255"),
 			"Table.alternateRowColor", stringToColorUI("240,240,240"),
