@@ -68,8 +68,9 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 1, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
+		textField.setEchoChar('\u2022'); // it should be 25CF but Java doesn't render that
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
 	}
 	

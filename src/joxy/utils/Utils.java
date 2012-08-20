@@ -272,7 +272,7 @@ public class Utils {
 			"Tree.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			"Tree.paintLines", true,
 			// Password field settings
-			"PasswordField.echoChar", "o",
+			"PasswordField.echoChar", '\u2022',
 			// Slider settings
 			"Slider.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Menu settings
