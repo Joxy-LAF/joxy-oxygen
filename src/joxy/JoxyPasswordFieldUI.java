@@ -1,14 +1,17 @@
 package joxy;
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPasswordFieldUI;
 import javax.swing.text.*;
 
 import joxy.painter.InputFieldPainter;
+import joxy.utils.Utils;
 
 public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	/**
@@ -21,6 +24,34 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	 * The text field we are painting for.
 	 */
 	JPasswordField textField;
+	
+	/**
+	 * A {@link MouseListener} that clears the contents of the text field when
+	 * the clear button has been pressed.
+	 */
+	MouseListener clearListener;
+	
+	/**
+	 * A {@link DocumentListener} that hides the clear button if there is no
+	 * text in the text field.
+	 */
+	DocumentListener changeListener;
+	
+	/** Timer for the clear button animation */
+	private Timer clearButtonTimer;
+	
+	/**
+	 * The opacity of the clear button. 0 means non-visible, 255 is fully opaque.
+	 */
+	int clearButtonOpacity = 0;
+	
+	/**
+	 * For some reason it doesn't work to add the changeListener to the Document of
+	 * the text field in installListeners(). Therefore we do it in the paint method.
+	 * Of course it only needs to be added once, and therefore we use this variable.
+	 * TODO figure out why just using installListeners() doesn't work
+	 */
+	boolean changeListenerAdded = false;
 	
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -40,6 +71,97 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textField.setFont(UIManager.getFont("Button.font"));
 		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+	}
+	
+	@Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		clearListener = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// Clear the text if
+				// 1. the clear button is visible;
+				// 2. the click happened inside the clear button;
+				// 3. the text field is not an editor, for example in an editable JComboBox,
+				//    that manages its own borders et cetera;
+				// 4. the text field is editable (in fact, the clear button should not be
+				//    visible if the field is non-editable, but for some reason that still
+				//    happens).
+				if (clearButtonOpacity > 0 && e.getX() > textField.getWidth() - 20
+						          && textField.getClientProperty("joxy.isEditor") == null
+						          && textField.isEditable()) {
+					textField.setText("");
+				}
+			}
+		};
+		
+		textField.addMouseListener(clearListener);
+		
+		changeListener = new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateClearButton();
+			}
+			
+			private void updateClearButton() {
+				clearButtonTimer.start();
+			}
+		};
+		
+		createTimer();
+	}
+	
+	private void createTimer() {
+		clearButtonTimer = new Timer(40, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() > 0) {
+					clearButtonOpacity += 70;
+				} else {
+					clearButtonOpacity -= 70;
+				}
+				if (clearButtonOpacity > 255) {
+					clearButtonOpacity = 255;
+					clearButtonTimer.stop();
+				}
+				if (clearButtonOpacity < 0) {
+					clearButtonOpacity = 0;
+					clearButtonTimer.stop();
+				}
+				textField.repaint();
+			}
+		});
+		
+		// start the timer once, to ensure the button is visible if there is text
+		// in the text field initially
+		clearButtonTimer.start();
 	}
 	
 	@Override
@@ -322,7 +444,25 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	 */
 	@Override
 	protected void paintSafely(Graphics g) {
-		paintBackground(g);
+		
+		// see comment of changeListenerAdded
+		if (!changeListenerAdded) {
+			changeListenerAdded = true;
+			textField.getDocument().addDocumentListener(changeListener);
+		}
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		if (textField.isEditable() && textField.getClientProperty("joxy.isEditor") == null) {
+			paintBackground(g);
+			
+			if (clearButtonOpacity > 0) {
+				paintClearButton(g, clearButtonOpacity);
+			}
+		}
 		
 		Highlighter highlighter = textField.getHighlighter();
         Caret caret = textField.getCaret();
@@ -342,17 +482,31 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
         if (caret != null) {
             caret.paint(g);
         }
+        
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 	}
     
-    @Override
+	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-
 		InputFieldPainter.paint(g2, 1, 1, textField.getWidth() - 2, textField.getHeight() - 2);
-
-		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
     }
+    
+    private void paintClearButton(Graphics g, int opacity) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		// TODO this icon should be cached
+		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+		
+		if (clearIcon == null) {
+			return;
+		}
+		
+		clearIcon.paintIcon(textField, g2, textField.getWidth() - 18, textField.getHeight() / 2 - 8);
+		
+		// TODO this is ugly
+		g2.setColor(new Color(255, 255, 255, 255 - opacity));
+		g2.fillRect(textField.getWidth() - 18, textField.getHeight() / 2 - 8, 16, 16);
+	}
 }
