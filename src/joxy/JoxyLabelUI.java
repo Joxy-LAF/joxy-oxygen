@@ -117,7 +117,7 @@ public class JoxyLabelUI extends BasicLabelUI {
 	
 	@Override
 	protected void paintDisabledText(JLabel l, Graphics g, String s, int textX, int textY) {
-		g.setColor(UIManager.getColor("Button.foregroundInactive"));
+		g.setColor(UIManager.getColor("Button.disabledForeground"));
 		JoxyGraphics.drawString((Graphics2D) g, s, textX, textY);
 	}
 

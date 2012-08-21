@@ -146,9 +146,9 @@ public class Utils {
 		colorMap = new Object[] {
 			// Button colors
 			"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
+			"Button.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 			"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
 			"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			"Button.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 			"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
 			
 			// Window shadow
@@ -207,7 +207,7 @@ public class Utils {
 			"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
 			
 			// Tabbed pane
-			"TabbedPane.foregroundInactive", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+			"TabbedPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 		};	
 		return colorMap;
 	}
