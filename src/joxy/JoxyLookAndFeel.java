@@ -29,7 +29,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Define the version of Joxy */
-	private final String version = "0.1.0";
+	private final String version = "current";
 	/** Whether Joxy already has been installed in the UIManager. */
 	private static boolean isInstalled = false;
 	
