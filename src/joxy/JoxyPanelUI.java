@@ -1,5 +1,7 @@
 package joxy;
 
+import java.awt.Graphics;
+
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPanelUI;
@@ -18,6 +20,12 @@ public class JoxyPanelUI extends BasicPanelUI {
 		c.setOpaque(false);
 		JoxyPanelUI panelUI = new JoxyPanelUI();
 		return panelUI;
+	}
+	
+	@Override
+	public void paint(Graphics g, JComponent c) {
+		// TODO Auto-generated method stub
+		super.paint(g, c);
 	}
 
 }

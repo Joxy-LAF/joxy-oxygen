@@ -11,6 +11,8 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -32,8 +34,11 @@ public class TestGUI {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel("joxy.JoxyLookAndFeel");
+					
+					//UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceOfficeBlue2007LookAndFeel");
 					//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 					//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+					//UIManager.setLookAndFeel("net.sourceforge.napkinlaf.NapkinLookAndFeel");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -318,6 +323,50 @@ public class TestGUI {
 		tab6.add(window2);
 		
 		t.addTab("Internal frames", tab6);
+		
+		JPanel tab7 = new JPanel(new GridLayout(3, 3, 5, 5));
+		
+		// line border
+		JPanel border1 = new JPanel();
+		border1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tab7.add(border1);
+
+		// raised etched border
+		JPanel border2 = new JPanel();
+		border2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		tab7.add(border2);
+		
+		// lowered etched border
+		JPanel border3 = new JPanel();
+		border3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		tab7.add(border3);
+		
+		// raised bevel border
+		JPanel border4 = new JPanel();
+		border4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		tab7.add(border4);
+		
+		// lowered bevel border
+		JPanel border5 = new JPanel();
+		border5.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+		tab7.add(border5);
+
+		// soft raised bevel border
+		JPanel border6 = new JPanel();
+		border6.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED));
+		tab7.add(border6);
+		
+		// soft lowered bevel border
+		JPanel border7 = new JPanel();
+		border7.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.LOWERED));
+		tab7.add(border7);
+		
+		// titled border
+		JPanel border8 = new JPanel();
+		border8.setBorder(BorderFactory.createTitledBorder("Title"));
+		tab7.add(border8);
+		
+		t.addTab("Borders", tab7);
 	}
 	
 	/**
