@@ -208,6 +208,9 @@ public class Utils {
 			
 			// Tabbed pane
 			"TabbedPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+			
+			// Titled border
+			"TitledBorder.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 		};	
 		return colorMap;
 	}
@@ -279,6 +282,8 @@ public class Utils {
 			"Menu.menuPopupOffsetX", -4,
 			"Menu.menuPopupOffsetY", -4,
 			"Menu.submenuPopupOffsetX", -11,
+			// Titled border settings
+			"TitledBorder.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Special setting for Netbeans
 			"NbMainWindow.showCustomBackground", true,
 		};
