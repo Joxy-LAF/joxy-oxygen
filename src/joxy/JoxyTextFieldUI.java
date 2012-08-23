@@ -599,6 +599,8 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
         if (highlighter != null) {
             highlighter.paint(g);
         }
+
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         
         // paint the view hierarchy
         Rectangle alloc = getVisibleEditorRect();
@@ -610,8 +612,6 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
         if (caret != null) {
             caret.paint(g);
         }
-        
-        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 	}
 	
 	@Override
