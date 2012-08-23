@@ -2,11 +2,7 @@ package joxy.utils;
 
 import java.awt.Font;
 import java.awt.TrayIcon.MessageType;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,8 +10,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
+
+import joxy.border.JoxyBevelBorder;
 
 /**
  * General class providing basic utilities for the Joxy Look and Feel.
