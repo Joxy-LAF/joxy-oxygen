@@ -26,12 +26,6 @@ import joxy.utils.Utils;
  * @author Willem Sonke
  */
 public class JoxyTextFieldUI extends BasicTextFieldUI {
-
-	/**
-	 * The width and height of the arcs that form up
-	 * the corners of the rounded rectangles. 
-	 */
-	public static final int ARC = 8;
 	
 	/**
 	 * The text field we are painting for.
