@@ -207,7 +207,10 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		InputFieldPainter.paint(g2, 0, 0, textArea.getWidth(), textArea.getHeight());
-		TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textArea.getWidth(), textArea.getHeight(), focusAmount);
-		TextFieldHoverIndicatorPainter.paint(g2, 0, 0, textArea.getWidth(), textArea.getHeight(), Math.max(0, hoverAmount - focusAmount));
-    }
+		
+		if (textArea.isEnabled()) {
+			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textArea.getWidth(), textArea.getHeight(), focusAmount);
+			TextFieldHoverIndicatorPainter.paint(g2, 0, 0, textArea.getWidth(), textArea.getHeight(), Math.max(0, hoverAmount - focusAmount));
+		}
+	}
 }

@@ -594,9 +594,12 @@ hoverListener = new MouseListener() {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		InputFieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
-		TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), focusAmount);
-		TextFieldHoverIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), Math.max(0, hoverAmount - focusAmount));
-    }
+		
+		if (textField.isEnabled()) {
+			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), focusAmount);
+			TextFieldHoverIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), Math.max(0, hoverAmount - focusAmount));
+		}
+	}
     
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
