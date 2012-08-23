@@ -48,7 +48,6 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 	private boolean hovered = false;
 	
 	public static ComponentUI createUI(JComponent c) {
-		//c.setOpaque(false);
 		return new JoxyTextAreaUI(c);
 	}
 	
