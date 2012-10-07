@@ -119,12 +119,26 @@ public class JoxyListUI extends BasicListUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
         Object value = dataModel.getElementAt(row);
+
+        Component rendererComponent = cellRenderer.getListCellRendererComponent(list, value, row, selModel.isSelectedIndex(row), false);
         
         int cx = rowBounds.x;
         int cy = rowBounds.y;
         int cw = rowBounds.width;
         int ch = rowBounds.height;
-		
+
+        // If this is a list in a file dialog, shrink the renderer to preferred
+        // size such that selection is only shown around the file name, instead of
+        // across the whole list cell.
+        if (list.getClientProperty("List.isFileList") != null &&
+        		list.getClientProperty("List.isFileList").equals(Boolean.TRUE)) {
+            int w = Math.min(cw, rendererComponent.getPreferredSize().width + 4);
+            if (!list.getComponentOrientation().isLeftToRight()) {
+                cx += (cw - w);
+            }
+            cw = w;
+        }
+        
         // hover effect
 		if (row == hoveredRow) {
 			// TODO take these colours from KDE configuration
@@ -150,8 +164,11 @@ public class JoxyListUI extends BasicListUI {
 			g2.setStroke(new BasicStroke(1));
 			g2.draw(new RoundRectangle2D.Float(cx, cy, cw, ch, 6, 6));
 		}
-
-        Component rendererComponent = cellRenderer.getListCellRendererComponent(list, value, row, selModel.isSelectedIndex(row), false);
+        // Also if we don't have our default Joxy renderer, at least try to allow
+        // the hover and selection effects to be visible
+        if (rendererComponent instanceof JComponent) {
+        	((JComponent) rendererComponent).setOpaque(false);
+        }
         
         rendererPane.paintComponent(g, rendererComponent, list, cx, cy, cw, ch, true);
     }
