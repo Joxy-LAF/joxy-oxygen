@@ -27,8 +27,7 @@ import joxy.utils.JoxyGraphics;
 import joxy.utils.Output;
 
 /**
- * Class overriding the default TabbedPaneUI (BasicTabbedPaneUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JTabbedPane.
  * 
  * @author Thom Castermans
  * @author Willem Sonke

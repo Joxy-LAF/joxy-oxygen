@@ -8,13 +8,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
-
-import joxy.border.JoxyBevelBorder;
 
 /**
  * General class providing basic utilities for the Joxy Look and Feel.
@@ -266,6 +264,7 @@ public class Utils {
 			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// List settings
 			"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			//"List.cellRenderer", new DefaultListCellRenderer.UIResource(),
 			// Menu settings
 			"MenuItem.highlight", getKDEConfigValue(kdeConfigLines, "[Style]", "MenuHighlightMode"),
 			// ToolTip settings
