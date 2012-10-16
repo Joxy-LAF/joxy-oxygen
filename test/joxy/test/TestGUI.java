@@ -228,7 +228,7 @@ public class TestGUI {
 		vect.add("... a ...");
 		vect.add("... JList.");
 		JList list = new JList(vect);
-		t.addTab("JList", list);
+		t.addTab("JList", new JScrollPane(list));
 		
 		tab2.setLayout(new BoxLayout(tab2, BoxLayout.PAGE_AXIS));
 		t.addTab("JScrollPane", new JScrollPane(tab2));
