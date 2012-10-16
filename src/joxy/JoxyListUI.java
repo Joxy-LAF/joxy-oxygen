@@ -199,13 +199,18 @@ public class JoxyListUI extends BasicListUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		InputFieldPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
+        Rectangle vp = list.getVisibleRect();
+        
+		InputFieldPainter.paint(g2, vp.x, vp.y, vp.width, vp.height);
 		
+		Shape oldClip = g2.getClip();
+		g2.setClip(vp.x + 2, vp.y + 2, vp.width - 4, vp.height - 5);
 		super.paint(g2, c); // this also paints the contents of the list
+		g2.setClip(oldClip);
 		
 		if (c.isEnabled()) {
-			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight(), focusAmount);
-			TextFieldHoverIndicatorPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight(), Math.max(0, hoverAmount - focusAmount));
+			TextFieldFocusIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, focusAmount);
+			TextFieldHoverIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, Math.max(0, hoverAmount - focusAmount));
 		}
 		
 		// TODO the background and focus indicator scroll with the content if the JList is in a JScrollPane
