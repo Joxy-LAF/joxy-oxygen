@@ -126,10 +126,9 @@ public class TestGUI {
 		tab1.add(new JTextField("Some text field..."));
 		tab1.add(new JToggleButton("A toggle button"));
 		Vector<String> items = new Vector<String>();
-		items.add("An item");
-		items.add("Another item");
-		items.add("Still another item");
-		items.add("The last item");
+		for (int i = 0; i < 20; i++) {
+			items.add("This is item " + i);
+		}
 		tab1.add(new JComboBox(items));
 		JComboBox box = new JComboBox(items);
 		box.setEditable(true);
