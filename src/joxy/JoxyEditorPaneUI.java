@@ -198,12 +198,14 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+
+		Rectangle vr = editor.getVisibleRect();
 		
-		InputFieldPainter.paint(g2, 0, 0, editor.getWidth(), editor.getHeight());
+		InputFieldPainter.paint(g2, 0, 0, vr.width, vr.height);
 		
 		if (editor.isEnabled()) {
-			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, editor.getWidth(), editor.getHeight(), focusAmount);
-			TextFieldHoverIndicatorPainter.paint(g2, 0, 0, editor.getWidth(), editor.getHeight(), Math.max(0, hoverAmount - focusAmount));
+			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);
+			TextFieldHoverIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, Math.max(0, hoverAmount - focusAmount));
 		}
     }
 }
