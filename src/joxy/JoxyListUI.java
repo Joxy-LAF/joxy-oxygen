@@ -79,7 +79,7 @@ public class JoxyListUI extends BasicListUI {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				hoveredRow = SwingUtilities2.loc2IndexFileList(list, e.getPoint());
+				updateHoveredRow(e);
 				list.repaint();
 				
 				hovered = true;
@@ -100,7 +100,7 @@ public class JoxyListUI extends BasicListUI {
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				hoveredRow = SwingUtilities2.loc2IndexFileList(list, e.getPoint());
+				updateHoveredRow(e);
 				list.repaint();
 			}
 			
@@ -126,6 +126,10 @@ public class JoxyListUI extends BasicListUI {
 		list.addFocusListener(focusListener);
 		
 		createTimers();
+	}
+
+	private void updateHoveredRow(MouseEvent e) {
+		hoveredRow = SwingUtilities2.loc2IndexFileList(list, e.getPoint());
 	}
 	
 	private void createTimers() {
@@ -200,20 +204,22 @@ public class JoxyListUI extends BasicListUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
         Rectangle vp = list.getVisibleRect();
-        
-		InputFieldPainter.paint(g2, vp.x, vp.y, vp.width, vp.height);
-		
-		Shape oldClip = g2.getClip();
-		g2.setClip(vp.x + 2, vp.y + 2, vp.width - 4, vp.height - 5);
-		super.paint(g2, c); // this also paints the contents of the list
-		g2.setClip(oldClip);
-		
-		if (c.isEnabled()) {
-			TextFieldFocusIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, focusAmount);
-			TextFieldHoverIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, Math.max(0, hoverAmount - focusAmount));
+
+		if (list.getName() != null && list.getName().equals("ComboBox.list")) {
+			super.paint(g2, c); // this also paints the contents of the list
+		} else {
+			InputFieldPainter.paint(g2, vp.x, vp.y, vp.width, vp.height);
+			
+			Shape oldClip = g2.getClip();
+			g2.setClip(vp.x + 2, vp.y + 2, vp.width - 4, vp.height - 5);
+			super.paint(g2, c); // this also paints the contents of the list
+			g2.setClip(oldClip);
+			
+			if (c.isEnabled()) {
+				TextFieldFocusIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, focusAmount);
+				TextFieldHoverIndicatorPainter.paint(g2, vp.x, vp.y, vp.width, vp.height, Math.max(0, hoverAmount - focusAmount));
+			}
 		}
-		
-		// TODO the background and focus indicator scroll with the content if the JList is in a JScrollPane
 	}
     
     @Override
