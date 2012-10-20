@@ -201,7 +201,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 
 		Rectangle vr = editor.getVisibleRect();
 		
-		InputFieldPainter.paint(g2, 0, 0, vr.width, vr.height);
+		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		if (editor.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);

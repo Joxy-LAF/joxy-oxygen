@@ -208,7 +208,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		
 		Rectangle vr = textArea.getVisibleRect();
 		
-		InputFieldPainter.paint(g2, 0, 0, vr.width, vr.height);
+		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		if (textArea.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);
