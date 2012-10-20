@@ -233,7 +233,9 @@ public class TestGUI {
 		t.addTab("JScrollPane", new JScrollPane(tab2));
 		
 		t.addTab("JEditorPane", new JEditorPane("", "This is a test with a JEditorPane. It needs some work as you can see..."));
-		t.addTab("JEditorPane with HTML", new JEditorPane("text/html", "<html><head><title>Joxy!!!</title></head><body>Hi! This is an HTML page.<br><br><font face=\"DejaVu Sans\">testing... testing...</font></body></html>"));
+		t.addTab("JEditorPane with HTML", new JEditorPane("text/html", "<html><head><title>Joxy!!!</title></head><body>Hi! This is an HTML page.<br><br>" +
+				"<font face=\"DejaVu Sans\">This text is written in another font.</font><br><br>" +
+				"<font color=green>This text is written in another color.</font></body></html>"));
 		
 		frame.add(t, BorderLayout.CENTER);
 		
@@ -280,24 +282,44 @@ public class TestGUI {
 		
 		t.addTab("A JSplitPane", new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JButton("left"), new JButton("right")));
 		
-		JPanel tab5 = new JPanel();
+		JPanel tab5 = new JPanel(new GridLayout(3, 3));
 		
-		JTextField editor1 = new JTextField("JTextField, default");
-		tab5.add(editor1);
+		tab5.add(new JLabel());
+		tab5.add(new JLabel("opaque"));
+		tab5.add(new JLabel("non-opaque"));
 		
-		JTextField editor2 = new JTextField("JTextField, opaque = false");
+		String text = "This is quite a long text in a JTextArea. ";
+		text += text;
+		text += text;
+		text += text;
+		text += text;
+		text += text;
+		
+		tab5.add(new JLabel("editable"));
+		JTextArea editor1 = new JTextArea(text);
+		editor1.setLineWrap(true);
+		editor1.setWrapStyleWord(true);
+		tab5.add(new JScrollPane(editor1));
+		JTextArea editor2 = new JTextArea(text);
+		editor2.setLineWrap(true);
+		editor2.setWrapStyleWord(true);
 		editor2.setOpaque(false);
-		tab5.add(editor2);
+		tab5.add(new JScrollPane(editor2));
 		
-		JTextField editor3 = new JTextField("JTextField, editable = false");
+		tab5.add(new JLabel("non-editable"));
+		JTextArea editor3 = new JTextArea(text);
+		editor3.setLineWrap(true);
+		editor3.setWrapStyleWord(true);
 		editor3.setEditable(false);
-		tab5.add(editor3);
+		tab5.add(new JScrollPane(editor3));
+		JTextArea editor4 = new JTextArea(text);
+		editor4.setLineWrap(true);
+		editor4.setWrapStyleWord(true);
+		editor4.setOpaque(false);
+		editor4.setEditable(false);
+		tab5.add(new JScrollPane(editor4));
 		
-		JTextField editor4 = new JTextField("JTextField, with border");
-		editor4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		tab5.add(editor4);
-		
-		t.addTab("Editor components", tab5);
+		t.addTab("Text components", tab5);
 		
 		JDesktopPane tab6 = new JDesktopPane();
 		
