@@ -264,7 +264,7 @@ public class JoxyMenuUI extends BasicMenuUI {
 			
 			// draw arrow
 			g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-			g2.setColor(Color.BLACK);
+			g2.setColor(mi.getModel().isEnabled() ? Color.BLACK : UIManager.getColor("Button.disabledForeground"));
 			g2.setStroke(new BasicStroke(1.25f));
 			
 			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMinY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
