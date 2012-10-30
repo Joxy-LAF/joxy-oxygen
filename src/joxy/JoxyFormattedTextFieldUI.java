@@ -585,10 +585,10 @@ public class JoxyFormattedTextFieldUI extends BasicFormattedTextFieldUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		if (textField.isEditable() && textField.getClientProperty("joxy.isEditor") == null) {
+		if (textField.getClientProperty("joxy.isEditor") == null) {
 			paintBackground(g);
 			
-			if (clearButtonOpacity > 0) {
+			if (textField.isEditable() && clearButtonOpacity > 0) {
 				paintClearButton(g, clearButtonOpacity);
 			}
 		}
