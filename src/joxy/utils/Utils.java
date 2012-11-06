@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
@@ -594,5 +592,14 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Returns whether Joxy is the current look and feel.
+	 * @return Whether Joxy is the look and feel.
+	 */
+	public static boolean isJoxyActive() {
+		LookAndFeel laf = UIManager.getLookAndFeel();
+		return laf != null && laf.getName().equals("Joxy");
 	}
 }
