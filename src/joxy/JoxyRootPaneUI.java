@@ -94,6 +94,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		
 		// determine colors to use
 		Color color = UIManager.getColor("Window.background");
+		assert color != null : "Wait, Window.background is null?";
 
 		// draw linear gradient
 		BufferedImage gradient = backgroundCache.get(c.getHeight());
@@ -189,6 +190,9 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	}
 	
 	public static Color getBackgroundRadialColor(Color baseColor) {
+		
+		assert baseColor != null;
+		
 		Color out = new Color(0, 0, 0);
 		
 		//if (ColorUtils.lowThreshold(baseColor)) {

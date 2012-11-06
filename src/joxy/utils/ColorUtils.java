@@ -58,7 +58,14 @@ public class ColorUtils {
 		return ColorUtils.shade(color, lumaAmount, 0.0f);
 	}
 	
+	/**
+	 * Returns the luminance of the given Java color.
+	 * @param color The color to determine the luminance of, non-null.
+	 * @return The luminance.
+	 */
 	public static float luma(Color color) {
+		assert color != null;
+		
 		HCYColor c = new HCYColor(color);
 		return c.getY();
 	}
@@ -78,6 +85,9 @@ public class ColorUtils {
 	 * Shade the color based on a ShadeRole.
 	 */
 	public static Color shadeScheme(Color color, ShadeRoles role, float contrast, float chromaAdjust) {
+
+		assert color != null;
+		
 		contrast = (1.0f > contrast ? (-1.0f < contrast ? contrast : -1.0f) : 1.0f);
 		float y = luma(color);
 		float yi = 1.0f - y;

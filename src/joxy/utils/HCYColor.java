@@ -20,8 +20,13 @@ public class HCYColor {
 	
 	/**
 	 * Generates a HCYColor out of a simple Java (RGB) color.
+	 * 
+	 * @param color The Java RGB color, non-null.
 	 */
 	public HCYColor(Color color) {
+		
+		assert color != null;
+		
 		float r = gamma(color.getRed() / 255.0f);
 		float g = gamma(color.getGreen() / 255.0f);
 		float b = gamma(color.getBlue() / 255.0f);
