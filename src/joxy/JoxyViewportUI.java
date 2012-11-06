@@ -22,6 +22,9 @@ public class JoxyViewportUI extends BasicViewportUI {
 	
 	@Override
 	public void paint(Graphics g, JComponent c) {
+		
+		// TODO handle Joxy's custom border painting
+		
 		super.paint(g, c);
 	}
 

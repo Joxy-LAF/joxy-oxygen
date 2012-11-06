@@ -1,8 +1,14 @@
 package joxy;
 
+import java.awt.*;
+
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTableUI;
+
+import joxy.painter.InputFieldPainter;
+import joxy.painter.TextFieldFocusIndicatorPainter;
+import joxy.painter.TextFieldHoverIndicatorPainter;
 
 public class JoxyTableUI extends BasicTableUI {
 	

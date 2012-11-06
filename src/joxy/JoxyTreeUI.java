@@ -5,12 +5,16 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+import joxy.painter.InputFieldPainter;
+import joxy.painter.TextFieldFocusIndicatorPainter;
+import joxy.painter.TextFieldHoverIndicatorPainter;
 import joxy.utils.Utils;
 
 /**
@@ -32,6 +36,31 @@ public class JoxyTreeUI extends BasicTreeUI {
 		renderer.setOpenIcon(Utils.getOxygenIcon("places/folder", 16));
 		renderer.setLeafIcon(Utils.getOxygenIcon("mimetypes/application-x-zerosize", 16));
 		tree.setCellRenderer(renderer);
+		
+		tree.setOpaque(false);
+		tree.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+	}
+	
+	@Override
+	public void paint(Graphics g, JComponent c) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	
+	    Rectangle vr = tree.getVisibleRect();
+	
+		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		
+		Shape oldClip = g2.getClip();
+		g2.setClip(vr.x + 2, vr.y + 2, vr.width - 4, vr.height - 5);
+		super.paint(g2, c); // this also paints the contents of the list
+		g2.setClip(oldClip);
+		
+		if (c.isEnabled()) {
+			//TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);
+			//TextFieldHoverIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, Math.max(0, hoverAmount - focusAmount));
+		}
 	}
 	
 	@Override
