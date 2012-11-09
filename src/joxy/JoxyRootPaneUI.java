@@ -11,14 +11,14 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import joxy.utils.ColorUtils;
+import joxy.utils.Output;
 import joxy.utils.ColorUtils.ShadeRoles;
+import joxy.utils.Utils;
 
 /**
  * Class overriding the default Rootpane (BasicRootpaneUI) to provide a good
@@ -87,6 +87,17 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
+		// Bug 12: some applications (breaking the API) create a JFrame and apply the LAF thereafter.
+		// That means that JoxyRootPaneUI will be applied already, coinciding with other LAF components,
+		// for example Metal. Most worrying, all kinds of stuff can happen to the defaults. Therefore
+		// we check if the LAF is Joxy, and if not, we update the component tree ourselves.
+		if (!Utils.isJoxyActive()) {
+			Output.warning("Application created the JRootPane after setting the LAF, but without using \n" +
+					"SwingUtilities.updateComponentTreeUI(frame). Joxy will do that now.");
+			SwingUtilities.updateComponentTreeUI(c);
+			return;
+		}
+		
 		// speed is important here
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 		
@@ -94,7 +105,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		
 		// determine colors to use
 		Color color = UIManager.getColor("Window.background");
-		assert color != null : "Wait, Window.background is null?";
 
 		// draw linear gradient
 		BufferedImage gradient = backgroundCache.get(c.getHeight());

@@ -53,6 +53,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 
 	@Override
 	public String getName() {
+		// Note: do not change this without changing Utils.isJoxyActive()
 		return "Joxy";
 	}
 
