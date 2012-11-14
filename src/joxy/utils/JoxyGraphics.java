@@ -36,10 +36,8 @@ public class JoxyGraphics {
 				System.loadLibrary("joxy");
 				couldInitializeNative = true;
 			} catch (Throwable t) {
-				Output.warning("Native text rendering requested (joxy.utils.JoxyGraphics.NATIVE_TEXT_RENDERING == true), " +
-						"but could not initialize the native library code. Native text rendering will be switched off " +
-						"and the exception will be printed now.\n\n");
-				t.printStackTrace();
+				Output.warning("Native text rendering requested (joxy.utils.JoxyGraphics.NATIVE_TEXT_RENDERING == true),\n" +
+						"but could not initialize the native library code. Joxy will fallback on Java text rendering.");
 			}
 			
 			if (couldInitializeNative) {

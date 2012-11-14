@@ -15,8 +15,6 @@ import joxy.painter.InputFieldPainter;
  * Class overriding the default Spinner (BasicSpinnerUI) to provide a good
  * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
  * 
- * [ws] TODO I suppose that to style the editor field, we need to implement the JFormattedTextField.
- * 
  * @author Thom Castermans
  * @author Willem Sonke
  */

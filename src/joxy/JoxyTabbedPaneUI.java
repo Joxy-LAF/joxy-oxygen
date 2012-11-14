@@ -204,7 +204,6 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		// TODO ook andere orientaties ondersteunen
 		paintContentBorderTabsTop(g2, selectedIndex, x, y, w, h);
 	}
 
@@ -357,11 +356,8 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	@Override
 	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex,
 			int x, int y, int w, int h, boolean isSelected) {
-		//super.paintTabBorder(g, tabPlacement, tabIndex, x, y, w, h, isSelected);
 		
-		// TODO implementeren :-D
-		
-		// Tijd om te prutsen! Jeej!
+		// TODO at the moment, only tabs on top are supported
 		
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -369,7 +365,6 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
 		if (isSelected) {
-			// momenteel denk ik alleen nog even TOP doen, kan de rest later :-)
 			switch (tabPlacement) {
 			case TOP:
 				Shape previousClip = g2.getClip();

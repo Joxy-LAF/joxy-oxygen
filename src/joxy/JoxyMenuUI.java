@@ -269,8 +269,6 @@ public class JoxyMenuUI extends BasicMenuUI {
 			
 			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMinY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
 			g2.draw(new Line2D.Double(arrowRect.getMinX(), arrowRect.getMaxY(), arrowRect.getMaxX(), arrowRect.getCenterY()));
-			
-			// TODO paint the "fading" effect of the highlight instead of the normal one
 		}
 	}
 
