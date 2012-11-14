@@ -29,6 +29,8 @@ import joxy.utils.Output;
 /**
  * Joxy's UI delegate for the JTabbedPane.
  * 
+ * <p>This is not complete yet; only tabs on top work reasonably well.</p>
+ * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
@@ -88,7 +90,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * Return the index of the first tab that is enabled from the tab at given index.
+	 * Returns the index of the first tab that is enabled from the tab at given index.
 	 * The first tab that is checked is the one at the given index, so if that tab
 	 * is enabled, the given index is returned.
 	 * 

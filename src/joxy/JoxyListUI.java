@@ -18,7 +18,7 @@ import sun.swing.SwingUtilities2;
  * Joxy's UI delegate for the JList.
  * 
  * <p>The JoxyListUI supports animations for the focus and hovered states.
- * See JoxyButtonUI for more details.</p>
+ * See {@link JoxyButtonUI} for more details.</p>
  * 
  * <p>JoxyListUI also handles painting the hover and selected states of
  * the list elements. To be able to know which element is hovered, an additional

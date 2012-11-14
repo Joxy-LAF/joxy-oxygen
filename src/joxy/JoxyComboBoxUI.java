@@ -8,9 +8,24 @@ import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.*;
+import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 
 import joxy.painter.*;
 
+/**
+ * Joxy's UI delegate for the JComboBox.
+ * 
+ * <p>A combo box can be either editable or non-editable, and Joxy draws both variants
+ * differently, just like KDE does. A non-editable combo box looks like a JButton; an
+ * editable combo box looks like a JTextField.</p>
+ * 
+ * <p>In both variants, it is possible to use the scroll wheel to traverse through the
+ * options. This is done by adding a {@link ScrollListener}.</p>
+ * 
+ * <p>The JoxyComboBoxUI supports animations for the focus and hovered states, but only
+ * for non-editable combo boxes. See JoxyButtonUI for more details. Support for those
+ * animations on editable combo boxes is planned.</p>
+ */
 public class JoxyComboBoxUI extends BasicComboBoxUI {
 	
 	/** The width and height of the arcs that form up

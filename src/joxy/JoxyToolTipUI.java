@@ -3,9 +3,7 @@ package joxy;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JToolTip;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicToolTipUI;
@@ -13,6 +11,17 @@ import javax.swing.text.View;
 
 import joxy.utils.JoxyGraphics;
 
+/**
+ * Joxy's UI delegate for the JToolTip.
+ * 
+ * <p>This class only distributes one shared instance to all JToolTips, to prevent many
+ * instances of this class being generated.</p>
+ * 
+ * <p>Joxy draws JToolTips customly, such that they can be semi-transparent.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyToolTipUI extends BasicToolTipUI {
 	
 	/**

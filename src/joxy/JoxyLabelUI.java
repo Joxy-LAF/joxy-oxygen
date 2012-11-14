@@ -21,11 +21,9 @@ import joxy.utils.JoxyGraphics;
 
 
 /**
- * Class overriding the default LabelUI (BasicLabelUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JLabel.
  * 
- * @author Thom Castermans
- * @author Willem Sonke
+ * <p>This delegate handles both HTML and non-HTML labels properly.</p>
  */
 public class JoxyLabelUI extends BasicLabelUI {
 	/**
@@ -39,7 +37,6 @@ public class JoxyLabelUI extends BasicLabelUI {
     private Rectangle paintTextR = new Rectangle();
 	
 	public static ComponentUI createUI(JComponent c) {
-		//c.setOpaque(false); // [ws] This caused bugs in other components, unfortunately
 		JoxyLabelUI ui = new JoxyLabelUI();
 		return ui;
 	}

@@ -16,7 +16,6 @@ import joxy.painter.FocusIndicatorPainter;
 import joxy.painter.HoverIndicatorPainter;
 import joxy.utils.JoxyGraphics;
 
-
 /**
  * Joxy's UI delegate for the JCheckBox.
  * 

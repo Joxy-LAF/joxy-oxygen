@@ -12,8 +12,7 @@ import javax.swing.plaf.basic.BasicSpinnerUI;
 import joxy.painter.InputFieldPainter;
 
 /**
- * Class overriding the default Spinner (BasicSpinnerUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JSpinner.
  * 
  * @author Thom Castermans
  * @author Willem Sonke

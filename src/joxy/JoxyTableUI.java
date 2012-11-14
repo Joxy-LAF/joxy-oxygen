@@ -10,6 +10,15 @@ import joxy.painter.InputFieldPainter;
 import joxy.painter.TextFieldFocusIndicatorPainter;
 import joxy.painter.TextFieldHoverIndicatorPainter;
 
+/**
+ * Joxy's UI delegate for the JTable.
+ * 
+ * <p>This is only a stub; the striped rows are done by setting the <i>Table.alternateRowColor</i>
+ * default.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyTableUI extends BasicTableUI {
 	
 	public static ComponentUI createUI(JComponent c) {

@@ -13,9 +13,10 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
 /**
- * General class providing basic utilities for the Joxy Look and Feel.
- * Note: this should become kind-of the public API for application developers wishing to improve
- * their application's LAF when using Joxy. But at the moment it contains primarily internals...
+ * A general class providing basic utilities for the Joxy Look and Feel.
+ * 
+ * <p>Note: this should become kind-of the public API for application developers wishing to improve
+ * their application's LAF when using Joxy. But at the moment it contains primarily internals...</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke

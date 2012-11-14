@@ -631,16 +631,21 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		}
     }
     
+	/**
+	 * Paints the clear button of a text field.
+	 * @param g The Graphics object to draw with.
+	 * @param opacity The opacity, between 0 and 255. This is used for the fading animation.
+	 */
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		if (clearIcon == null) {
 			return;
 		}
 		
 		clearIcon.paintIcon(textField, g2, textField.getWidth() - 20, textField.getHeight() / 2 - 8);
 		
-		// TODO this is ugly
+		// TODO This is ugly; it should be possible to paint the image with opacity
 		g2.setColor(new Color(255, 255, 255, 255 - opacity));
 		g2.fillRect(textField.getWidth() - 20, textField.getHeight() / 2 - 8, 16, 16);
 	}

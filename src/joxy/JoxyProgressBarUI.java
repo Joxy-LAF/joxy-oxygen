@@ -13,6 +13,12 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 import joxy.painter.ProgressBarIndicator;
 import joxy.painter.DarkEngravingPainter;
 
+/**
+ * Joxy's UI delegate for the JProgressBar.
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyProgressBarUI extends BasicProgressBarUI {
 
 	public static ComponentUI createUI(JComponent c) {

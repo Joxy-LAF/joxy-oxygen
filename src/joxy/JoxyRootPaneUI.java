@@ -21,14 +21,22 @@ import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.Utils;
 
 /**
- * Class overriding the default Rootpane (BasicRootpaneUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JRootPaneUI.
+ * 
+ * <p>This class is responsible for drawing the radial background of windows.
+ * Several ways of caching are used, since this is done very often. See {@link #backgroundCache}
+ * and {@link #radialGradient600px}.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
 public class JoxyRootPaneUI extends BasicRootPaneUI {
 	
+	/**
+	 * This is a correction to the contrast, to let the radial background look better.
+	 * @deprecated The radial background now is that good that this isn't needed anymore.
+	 */
+	@Deprecated
 	public static final float CONTRAST_ADJUSTMENT = 0f;
 	
 	/**

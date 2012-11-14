@@ -9,6 +9,14 @@ import javax.swing.JInternalFrame;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+/**
+ * Joxy's UI delegate for the JInternalFrame.
+ * 
+ * <p>This is only a stub.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyInternalFrameUI extends BasicInternalFrameUI {
 
 	public static ComponentUI createUI(JComponent c) {

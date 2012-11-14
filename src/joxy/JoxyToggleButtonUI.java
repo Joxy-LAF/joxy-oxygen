@@ -28,6 +28,15 @@ import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.JoxyGraphics;
 import joxy.utils.TileSet;
 
+/**
+ * Joxy's UI delegate for the JToggleButton.
+ * 
+ * <p>This class is largely copied from {@link JoxyButtonUI}, but note that
+ * a "selected" toggle button looks different from a "pressed" button.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 	
 	/** The width and height of the arcs that form up
