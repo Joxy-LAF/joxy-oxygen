@@ -67,6 +67,11 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	private boolean hovered = false;
 	
 	/**
+	 * The icon to use for the clear button.
+	 */
+	private static ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+	
+	/**
 	 * For some reason it doesn't work to add the changeListener to the Document of
 	 * the text field in installListeners(). Therefore we do it in the paint method.
 	 * Of course it only needs to be added once, and therefore we use this variable.
@@ -628,9 +633,6 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
     
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
-		// TODO this icon should be cached
-		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
 		
 		if (clearIcon == null) {
 			return;
