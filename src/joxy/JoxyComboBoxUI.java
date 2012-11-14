@@ -243,7 +243,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		InputFieldPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
+		InputFieldPainter.paint(g2, 0, 0, comboBox.getWidth(), comboBox.getHeight());
 	}
 	
 	@Override
