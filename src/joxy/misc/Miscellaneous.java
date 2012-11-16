@@ -10,8 +10,7 @@ import javax.swing.UIManager;
 
 /**
  * Class with some miscelleaneous methods, for example a method to list
- * all keys to be used in the UIManger defaults table.
- * This class should not be part of the public release.
+ * all keys to be used in the UIManager defaults table.
  * 
  * @author Thom Castermans
  * @author Willem Sonke

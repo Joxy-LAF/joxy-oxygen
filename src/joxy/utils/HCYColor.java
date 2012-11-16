@@ -3,8 +3,12 @@ package joxy.utils;
 import java.awt.Color;
 
 /**
- * This class represents a color in the HCY-model.
- * It is part of the Joxy Look and Feel.
+ * This class represents a color in the HCY (hue, chroma, luma) color model.
+ * KDE uses this model internally to modify colors, and this class allows Joxy
+ * to do the same.
+ * 
+ * <p>The logic for many methods of this class is taken from KDE's HCY color
+ * implementation.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -119,13 +123,6 @@ public class HCYColor {
 		else
 			return new Color(inverseGamma(tp), inverseGamma(tn), inverseGamma(to), a / 255.0f);
 	}
-	
-	/**
-	 * Yet another weird gamma function :D
-	 */
-	public static float inverseGamma(float n) {
-		return (float) Math.pow(normalize(n), 1.0/2.2);
-	}
 
 	/**
 	 * Gamma function.
@@ -135,7 +132,14 @@ public class HCYColor {
     }
 	
 	/**
-	 * Some sort of modulo-function.
+	 * Inverse gamma function, see {@link #gamma(float)}.
+	 */
+	public static float inverseGamma(float n) {
+		return (float) Math.pow(normalize(n), 1.0/2.2);
+	}
+	
+	/**
+	 * Wraps a value to the range [0, d].
 	 */
 	public static float wrap(float n, float d) {
 		float r = n % d;
@@ -143,7 +147,7 @@ public class HCYColor {
 	}
 	
 	/**
-	 * Some sort of modulo 1.0-function.
+	 * Wraps a value to the range [0, 1].
 	 */
 	public static float wrap(float n) {
 		return wrap(n, 1.0f);
@@ -151,7 +155,11 @@ public class HCYColor {
 
 	
 	/**
-	 * Outputs
+	 * Normalizes the input, that means, map values lower than 0 to 0, and map values
+	 * higher than 1 to 1.
+	 * 
+	 * @param The input number.
+	 * @return The following value:
 	 * <ul>
 	 *   <li>0 if n < 0;</li>
 	 *   <li>n if 0 < n < 1;</li>
@@ -161,34 +169,36 @@ public class HCYColor {
 	public static float normalize(float n) {
 		return (float) (n < 1.0 ? (n > 0.0 ? n : 0.0) : 1.0);
 	}
-
+	
+	/**
+	 * TODO documentation
+	 */
 	public static float lumag(float r, float g, float b) {
 	    return r*yc[0] + g*yc[1] + b*yc[2];
 	}
 
 	//-- GETTERS AND SETTERS --
-	public float getY() {
+	float getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+	void setY(float y) {
 		this.y = y;
 	}
 
-	public float getC() {
+	float getC() {
 		return c;
 	}
 
-	public void setC(float c) {
+	void setC(float c) {
 		this.c = c;
 	}
 
-	public float getH() {
+	float getH() {
 		return h;
 	}
 
-	public void setH(float h) {
+	void setH(float h) {
 		this.h = h;
 	}
-	
 }
