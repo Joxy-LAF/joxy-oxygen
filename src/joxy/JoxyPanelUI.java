@@ -20,7 +20,11 @@ import joxy.border.JoxyTitledBorder;
  */
 public class JoxyPanelUI extends BasicPanelUI {
 	
-	Border oldBorder;
+	/**
+	 * The old border (from before the new Joxy border was applied).
+	 * If this is <code>null</code>, the border has not been swapped.
+	 */
+	private Border oldBorder;
 	
 	public static ComponentUI createUI(JComponent c) {
 		JoxyPanelUI panelUI = new JoxyPanelUI();

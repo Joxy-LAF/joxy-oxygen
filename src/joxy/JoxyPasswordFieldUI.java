@@ -156,7 +156,7 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 			}
 		};
 		
-hoverListener = new MouseListener() {
+		hoverListener = new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {}

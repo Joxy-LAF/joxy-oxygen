@@ -61,16 +61,32 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
         }
 	}
 	
+	/**
+	 * Paints the groove of the progress bar.
+	 * @param g The Graphics object to paint with.
+	 * @param c The progress bar component.
+	 */
 	protected void paintGroove(Graphics g, JComponent c) {
 		DarkEngravingPainter.paint((Graphics2D) g, 0, 0, c.getWidth(), c.getHeight() - 1);
 	}
-
+	
+	/**
+	 * Paints the progress indicator for indeterminate progress bars.
+	 * @param g The Graphics object to paint with.
+	 * @param c The progress bar component.
+	 */
 	protected void paintIndeterminateBox(Graphics g, JComponent c) {
         boxRect = getBox(boxRect);
         
 		ProgressBarIndicator.paint((Graphics2D) g, boxRect.x + 1, boxRect.y + 1, boxRect.width - 2, boxRect.height - 3);
 	}
 
+	/**
+	 * Paints the progress indicator for determinate progress bars.
+	 * @param g The Graphics object to paint with.
+	 * @param c The progress bar component.
+	 * @param amount The amount of progress, indicated as the number of pixels.
+	 */
 	protected void paintProgress(Graphics g, JComponent c, int amount) {
 		ProgressBarIndicator.paint((Graphics2D) g, 1, 1, amount - 2, c.getHeight() - 3);
 	}
