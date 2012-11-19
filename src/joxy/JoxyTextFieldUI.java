@@ -98,7 +98,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		// pixels on the right side are strange
 		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 5, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
-		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+		textField.setOpaque(false);
 	}
 	
 	@Override

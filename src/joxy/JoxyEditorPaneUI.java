@@ -59,6 +59,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
 		editor.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		editor.setFont(UIManager.getFont("Button.font"));
+		editor.setOpaque(false);
 		
 		// force the default font to be used if the HTML does not override it... nice :-)
 		editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);

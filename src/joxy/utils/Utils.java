@@ -159,6 +159,12 @@ public class Utils {
 			"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
 			"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
 			// Selection color
+			"EditorPane.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"EditorPane.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			"FormattedTextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"FormattedTextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			"TextArea.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"TextArea.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 			"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			// Window colors
