@@ -33,13 +33,6 @@ import joxy.utils.Utils;
 public class JoxyRootPaneUI extends BasicRootPaneUI {
 	
 	/**
-	 * This is a correction to the contrast, to let the radial background look better.
-	 * @deprecated The radial background now is that good that this isn't needed anymore.
-	 */
-	@Deprecated
-	public static final float CONTRAST_ADJUSTMENT = 0f;
-	
-	/**
 	 * In this hash table we store cached images of the <b>linear</b> part of the
 	 * background to improve performance. Because these images are just stretchable
 	 * in the <i>x</i> direction, they are 1 pixel wide.
@@ -173,7 +166,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 			
 			out = ColorUtils.shade(baseColor, (float) ((my-by) * backgroundContrast));
 		//}
@@ -198,7 +190,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 			
             out = ColorUtils.shade(baseColor, (float) ((my-by) * backgroundContrast));
 
@@ -222,7 +213,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 		
 			out = ColorUtils.shadeScheme(baseColor, ShadeRoles.LightShade, (float) backgroundContrast);
 		//}
