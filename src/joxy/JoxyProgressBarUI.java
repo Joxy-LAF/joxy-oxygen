@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
-import joxy.painter.ProgressBarIndicator;
+import joxy.painter.ProgressBarIndicatorPainter;
 import joxy.painter.DarkEngravingPainter;
 
 /**
@@ -78,7 +78,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	protected void paintIndeterminateBox(Graphics g, JComponent c) {
         boxRect = getBox(boxRect);
         
-		ProgressBarIndicator.paint((Graphics2D) g, boxRect.x + 1, boxRect.y + 1, boxRect.width - 2, boxRect.height - 3);
+		ProgressBarIndicatorPainter.paint((Graphics2D) g, boxRect.x + 1, boxRect.y + 1, boxRect.width - 2, boxRect.height - 3);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	 * @param amount The amount of progress, indicated as the number of pixels.
 	 */
 	protected void paintProgress(Graphics g, JComponent c, int amount) {
-		ProgressBarIndicator.paint((Graphics2D) g, 1, 1, amount - 2, c.getHeight() - 3);
+		ProgressBarIndicatorPainter.paint((Graphics2D) g, 1, 1, amount - 2, c.getHeight() - 3);
 	}
 	
 	@Override

@@ -13,5 +13,4 @@ public class ColorUtilsTest {
 		Color result = ColorUtils.shade(input, 0.0f);
 	    Assert.assertEquals(input, result);
 	}
-
 }

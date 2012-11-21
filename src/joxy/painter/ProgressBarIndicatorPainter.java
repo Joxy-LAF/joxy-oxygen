@@ -18,7 +18,7 @@ import joxy.utils.ColorUtils;
 /**
  * Painter for a progress bar indicator.
  */
-public class ProgressBarIndicator {
+public class ProgressBarIndicatorPainter {
 
 	// In actual code: 2.5f. But it seems Java arcs are different... sigh.
 	private static final float ARC = 8f;
