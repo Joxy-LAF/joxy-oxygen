@@ -1,6 +1,7 @@
 package joxy.painter;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 /**
@@ -50,7 +51,11 @@ public abstract class Painter {
 		
 		if (cache == null || cache.getWidth() != width || cache.getHeight() != height) {
 			cache = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
-			paintObject((Graphics2D) cache.getGraphics(), width, height);
+			Graphics2D gimg = (Graphics2D) cache.getGraphics();
+			gimg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			gimg.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			
+			paintObject(gimg, width, height);
 		}
 		
 		g2.drawImage(cache, x, y, null);
