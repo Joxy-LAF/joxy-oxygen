@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class BorderBenchmark {
 	
-	Graphics2D g2 = (Graphics2D) new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB).getGraphics();
+	Graphics2D g2 = (Graphics2D) new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB).getGraphics();
 	
 	@Test
 	public void benchmarkJoxyBevelBorderRaised() {
