@@ -264,6 +264,8 @@ public class Utils {
 			"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
 			"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
 			"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows"),
+			// Panel settings
+			"Panel.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Table settings
 			"Table.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),

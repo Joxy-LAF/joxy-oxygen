@@ -3,6 +3,7 @@ package joxy;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.border.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPanelUI;
