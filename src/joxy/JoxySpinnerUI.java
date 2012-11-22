@@ -94,7 +94,7 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 		JComponent e = super.createEditor();
 		
 		if (e instanceof DefaultEditor) {
-			((DefaultEditor) e).getTextField().putClientProperty("joxy.isEditor", true);
+			((DefaultEditor) e).getTextField().putClientProperty("joxy.isEditor", Boolean.TRUE);
 		}
 		
 		return e;

@@ -336,7 +336,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		ComboBoxEditor e = super.createEditor();
 		
 		if (e.getEditorComponent() instanceof JTextField) {
-			((JTextField) e.getEditorComponent()).putClientProperty("joxy.isEditor", true);
+			((JTextField) e.getEditorComponent()).putClientProperty("joxy.isEditor", Boolean.TRUE);
 		}
 		
 		return e;
