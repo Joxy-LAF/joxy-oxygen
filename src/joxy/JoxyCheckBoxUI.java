@@ -53,6 +53,11 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 	/** Listeners for the animation */
 	private MouseListener hoverListener;
 	private FocusListener focusListener;
+	
+	/**
+	 * The painter for the button slab.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
     
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -207,7 +212,7 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 		HoverIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, hoverAmount);
 		
 		// slab
-		ButtonSlabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
+		slabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
 		
 		// the circle
 		if (b.getModel().isPressed() || (b.getModel().isSelected() && !b.isEnabled())) { // [ws] TODO only for KDE 4.8

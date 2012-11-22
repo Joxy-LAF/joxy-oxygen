@@ -47,6 +47,11 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	/** Listeners for scrolling */
 	private MouseWheelListener scrollListener;
 	
+	/**
+	 * The painter for the button slab.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyComboBoxUI();
 	}
@@ -239,8 +244,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, focusAmount);
 			HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, hoverAmount);
 
-			ButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-					comboBox.getHeight() - 4);
+			slabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
 		}
 
 		// TODO Draw disabled buttons differently

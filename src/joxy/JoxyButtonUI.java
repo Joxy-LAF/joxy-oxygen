@@ -81,6 +81,11 @@ public class JoxyButtonUI extends BasicButtonUI {
 	private MouseListener hoverListener;
 	private FocusListener focusListener;
 	
+	/**
+	 * The painter for the button slab.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		((AbstractButton) c).setRolloverEnabled(true);
 		JoxyButtonUI ui = new JoxyButtonUI();
@@ -256,7 +261,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 					
 					// slab
-					ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				}
 			} else {
 				if (b.getModel().isPressed()) {
