@@ -20,7 +20,12 @@ import joxy.painter.DarkEngravingPainter;
  * @author Willem Sonke
  */
 public class JoxyProgressBarUI extends BasicProgressBarUI {
-
+	
+	/**
+	 * The painter for the groove.
+	 */
+	private DarkEngravingPainter groovePainter = new DarkEngravingPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		JoxyProgressBarUI progressUI = new JoxyProgressBarUI();
 		return progressUI;
@@ -67,7 +72,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	 * @param c The progress bar component.
 	 */
 	protected void paintGroove(Graphics g, JComponent c) {
-		DarkEngravingPainter.paint((Graphics2D) g, 0, 0, c.getWidth(), c.getHeight() - 1);
+		groovePainter.paint((Graphics2D) g, 0, 0, c.getWidth(), c.getHeight() - 1);
 	}
 	
 	/**

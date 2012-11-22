@@ -64,9 +64,17 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 	private FocusListener focusListener;
 	
 	/**
-	 * The painter for the button slab.
+	 * The painter for the button slab, if it is not a toolbar button.
 	 */
 	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for a selected button background.
+	 */
+	private DarkEngravingPainter selectedPainter = new DarkEngravingPainter();
+	/**
+	 * The painter for the pressed button, if it is a toolbar button.
+	 */
+	private DarkEngravingPainter pressedToolbarPainter = new DarkEngravingPainter();
 	
     public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -224,7 +232,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		// Check whether the button is a toolbar button; see JoxyToolBarUI
 		if (b.getClientProperty("isToolbarButton") == null) {
 		    if (b.getModel().isPressed() || b.getModel().isSelected()) {
-		    	DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+		    	pressedToolbarPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
 				// shadow
 				g2.setColor(new Color(0, 0, 0, 80));
@@ -242,7 +250,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 			}
 		} else {
 			if (b.getModel().isPressed() || b.getModel().isSelected()) {
-				DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				selectedPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
 				// If mouse is over the component, draw hover indicator; note it is a special indicator
 				// for toolbar buttons

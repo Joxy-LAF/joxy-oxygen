@@ -10,7 +10,8 @@ import java.awt.image.BufferedImage;
  * <p>A painter always has a paint method. This super class encapsulates this method to
  * introduce caching. A painter can also require data, such as colors or the opacity.</p>
  * 
- * <p>TODO this class is a work in progress</p>
+ * @author Thom Castermans
+ * @author Willem Sonke
  */
 public abstract class Painter {
 	

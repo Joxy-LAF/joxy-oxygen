@@ -8,6 +8,11 @@ import java.awt.geom.RoundRectangle2D;
 
 /**
  * Painter for a button slab. A button slab is the shape that makes up a button.
+ * 
+ * This painter doesn't need any data (at the moment).
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
  */
 public class ButtonSlabPainter extends Painter {
 
