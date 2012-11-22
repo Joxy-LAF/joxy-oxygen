@@ -6,16 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
-import javax.swing.ImageIcon;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class TestMenu extends JMenuBar {
@@ -82,7 +74,23 @@ public class TestMenu extends JMenuBar {
 		// Tools
 		JMenu toolsMenu = new JMenu("Tools");
 		toolsMenu.setMnemonic(KeyEvent.VK_T);
-		toolsMenu.add(new JMenuItem("Don't know", KeyEvent.VK_D));
+		toolsMenu.add(new JLabel("Some radio button menu items:"));
+		toolsMenu.add(new JRadioButtonMenuItem("Foo"));
+		toolsMenu.add(new JRadioButtonMenuItem("Bar"));
+		toolsMenu.add(new JRadioButtonMenuItem("Baz"));
+		toolsMenu.addSeparator();
+		toolsMenu.add(new JLabel("Some check box menu items:"));
+		toolsMenu.add(new JCheckBoxMenuItem("Foo"));
+		toolsMenu.add(new JCheckBoxMenuItem("Bar"));
+		toolsMenu.add(new JCheckBoxMenuItem("Baz"));
+		toolsMenu.addSeparator();
+		toolsMenu.add(new JLabel("Some non-menu components:"));
+		JSpinner spinner = new JSpinner();
+		spinner.setAlignmentX(0);
+		toolsMenu.add(spinner);
+		JComboBox<String> combo = new JComboBox<String>(new String[]{"A combobox", "Inside a menu", "Weird, isn't it?"});
+		combo.setAlignmentX(0);
+		toolsMenu.add(combo);
 		this.add(toolsMenu);
 		// Help
 		JMenu helpMenu = new JMenu("Help");

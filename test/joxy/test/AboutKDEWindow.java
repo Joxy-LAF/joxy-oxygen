@@ -10,6 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import joxy.utils.Output;
+
 
 public class AboutKDEWindow extends JFrame {
 	/** Serial version UID */
@@ -33,7 +35,7 @@ public class AboutKDEWindow extends JFrame {
 		try {
 			cp.add(new LeftPanel(), BorderLayout.LINE_START);
 		} catch (IOException e) {
-			System.out.println("Konqi image not found");
+			Output.warning("Konqi image not found");
 		}
 		cp.add(new ContentPanel(), BorderLayout.CENTER);
 		cp.add(new LowerPanel(), BorderLayout.PAGE_END);

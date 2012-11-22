@@ -1,8 +1,9 @@
 package joxy.test;
 
 import java.awt.*;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
+import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -16,6 +17,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import joxy.utils.Output;
 
 /**
  * A graphical user interface containing all kinds of GUI elements, for
@@ -48,6 +51,16 @@ public class TestGUI {
 		});
 	}
 
+	private static BufferedImage konqi;
+	
+	static {
+		try {
+			konqi = ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"));
+		} catch (IOException e) {
+			Output.warning("Konqi image not found");
+		}
+	}
+	
 	protected static void showSomeGUI() {
 		frame = new JFrame("The Joxytester");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,21 +191,34 @@ public class TestGUI {
 				"Or make the text <big>bigger</big> or <small>smaller</small>.<br>" +
 				"And the text is anti-aliased!")));
 		JPanel tab4 = new JPanel() {
-			/** Serial version UID */
-			private static final long serialVersionUID = 5596697860474540908L;
-
+			{
+				setPreferredSize(new Dimension(620, 440));
+			}
+			
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g2.setColor(Color.BLACK);
-				g2.fillOval(getWidth() / 3, getHeight() / 3, getWidth() / 2, getHeight() / 2);
+				g2.drawImage(konqi, 100, 150, null);
 				g2.setColor(Color.WHITE);
-				g2.drawString("This panel has a custom paintComponent.", getWidth() / 3 + 50, getHeight() / 2);
+				g2.fillOval(190, 60, 300, 50);
+				g2.setColor(Color.BLACK);
+				g2.drawOval(190, 60, 300, 50);
+				GeneralPath balloonPath = new GeneralPath();
+				balloonPath.moveTo(220, 99);
+				balloonPath.lineTo(210, 170);
+				balloonPath.lineTo(240, 103);
+				g2.setColor(Color.WHITE);
+				g2.fill(balloonPath);
+				g2.setColor(Color.BLACK);
+				g2.draw(balloonPath);
+				g2.setFont(getFont());
+				g2.drawString("This panel has a custom paintComponent.", 206, 90);
 			}
 		};
-		t.addTab("Custom tab", tab4);
+		t.addTab("Custom tab", new JScrollPane(tab4));
+		
 		t.addTab("JTextArea", new JTextArea("This is a JTextArea."));
 		t.addTab("JTextPane", new JTextPane());
 		
