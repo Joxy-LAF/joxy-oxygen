@@ -158,7 +158,7 @@ public class HCYColor {
 	 * Normalizes the input, that means, map values lower than 0 to 0, and map values
 	 * higher than 1 to 1.
 	 * 
-	 * @param The input number.
+	 * @param n The input number.
 	 * @return The following value:
 	 * <ul>
 	 *   <li>0 if n < 0;</li>
