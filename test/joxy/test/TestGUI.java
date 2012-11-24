@@ -18,6 +18,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import joxy.utils.JoxyGraphics;
 import joxy.utils.Output;
 
 /**
@@ -25,7 +26,7 @@ import joxy.utils.Output;
  * testing purposes.
  * 
  * <p>To run this from the Joxy JAR file, use the command
- * <code>java -cp joxy.jar TestGUI</code>.</p>
+ * <code>java -cp joxy.jar joxy.test.TestGUI</code>.</p>
  */
 public class TestGUI {
 	
@@ -62,7 +63,7 @@ public class TestGUI {
 	}
 	
 	protected static void showSomeGUI() {
-		frame = new JFrame("The Joxytester");
+		frame = new JFrame("Test GUI for Joxy");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setJMenuBar(new TestMenu());
@@ -214,7 +215,7 @@ public class TestGUI {
 				g2.setColor(Color.BLACK);
 				g2.draw(balloonPath);
 				g2.setFont(getFont());
-				g2.drawString("This panel has a custom paintComponent.", 206, 90);
+				JoxyGraphics.drawString(g2, "This panel has a custom paintComponent.", 206, 90);
 			}
 		};
 		t.addTab("Custom tab", new JScrollPane(tab4));
@@ -305,6 +306,7 @@ public class TestGUI {
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.2"));
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.0.3"));
 		joxy.add(new DefaultMutableTreeNode("Joxy 0.1.0"));
+		joxy.add(new DefaultMutableTreeNode("Joxy Git"));
 		
 		t.addTab("A JSplitPane", new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JButton("left"), new JButton("right")));
 		
