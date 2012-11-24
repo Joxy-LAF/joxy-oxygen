@@ -49,6 +49,10 @@ public abstract class Painter {
 	 */
 	public void paint(Graphics2D g2, int x, int y, int width, int height) {
 		
+		if (width <= 0 || height <= 0) {
+			return;
+		}
+		
 		if (cache == null || cache.getWidth() != width || cache.getHeight() != height) {
 			cache = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D gimg = (Graphics2D) cache.getGraphics();
