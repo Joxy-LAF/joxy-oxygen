@@ -57,6 +57,11 @@ public class JoxyListUI extends BasicListUI {
 	 */
 	private MouseMotionListener mouseMotionListener;
 	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		JoxyListUI ui = new JoxyListUI();
 		return ui;
@@ -208,7 +213,7 @@ public class JoxyListUI extends BasicListUI {
 		if (list.getName() != null && list.getName().equals("ComboBox.list")) {
 			super.paint(g2, c); // this also paints the contents of the list
 		} else {
-			InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 			
 			Shape oldClip = g2.getClip();
 			g2.setClip(vr.x + 2, vr.y + 2, vr.width - 4, vr.height - 5);

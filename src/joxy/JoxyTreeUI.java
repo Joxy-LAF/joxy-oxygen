@@ -21,6 +21,11 @@ import joxy.utils.Utils;
  * Joxy's UI delegate for the JTree.
  */
 public class JoxyTreeUI extends BasicTreeUI {
+	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
 
 	public static ComponentUI createUI(JComponent c) {
 		JoxyTreeUI ui = new JoxyTreeUI();
@@ -50,7 +55,7 @@ public class JoxyTreeUI extends BasicTreeUI {
 	
 	    Rectangle vr = tree.getVisibleRect();
 	
-		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		Shape oldClip = g2.getClip();
 		g2.setClip(vr.x + 2, vr.y + 2, vr.width - 4, vr.height - 5);

@@ -48,9 +48,13 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	private MouseWheelListener scrollListener;
 	
 	/**
-	 * The painter for the button slab.
+	 * The painter for the button slab (for a non-editable combo box).
 	 */
 	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for the input field (for an editable combo box).
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
 	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyComboBoxUI();
@@ -262,7 +266,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		InputFieldPainter.paint(g2, 0, 0, comboBox.getWidth(), comboBox.getHeight());
+		fieldPainter.paint(g2, 0, 0, comboBox.getWidth(), comboBox.getHeight());
 	}
 	
 	@Override
