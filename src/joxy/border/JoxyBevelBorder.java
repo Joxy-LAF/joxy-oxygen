@@ -67,7 +67,7 @@ public class JoxyBevelBorder extends BevelBorder {
 		} else {
 			try {
 				// outer border
-				g2.setStroke(new BasicStroke(0.5f));
+				g2.setStroke(new BasicStroke(0.7f));
 				LinearGradientPaint outerGradient = new LinearGradientPaint(0, y + 1, 0, height - 4,
 						new float[]{0, 3f / height, 1 - 2f / height, 1},
 						new Color[]{new Color(0, 0, 0, 180), new Color(0, 0, 0, 90),
