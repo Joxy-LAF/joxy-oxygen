@@ -67,6 +67,11 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	private boolean hovered = false;
 	
 	/**
+	 * The icon to use for the clear button.
+	 */
+	private static ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+	
+	/**
 	 * The painter for the input field.
 	 */
 	private InputFieldPainter fieldPainter = new InputFieldPainter();
@@ -608,10 +613,7 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
     
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
-		// TODO this icon should be cached
-		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
-		
+
 		if (clearIcon == null) {
 			return;
 		}
