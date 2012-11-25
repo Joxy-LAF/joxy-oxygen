@@ -25,6 +25,10 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	 * The painter for the groove.
 	 */
 	private DarkEngravingPainter groovePainter = new DarkEngravingPainter();
+	/**
+	 * The painter for the progress indicator.
+	 */
+	private ProgressBarIndicatorPainter indicatorPainter = new ProgressBarIndicatorPainter();
 	
 	public static ComponentUI createUI(JComponent c) {
 		JoxyProgressBarUI progressUI = new JoxyProgressBarUI();
@@ -83,7 +87,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	protected void paintIndeterminateBox(Graphics g, JComponent c) {
         boxRect = getBox(boxRect);
         
-		ProgressBarIndicatorPainter.paint((Graphics2D) g, boxRect.x + 1, boxRect.y + 1, boxRect.width - 2, boxRect.height - 3);
+		indicatorPainter.paint((Graphics2D) g, boxRect.x + 1, boxRect.y + 1, boxRect.width - 2, boxRect.height - 3);
 	}
 
 	/**
@@ -93,7 +97,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	 * @param amount The amount of progress, indicated as the number of pixels.
 	 */
 	protected void paintProgress(Graphics g, JComponent c, int amount) {
-		ProgressBarIndicatorPainter.paint((Graphics2D) g, 1, 1, amount - 2, c.getHeight() - 3);
+		indicatorPainter.paint((Graphics2D) g, 1, 1, amount - 2, c.getHeight() - 3);
 	}
 	
 	@Override
