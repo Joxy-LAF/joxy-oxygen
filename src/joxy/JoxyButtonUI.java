@@ -269,7 +269,7 @@ public class JoxyButtonUI extends BasicButtonUI {
 				}
 			} else {
 				if (b.getModel().isPressed()) {
-					pressedToolbarPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
 				} else {
 					// If mouse is over the component, draw hover indicator; note it is a special indicator
 					// for toolbar buttons

@@ -12,7 +12,7 @@ import joxy.border.JoxyBevelBorder;
  */
 public class InputFieldPainter {
 
-	private static final int ARC = 6;
+	private static final int ARC = 4;
 	
 	/**
 	 * Draws the hover indicator. Note that a hover indicator is  a 'border' around the

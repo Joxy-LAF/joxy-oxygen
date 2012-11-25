@@ -7,6 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.border.BevelBorder;
+
+import joxy.border.JoxyBevelBorder;
+
 /**
  * Painter for a dark engraving. A dark engraving is e.g. the track of a slider
  * or the background of a pressed button.
@@ -18,11 +22,17 @@ import java.awt.geom.RoundRectangle2D;
  */
 public class DarkEngravingPainter extends Painter {
 
-	private static final int ARC = 8;
+	private static final int ARC = 4;
 
 	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
-		g2.setPaint(Color.WHITE);
+		// background
+		g2.setColor(new Color(182, 174, 170)); // TODO find correct color
+		g2.fill(new RoundRectangle2D.Float(2, 2, width - 4, height - 5, ARC, ARC));
+
+		JoxyBevelBorder.paintActualBorder(g2, 0, 0, width, height, BevelBorder.LOWERED);
+		
+		/*g2.setPaint(Color.WHITE);
  		g2.fill(new RoundRectangle2D.Double(0, 0, width, height + 0.4f, ARC, ARC));
         GradientPaint fill = new GradientPaint(0, 0, new Color(159, 152, 149), 0, 6, new Color(182, 174, 170));
  		g2.setPaint(fill);
@@ -32,7 +42,7 @@ public class DarkEngravingPainter extends Painter {
  	 	g2.setPaint(gr);
  		
  		g2.setStroke(new BasicStroke(0.2f));
- 		g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height-1, ARC, ARC));
+ 		g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height-1, ARC, ARC));*/
 	}
 
 }
