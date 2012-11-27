@@ -59,16 +59,16 @@ public class JoxyPanelUI extends BasicPanelUI {
 		// note that setBorder repaints the component itself; if we also would do that we
 		// get a StackOverflowError
 		
-		if (b instanceof BevelBorder) {
+		if (b instanceof BevelBorder && !(b instanceof JoxyBevelBorder)) {
 			oldBorder = b;
 			c.setBorder(new JoxyBevelBorder(((BevelBorder) b).getBevelType()));
 		}
-		if (b instanceof EtchedBorder) {
+		if (b instanceof EtchedBorder && !(b instanceof JoxyBevelBorder)) {
 			oldBorder = b;
 			// TODO this is not the correct Joxy border type, but we don't have a real etched border in KDE
 			c.setBorder(new JoxyBevelBorder(BevelBorder.RAISED));
 		}
-		if (b instanceof TitledBorder) {
+		if (b instanceof TitledBorder && !(b instanceof JoxyTitledBorder)) {
 			oldBorder = b;
 			c.setBorder(new JoxyTitledBorder(((TitledBorder) b).getTitle()));
 		}
