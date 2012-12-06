@@ -134,10 +134,12 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 				//    that manages its own borders et cetera;
 				// 4. the text field is editable (in fact, the clear button should not be
 				//    visible if the field is non-editable, but for some reason that still
-				//    happens).
+				//    happens);
+				// 5. the text field is enabled.
 				if (clearButtonOpacity > 0 && e.getX() > textField.getWidth() - 24
 						          && textField.getClientProperty("joxy.isEditor") == null
-						          && textField.isEditable()) {
+						          && textField.isEditable()
+						          && textField.isEnabled()) {
 					textField.setText("");
 				}
 			}
@@ -597,7 +599,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		if (textField.isEditable() && textField.getClientProperty("joxy.isEditor") == null) {
 			paintBackground(g);
 			
-			if (clearButtonOpacity > 0) {
+			if (clearButtonOpacity > 0 && textField.isEnabled()) {
 				paintClearButton(g, clearButtonOpacity);
 			}
 		}

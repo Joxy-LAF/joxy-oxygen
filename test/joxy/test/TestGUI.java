@@ -138,6 +138,9 @@ public class TestGUI {
 		});
 		tab1.add(j2);
 		tab1.add(new JTextField("Some text field..."));
+		JTextField tf = new JTextField("Some disabled text field...");
+		tf.setEnabled(false);
+		tab1.add(tf);
 		tab1.add(new JToggleButton("A toggle button"));
 		Vector<String> items = new Vector<String>();
 		for (int i = 0; i < 20; i++) {
