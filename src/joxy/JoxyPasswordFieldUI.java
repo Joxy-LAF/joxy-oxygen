@@ -2,6 +2,7 @@ package joxy;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -213,7 +214,11 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textField.getText().length() > 0) {
+				char[] contents = textField.getPassword();
+				int length = contents.length;
+				// for security reasons, clear the password after determining its length
+				Arrays.fill(contents, (char) 0);
+				if (length > 0) {
 					clearButtonOpacity += 70;
 				} else {
 					clearButtonOpacity -= 70;
@@ -226,6 +231,7 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 					clearButtonOpacity = 0;
 					clearButtonTimer.stop();
 				}
+				
 				textField.repaint();
 			}
 		});
