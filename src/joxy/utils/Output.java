@@ -1,5 +1,8 @@
 package joxy.utils;
 
+import java.awt.Component;
+import java.awt.Container;
+
 /**
  * This class provides methods to output messages to the "outside world".
  * All output from the Joxy LookAndFeel should come via this class, where
@@ -180,5 +183,22 @@ public class Output {
 			if (debugNotClasses[i].equals(className))  return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Prints debug information about a component, and does the same for its
+	 * children.
+	 * 
+	 * @param component The component to display information about.
+	 * @param indent The indentation. This should be "" on the first call.
+	 */
+	public static void debugComponent(Component component, String indent) {
+		System.out.println(indent + component.getClass().getCanonicalName() + ",  name " + component.getName());
+		
+		if (component instanceof Container) {
+			for (Component child : ((Container) component).getComponents()) {
+				debugComponent(child, indent + "  ");
+			}
+		}
 	}
 }
