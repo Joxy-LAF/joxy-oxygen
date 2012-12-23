@@ -1,11 +1,6 @@
 package joxy;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RadialGradientPaint;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -15,12 +10,8 @@ import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
-import sun.util.resources.CurrencyNames_nl_NL;
-
-import joxy.utils.ColorUtils;
-import joxy.utils.Output;
+import joxy.utils.*;
 import joxy.utils.ColorUtils.ShadeRoles;
-import joxy.utils.Utils;
 
 /**
  * Joxy's UI delegate for the JRootPaneUI.
@@ -87,6 +78,9 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	@Override
 	protected void installDefaults(JRootPane c) {
 		super.installDefaults(c);
+		
+		// this is a fix for bug 15; see the description there
+		c.setOpaque(true);
 	}
 	
 	/**
