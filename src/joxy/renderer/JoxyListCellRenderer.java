@@ -3,10 +3,14 @@ package joxy.renderer;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
+import javax.swing.*;
 
+/**
+ * A custom {@link ListCellRenderer} for Joxy.
+ * 
+ * <p>This renderer is not used in JLists at the moment instead of the {@link DefaultListCellRenderer},
+ * because for some reason setting the <i>List.cellRenderer</i> property doesn't work.</p>
+ */
 public class JoxyListCellRenderer extends DefaultListCellRenderer {
 	
 	/**
@@ -21,8 +25,6 @@ public class JoxyListCellRenderer extends DefaultListCellRenderer {
     
     @Override
     public void paint(Graphics g) {
-    	
-    	// TODO paint selection
     	
     	super.paint(g);
     }

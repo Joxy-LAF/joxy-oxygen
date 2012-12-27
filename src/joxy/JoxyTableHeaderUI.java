@@ -122,7 +122,13 @@ public class JoxyTableHeaderUI extends BasicTableHeaderUI {
 	 */
 	private void paintColumnName(Graphics2D g2, Rectangle cellRect, int columnIndex) {
 		g2.setColor(Color.BLACK);
-		String name = header.getColumnModel().getColumn(columnIndex).getHeaderValue().toString();
+		Object headerValue = header.getColumnModel().getColumn(columnIndex).getHeaderValue();
+		
+		if (headerValue == null) {
+			return;
+		}
+		
+		String name = headerValue.toString();
 		FontMetrics f = header.getFontMetrics(header.getFont());
 		int w = f.stringWidth(name);
 		int h = f.getHeight();

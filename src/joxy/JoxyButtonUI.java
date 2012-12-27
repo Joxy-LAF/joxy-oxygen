@@ -81,6 +81,15 @@ public class JoxyButtonUI extends BasicButtonUI {
 	private MouseListener hoverListener;
 	private FocusListener focusListener;
 	
+	/**
+	 * The painter for the button slab, if it is not a toolbar button.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for the pressed button, if it is a toolbar button.
+	 */
+	private DarkEngravingPainter pressedToolbarPainter = new DarkEngravingPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		((AbstractButton) c).setRolloverEnabled(true);
 		JoxyButtonUI ui = new JoxyButtonUI();
@@ -256,11 +265,11 @@ public class JoxyButtonUI extends BasicButtonUI {
 					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 					
 					// slab
-					ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 				}
 			} else {
 				if (b.getModel().isPressed()) {
-					DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+					pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
 				} else {
 					// If mouse is over the component, draw hover indicator; note it is a special indicator
 					// for toolbar buttons

@@ -68,6 +68,11 @@ public class JoxyFormattedTextFieldUI extends BasicFormattedTextFieldUI {
 	private boolean hovered = false;
 	
 	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
+	
+	/**
 	 * For some reason it doesn't work to add the changeListener to the Document of
 	 * the text field in installListeners(). Therefore we do it in the paint method.
 	 * Of course it only needs to be added once, and therefore we use this variable.
@@ -94,7 +99,7 @@ public class JoxyFormattedTextFieldUI extends BasicFormattedTextFieldUI {
 		// pixels on the right side are strange
 		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 5, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
-		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+		textField.setOpaque(false);
 	}
 	
 	@Override
@@ -619,7 +624,7 @@ public class JoxyFormattedTextFieldUI extends BasicFormattedTextFieldUI {
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		InputFieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
+		fieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
 
 		if (textField.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), focusAmount);

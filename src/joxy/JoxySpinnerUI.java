@@ -12,15 +12,17 @@ import javax.swing.plaf.basic.BasicSpinnerUI;
 import joxy.painter.InputFieldPainter;
 
 /**
- * Class overriding the default Spinner (BasicSpinnerUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
- * 
- * [ws] TODO I suppose that to style the editor field, we need to implement the JFormattedTextField.
+ * Joxy's UI delegate for the JSpinner.
  * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
 public class JoxySpinnerUI extends BasicSpinnerUI {
+	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
 	
     public static ComponentUI createUI(JComponent b) {
         return new JoxySpinnerUI();
@@ -73,7 +75,7 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		InputFieldPainter.paint(g2, 2, 2, spinner.getWidth() - 4, spinner.getHeight() - 4);
+		fieldPainter.paint(g2, 0, 0, spinner.getWidth(), spinner.getHeight());
 		
 		super.paint(g, c);
 	}
@@ -97,7 +99,7 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 		JComponent e = super.createEditor();
 		
 		if (e instanceof DefaultEditor) {
-			((DefaultEditor) e).getTextField().putClientProperty("joxy.isEditor", true);
+			((DefaultEditor) e).getTextField().putClientProperty("joxy.isEditor", Boolean.TRUE);
 		}
 		
 		return e;

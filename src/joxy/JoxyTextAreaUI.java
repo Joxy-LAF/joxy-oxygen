@@ -47,6 +47,11 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 	
 	private boolean hovered = false;
 	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyTextAreaUI(c);
 	}
@@ -63,7 +68,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
 		textArea.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textArea.setFont(UIManager.getFont("Button.font"));
-		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+		textArea.setOpaque(false);
 	}
 	
 	@Override
@@ -206,7 +211,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		
 		Rectangle vr = textArea.getVisibleRect();
 		
-		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		if (textArea.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);

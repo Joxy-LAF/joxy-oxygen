@@ -17,6 +17,15 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicPopupMenuUI;
 import javax.swing.plaf.basic.DefaultMenuLayout;
 
+/**
+ * Joxy's UI delegate for the JPopupMenu.
+ * 
+ * <p>Note that this delegate is also responsible for drawing the backgrounds
+ * of popup menus that appear in a "normal" menu bar.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyPopupMenuUI extends BasicPopupMenuUI {
 	
 	private static final int ARC = 6;

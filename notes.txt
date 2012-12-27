@@ -1,2 +1,13 @@
-[Oxygen Code]
+The repository for the original Oxygen code
+-------------------------------------------
+
 https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/master/show/kstyles/oxygen/
+
+
+
+To do before a release
+----------------------
+ * Set the version number in joxy.JoxyLookAndFeel
+ * Set the output to the warning level in joxy.utils.Output
+ * If needed, switch the native text rendering on (joxy.utils.JoxyGraphics)
+ * ... more?

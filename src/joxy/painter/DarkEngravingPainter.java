@@ -7,46 +7,30 @@ import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.border.BevelBorder;
+
+import joxy.border.JoxyBevelBorder;
+
 /**
  * Painter for a dark engraving. A dark engraving is e.g. the track of a slider
  * or the background of a pressed button.
+ * 
+ * This painter doesn't need any data (at the moment).
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
  */
-public class DarkEngravingPainter {
+public class DarkEngravingPainter extends Painter {
 
-	private static final int ARC = 8;
-	
-	/**
-	 * Draws the dark engraving.
-	 * @param g2 The Graphics2D to paint with.
-	 * @param x x-coordinate for the left upper corner.
-	 * @param y y-coordinate for the left upper corner.
-	 * @param width Width of the shape.
-	 * @param height Height of the shape.
-	 */
-	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
-		g2.setPaint(Color.WHITE);
- 		g2.fill(new RoundRectangle2D.Double(x, y, width, height + 0.4f, ARC, ARC));
-        GradientPaint fill = new GradientPaint(0, 0, new Color(159, 152, 149), 0, 6, new Color(182, 174, 170));
- 		g2.setPaint(fill);
- 		g2.fill(new RoundRectangle2D.Double(x, y, width, height, ARC, ARC));
- 		
- 		// TODO Workaround for the IllegalArgumentException, and to collect some information about why it is failing.
- 		// Probably it has something to do with width <= 0 or height <= 0.
- 		try {
- 			LinearGradientPaint gr = new LinearGradientPaint(0, y, 0, y + height, new float[]{0, 1}, new Color[]{new Color(80, 77, 74), new Color(159, 152, 149)});
- 	 		g2.setPaint(gr);
- 	 	} catch (IllegalArgumentException e) {
- 			System.err.println("Catched IllegalArgumentException in DarkEngravingPainter.paint with the following arguments:");
- 			System.err.println(" x = " + x);
- 			System.err.println(" y = " + y);
- 			System.err.println(" width = " + width);
- 			System.err.println(" height = " + height);
- 			System.err.println("The exception was:");
- 			e.printStackTrace();
- 		}
- 		
- 		g2.setStroke(new BasicStroke(0.2f));
- 		g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height-1, ARC, ARC));
+	private static final int ARC = 4;
+
+	@Override
+	protected void paintObject(Graphics2D g2, float width, float height) {
+		// background
+		g2.setColor(new Color(182, 174, 170)); // TODO find correct color
+		g2.fill(new RoundRectangle2D.Float(2, 2, width - 4, height - 5, ARC, ARC));
+
+		JoxyBevelBorder.paintActualBorder(g2, 0, 0, width, height, BevelBorder.LOWERED);
 	}
 
 }

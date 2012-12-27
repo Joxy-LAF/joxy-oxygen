@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
 /**
- * General class providing basic utilities for the Joxy Look and Feel.
- * Note: this should become kind-of the public API for application developers wishing to improve
- * their application's LAF when using Joxy. But at the moment it contains primarily internals...
+ * A general class providing basic utilities for the Joxy Look and Feel.
+ * 
+ * <p>Note: this should become kind-of the public API for application developers wishing to improve
+ * their application's LAF when using Joxy. But at the moment it contains primarily internals...</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -160,6 +159,12 @@ public class Utils {
 			"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
 			"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
 			// Selection color
+			"EditorPane.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"EditorPane.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			"FormattedTextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"FormattedTextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+			"TextArea.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+			"TextArea.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 			"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			// Window colors
@@ -259,6 +264,8 @@ public class Utils {
 			"Window.titleAlignment", getKDEConfigValue(kdeConfigLines, "[Windeco]", "TitleAlignment"),
 			"Window.useAnimations", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseAnimations"),
 			"Window.useOxygenShadows", getKDEConfigValue(kdeConfigLines, "[Windeco]", "UseOxygenShadows"),
+			// Panel settings
+			"Panel.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Table settings
 			"Table.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
@@ -594,5 +601,14 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Returns whether Joxy is the current look and feel.
+	 * @return Whether Joxy is the look and feel.
+	 */
+	public static boolean isJoxyActive() {
+		LookAndFeel laf = UIManager.getLookAndFeel();
+		return laf != null && laf.getName().equals("Joxy");
 	}
 }

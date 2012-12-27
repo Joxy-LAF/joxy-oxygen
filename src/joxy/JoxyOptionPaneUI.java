@@ -7,8 +7,15 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicOptionPaneUI;
 
 /**
- * Remark: this is only a stub to make the option pane non-opaque, so the radial
- * background is visible.
+ * Joxy's UI delegate for the JOptionPane.
+ * 
+ * <p>This is only a stub that makes the JOptionPane non-opaque, so that
+ * the radial background becomes visible.</p>
+ * 
+ * <p>The various icons (error, warning, etc.) are defined in {@link joxy.utils.Utils#getKDEIconsMap()}.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
  */
 public class JoxyOptionPaneUI extends BasicOptionPaneUI {
 

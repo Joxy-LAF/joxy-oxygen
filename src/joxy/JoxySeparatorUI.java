@@ -13,6 +13,15 @@ import javax.swing.JSeparator;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSeparatorUI;
 
+/**
+ * Joxy's UI delegate for the JSeparator.
+ * 
+ * <p>Only horizontal separators are rendered properly, vertical ones
+ * are still rendered in the Basic look-and-feel style.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxySeparatorUI extends BasicSeparatorUI {
 
     public static ComponentUI createUI(JComponent c) {

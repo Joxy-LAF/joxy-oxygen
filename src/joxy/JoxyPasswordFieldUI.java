@@ -2,6 +2,7 @@ package joxy;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -65,6 +66,16 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	private FocusListener focusListener;
 	
 	private boolean hovered = false;
+	
+	/**
+	 * The icon to use for the clear button.
+	 */
+	private static ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
 	
 	/**
 	 * For some reason it doesn't work to add the changeListener to the Document of
@@ -156,7 +167,7 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 			}
 		};
 		
-hoverListener = new MouseListener() {
+		hoverListener = new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {}
@@ -203,7 +214,11 @@ hoverListener = new MouseListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (textField.getText().length() > 0) {
+				char[] contents = textField.getPassword();
+				int length = contents.length;
+				// for security reasons, clear the password after determining its length
+				Arrays.fill(contents, (char) 0);
+				if (length > 0) {
 					clearButtonOpacity += 70;
 				} else {
 					clearButtonOpacity -= 70;
@@ -216,6 +231,7 @@ hoverListener = new MouseListener() {
 					clearButtonOpacity = 0;
 					clearButtonTimer.stop();
 				}
+				
 				textField.repaint();
 			}
 		});
@@ -593,7 +609,7 @@ hoverListener = new MouseListener() {
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		InputFieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
+		fieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
 		
 		if (textField.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), focusAmount);
@@ -603,10 +619,7 @@ hoverListener = new MouseListener() {
     
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
-		// TODO this icon should be cached
-		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
-		
+
 		if (clearIcon == null) {
 			return;
 		}

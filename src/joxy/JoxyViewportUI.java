@@ -2,13 +2,15 @@ package joxy;
 
 import java.awt.Graphics;
 
+import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicViewportUI;
 
 /**
- * Class overriding the default Viewport (BasicViewportUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JViewport.
+ * 
+ * <p>This is just a stub.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -22,6 +24,9 @@ public class JoxyViewportUI extends BasicViewportUI {
 	
 	@Override
 	public void paint(Graphics g, JComponent c) {
+		
+		// TODO handle Joxy's custom border painting
+		
 		super.paint(g, c);
 	}
 

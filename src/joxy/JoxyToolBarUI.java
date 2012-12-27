@@ -7,6 +7,16 @@ import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicToolBarUI;
 
+/**
+ * Joxy's UI delegate for the JToolBar.
+ * 
+ * <p>This doesn't do very much, but it applies {@link AbstractButton#setContentAreaFilled(boolean)}
+ * on buttons placed inside the JToolBar. {@link JoxyButtonUI} then renders the button
+ * like a KDE toolbar button.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyToolBarUI extends BasicToolBarUI {
 
 	public static ComponentUI createUI(JComponent b) {

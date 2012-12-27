@@ -18,10 +18,10 @@ import joxy.utils.ColorUtils;
 /**
  * Painter for a progress bar indicator.
  */
-public class ProgressBarIndicator {
+public class ProgressBarIndicatorPainter extends Painter {
 
 	// In actual code: 2.5f. But it seems Java arcs are different... sigh.
-	private static final float ARC = 8f;
+	private static final float ARC = 6;
 	
 	/**
 	 * Draws the indicator. The color is determined from the system defaults.
@@ -31,7 +31,8 @@ public class ProgressBarIndicator {
 	 * @param width Width of the shape.
 	 * @param height Height of the shape.
 	 */
-	public static void paint(Graphics2D g2, float x, float y, float width, float height) {
+	@Override
+	protected void paintObject(Graphics2D g2, float width, float height) {
 		
 		// this is to prevent a 0-length bar to be drawn => exception
 		if (width > 0) {
@@ -57,7 +58,7 @@ public class ProgressBarIndicator {
 			
 			// draw fill
 			g2.setColor(ColorUtils.mix(highlight, dark, 0.2f));
-			g2.fill(new RoundRectangle2D.Float(x, y, width, height, ARC, ARC));
+			g2.fill(new RoundRectangle2D.Float(0, 0, width, height, ARC, ARC));
 			
 			// fake radial gradient
 			// [ws] note that we here copy the original code straightforward by first
@@ -84,21 +85,21 @@ public class ProgressBarIndicator {
 				grg2.fill(new Rectangle2D.Float(0, 0, width, height));
 			}
 			
-			g2.drawImage(gradient, (int) x, (int) y, null);
+			g2.drawImage(gradient, 0, 0, null);
 			
 			// draw bevel
-			LinearGradientPaint bevel = new LinearGradientPaint(new Point2D.Float(0, y + 0.5f), new Point2D.Float(x, y + height - 0.5f), new float[]{0f, 0.5f, 1f}, new Color[]{lhighlight, highlight, ColorUtils.calcDarkColor(highlight)});
+			LinearGradientPaint bevel = new LinearGradientPaint(new Point2D.Float(0, 0.5f), new Point2D.Float(0, height - 0.5f), new float[]{0f, 0.5f, 1f}, new Color[]{lhighlight, highlight, ColorUtils.calcDarkColor(highlight)});
 			g2.setPaint(bevel);
 			g2.setStroke(new BasicStroke(1));
-			g2.draw(new RoundRectangle2D.Float(x + 0.5f, y + 0.5f, width, height, ARC, ARC));
+			g2.draw(new RoundRectangle2D.Float(0.5f, 0.5f, width, height, ARC, ARC));
 			
 			// draw bright top edge
 			Color mixed = ColorUtils.mix(highlight, light, 0.8f);
 			Color mixedTransparent = new Color(mixed.getRed(), mixed.getGreen(), mixed.getBlue(), 0);
-			LinearGradientPaint lightHl = new LinearGradientPaint(new Point2D.Float(x, 0), new Point2D.Float(x + width, 0), new float[]{0f, 0.5f, 1f}, new Color[]{mixedTransparent, mixed, mixedTransparent});
+			LinearGradientPaint lightHl = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(width, 0), new float[]{0f, 0.5f, 1f}, new Color[]{mixedTransparent, mixed, mixedTransparent});
 			g2.setPaint(lightHl);
 			g2.setStroke(new BasicStroke(1));
-			g2.draw(new Line2D.Float(x + 0.5f, y + 0.5f, x + width + 0.5f, y + 0.5f));
+			g2.draw(new Line2D.Float(0.5f, 0.5f, width + 0.5f, 0.5f));
 			
 			/*Color fill = UIManager.getColor("Button.hover"); // TODO een andere key!
 			g2.setPaint(new GradientPaint(x, y, fill.darker(), x + width / 2, y, fill, true));

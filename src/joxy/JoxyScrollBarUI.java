@@ -35,6 +35,11 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 	
 	/** Listener for enabling/disabling the arrow buttons */
 	private AdjustmentListener adjustmentListener;
+
+	/**
+	 * The painter for the groove.
+	 */
+	private DarkEngravingPainter groovePainter = new DarkEngravingPainter();
 			
     public static ComponentUI createUI(JComponent c) {
         return new JoxyScrollBarUI();
@@ -113,7 +118,7 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-    	DarkEngravingPainter.paint(g2, trackBounds.x + 1, trackBounds.y + 1, trackBounds.width - 2, trackBounds.height - 2);
+    	groovePainter.paint(g2, trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
     }
     
     @Override
@@ -123,8 +128,8 @@ public class JoxyScrollBarUI extends BasicScrollBarUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-    	HoverIndicatorPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 4, hoverAmount);
-    	ScrollThumbPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 4, 255 - hoverAmount);
+    	HoverIndicatorPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 5, hoverAmount);
+    	ScrollThumbPainter.paint(g2, thumbBounds.x + 2, thumbBounds.y + 2, thumbBounds.width - 4, thumbBounds.height - 5, 255 - hoverAmount);
     }
     
     @Override

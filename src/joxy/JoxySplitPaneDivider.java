@@ -27,6 +27,10 @@ public class JoxySplitPaneDivider extends BasicSplitPaneDivider {
 	
 	private boolean hovered = false;
 	
+	/**
+	 * Creates a new {@link JoxySplitPaneDivider}.
+	 * @param ui The UI delegate the divider is used for.
+	 */
 	public JoxySplitPaneDivider(BasicSplitPaneUI ui) {
 		super(ui);
 		createListeners();

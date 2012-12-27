@@ -28,6 +28,15 @@ import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.JoxyGraphics;
 import joxy.utils.TileSet;
 
+/**
+ * Joxy's UI delegate for the JToggleButton.
+ * 
+ * <p>This class is largely copied from {@link JoxyButtonUI}, but note that
+ * a "selected" toggle button looks different from a "pressed" button.</p>
+ * 
+ * @author Thom Castermans
+ * @author Willem Sonke
+ */
 public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 	
 	/** The width and height of the arcs that form up
@@ -53,6 +62,19 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 	/** Listeners for the animation */
 	private MouseListener hoverListener;
 	private FocusListener focusListener;
+	
+	/**
+	 * The painter for the button slab, if it is not a toolbar button.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for a selected button background.
+	 */
+	private DarkEngravingPainter selectedPainter = new DarkEngravingPainter();
+	/**
+	 * The painter for the pressed button, if it is a toolbar button.
+	 */
+	private DarkEngravingPainter pressedToolbarPainter = new DarkEngravingPainter();
 	
     public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
@@ -210,7 +232,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		// Check whether the button is a toolbar button; see JoxyToolBarUI
 		if (b.getClientProperty("isToolbarButton") == null) {
 		    if (b.getModel().isPressed() || b.getModel().isSelected()) {
-		    	DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+		    	pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
 			} else {
 				// shadow
 				g2.setColor(new Color(0, 0, 0, 80));
@@ -224,11 +246,11 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 				HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 				
 				// slab
-				ButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			}
 		} else {
 			if (b.getModel().isPressed() || b.getModel().isSelected()) {
-				DarkEngravingPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				selectedPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
 			} else {
 				// If mouse is over the component, draw hover indicator; note it is a special indicator
 				// for toolbar buttons

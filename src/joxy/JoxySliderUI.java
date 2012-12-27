@@ -18,8 +18,10 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
- * Class overriding the default Slider (BasicSliderUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JSlider.
+ * 
+ * <p>The JoxySliderUI supports animations for the focus state (not yet the hovered state).
+ * See {@link JoxyButtonUI} for more details.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke

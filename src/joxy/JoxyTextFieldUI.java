@@ -67,6 +67,16 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 	private boolean hovered = false;
 	
 	/**
+	 * The icon to use for the clear button.
+	 */
+	private static ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
+	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
+	
+	/**
 	 * For some reason it doesn't work to add the changeListener to the Document of
 	 * the text field in installListeners(). Therefore we do it in the paint method.
 	 * Of course it only needs to be added once, and therefore we use this variable.
@@ -93,7 +103,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		// pixels on the right side are strange
 		textField.setBorder(BorderFactory.createEmptyBorder(3, 5, 5, 25));
 		textField.setFont(UIManager.getFont("Button.font"));
-		//textField.setSelectedTextColor(UIManager.getColor("TextField.selectionBackground"));
+		textField.setOpaque(false);
 	}
 	
 	@Override
@@ -124,10 +134,12 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 				//    that manages its own borders et cetera;
 				// 4. the text field is editable (in fact, the clear button should not be
 				//    visible if the field is non-editable, but for some reason that still
-				//    happens).
+				//    happens);
+				// 5. the text field is enabled.
 				if (clearButtonOpacity > 0 && e.getX() > textField.getWidth() - 24
 						          && textField.getClientProperty("joxy.isEditor") == null
-						          && textField.isEditable()) {
+						          && textField.isEditable()
+						          && textField.isEnabled()) {
 					textField.setText("");
 				}
 			}
@@ -587,7 +599,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		if (textField.isEditable() && textField.getClientProperty("joxy.isEditor") == null) {
 			paintBackground(g);
 			
-			if (clearButtonOpacity > 0) {
+			if (clearButtonOpacity > 0 && textField.isEnabled()) {
 				paintClearButton(g, clearButtonOpacity);
 			}
 		}
@@ -618,7 +630,7 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		InputFieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
+		fieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
 		
 		if (textField.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight(), focusAmount);
@@ -626,19 +638,21 @@ public class JoxyTextFieldUI extends BasicTextFieldUI {
 		}
     }
     
+	/**
+	 * Paints the clear button of a text field.
+	 * @param g The Graphics object to draw with.
+	 * @param opacity The opacity, between 0 and 255. This is used for the fading animation.
+	 */
     private void paintClearButton(Graphics g, int opacity) {
 		Graphics2D g2 = (Graphics2D) g;
-		
-		// TODO this icon should be cached
-		ImageIcon clearIcon = Utils.getOxygenIcon("actions/edit-clear-locationbar-rtl", 16);
-		
+
 		if (clearIcon == null) {
 			return;
 		}
 		
 		clearIcon.paintIcon(textField, g2, textField.getWidth() - 20, textField.getHeight() / 2 - 8);
 		
-		// TODO this is ugly
+		// TODO This is ugly; it should be possible to paint the image with opacity
 		g2.setColor(new Color(255, 255, 255, 255 - opacity));
 		g2.fillRect(textField.getWidth() - 20, textField.getHeight() / 2 - 8, 16, 16);
 	}

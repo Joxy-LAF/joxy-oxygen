@@ -67,10 +67,10 @@ public class JoxyBevelBorder extends BevelBorder {
 		} else {
 			try {
 				// outer border
-				g2.setStroke(new BasicStroke(0.5f));
+				g2.setStroke(new BasicStroke(0.7f));
 				LinearGradientPaint outerGradient = new LinearGradientPaint(0, y + 1, 0, height - 4,
 						new float[]{0, 3f / height, 1 - 2f / height, 1},
-						new Color[]{new Color(0, 0, 0, 180), new Color(0, 0, 0, 90),
+						new Color[]{new Color(0, 0, 0, 150), new Color(0, 0, 0, 90),
 						             new Color(0, 0, 0, 90), new Color(0, 0, 0, 30)});
 				g2.setPaint(outerGradient);
 				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, width - 3, height - 4, ARC, ARC));
@@ -78,7 +78,7 @@ public class JoxyBevelBorder extends BevelBorder {
 				// inner border
 				LinearGradientPaint innerGradient = new LinearGradientPaint(0, y + 2, 0, height - 6,
 						new float[]{0, 3f / height, 1 - 2f / height, 1},
-						new Color[]{new Color(0, 0, 0, 90), new Color(0, 0, 0, 15),
+						new Color[]{new Color(0, 0, 0, 60), new Color(0, 0, 0, 15),
 						             new Color(0, 0, 0, 15), new Color(0, 0, 0, 0)});
 				g2.setPaint(innerGradient);
 				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, width - 5, height - 6, ARC - 2, ARC - 2));

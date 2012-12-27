@@ -9,10 +9,13 @@ import javax.swing.text.DefaultEditorKit;
 
 import joxy.utils.Utils;
 
-
-
 /**
- * This class is the main class of the Joxy Look and Feel.
+ * This class is the main class of the Joxy Look and Feel. It extends the Basic
+ * look and feel.
+ * 
+ * <p>Besides implementing the obligatory (abstract) methods, this class also
+ * provides a {@link #getVersion()} method, that can be used to get the version
+ * identifier (e.g. "0.1.0") of this version of Joxy.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -41,6 +44,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	/**
 	 * Returns the version of the Joxy Look and Feel.
+	 * @return The version, as a String.
 	 */
 	public String getVersion() {
 		return version;
@@ -53,6 +57,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 
 	@Override
 	public String getName() {
+		// Note: do not change this without changing Utils.isJoxyActive()
 		return "Joxy";
 	}
 

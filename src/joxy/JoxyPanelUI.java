@@ -3,6 +3,7 @@ package joxy;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.border.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPanelUI;
@@ -20,7 +21,11 @@ import joxy.border.JoxyTitledBorder;
  */
 public class JoxyPanelUI extends BasicPanelUI {
 	
-	Border oldBorder;
+	/**
+	 * The old border (from before the new Joxy border was applied).
+	 * If this is <code>null</code>, the border has not been swapped.
+	 */
+	private Border oldBorder;
 	
 	public static ComponentUI createUI(JComponent c) {
 		JoxyPanelUI panelUI = new JoxyPanelUI();
@@ -54,16 +59,16 @@ public class JoxyPanelUI extends BasicPanelUI {
 		// note that setBorder repaints the component itself; if we also would do that we
 		// get a StackOverflowError
 		
-		if (b instanceof BevelBorder) {
+		if (b instanceof BevelBorder && !(b instanceof JoxyBevelBorder)) {
 			oldBorder = b;
 			c.setBorder(new JoxyBevelBorder(((BevelBorder) b).getBevelType()));
 		}
-		if (b instanceof EtchedBorder) {
+		if (b instanceof EtchedBorder && !(b instanceof JoxyBevelBorder)) {
 			oldBorder = b;
 			// TODO this is not the correct Joxy border type, but we don't have a real etched border in KDE
 			c.setBorder(new JoxyBevelBorder(BevelBorder.RAISED));
 		}
-		if (b instanceof TitledBorder) {
+		if (b instanceof TitledBorder && !(b instanceof JoxyTitledBorder)) {
 			oldBorder = b;
 			c.setBorder(new JoxyTitledBorder(((TitledBorder) b).getTitle()));
 		}

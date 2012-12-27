@@ -8,9 +8,24 @@ import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.*;
+import javax.swing.plaf.basic.BasicSliderUI.ScrollListener;
 
 import joxy.painter.*;
 
+/**
+ * Joxy's UI delegate for the JComboBox.
+ * 
+ * <p>A combo box can be either editable or non-editable, and Joxy draws both variants
+ * differently, just like KDE does. A non-editable combo box looks like a JButton; an
+ * editable combo box looks like a JTextField.</p>
+ * 
+ * <p>In both variants, it is possible to use the scroll wheel to traverse through the
+ * options. This is done by adding a {@link ScrollListener}.</p>
+ * 
+ * <p>The JoxyComboBoxUI supports animations for the focus and hovered states, but only
+ * for non-editable combo boxes. See JoxyButtonUI for more details. Support for those
+ * animations on editable combo boxes is planned.</p>
+ */
 public class JoxyComboBoxUI extends BasicComboBoxUI {
 	
 	/** The width and height of the arcs that form up
@@ -31,6 +46,15 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	
 	/** Listeners for scrolling */
 	private MouseWheelListener scrollListener;
+	
+	/**
+	 * The painter for the button slab (for a non-editable combo box).
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for the input field (for an editable combo box).
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
 	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyComboBoxUI();
@@ -224,8 +248,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, focusAmount);
 			HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, hoverAmount);
 
-			ButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-					comboBox.getHeight() - 4);
+			slabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
 		}
 
 		// TODO Draw disabled buttons differently
@@ -243,7 +266,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
-		InputFieldPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
+		fieldPainter.paint(g2, 0, 0, comboBox.getWidth(), comboBox.getHeight());
 	}
 	
 	@Override
@@ -317,7 +340,7 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		ComboBoxEditor e = super.createEditor();
 		
 		if (e.getEditorComponent() instanceof JTextField) {
-			((JTextField) e.getEditorComponent()).putClientProperty("joxy.isEditor", true);
+			((JTextField) e.getEditorComponent()).putClientProperty("joxy.isEditor", Boolean.TRUE);
 		}
 		
 		return e;

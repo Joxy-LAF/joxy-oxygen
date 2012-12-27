@@ -44,6 +44,11 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 	
 	private boolean hovered = false;
 	
+	/**
+	 * The painter for the input field.
+	 */
+	private InputFieldPainter fieldPainter = new InputFieldPainter();
+	
 	public static ComponentUI createUI(JComponent c) {
 		return new JoxyEditorPaneUI(c);
 	}
@@ -59,6 +64,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
 		editor.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		editor.setFont(UIManager.getFont("Button.font"));
+		editor.setOpaque(false);
 		
 		// force the default font to be used if the HTML does not override it... nice :-)
 		editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
@@ -199,7 +205,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 
 		Rectangle vr = editor.getVisibleRect();
 		
-		InputFieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		if (editor.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);

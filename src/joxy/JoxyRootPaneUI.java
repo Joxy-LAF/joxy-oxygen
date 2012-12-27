@@ -1,35 +1,29 @@
 package joxy;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RadialGradientPaint;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
-import joxy.utils.ColorUtils;
+import joxy.utils.*;
 import joxy.utils.ColorUtils.ShadeRoles;
 
 /**
- * Class overriding the default Rootpane (BasicRootpaneUI) to provide a good
- * integration with the Oxygen KDE style. Part of the Joxy Look and Feel.
+ * Joxy's UI delegate for the JRootPaneUI.
+ * 
+ * <p>This class is responsible for drawing the radial background of windows.
+ * Several ways of caching are used, since this is done very often. See {@link #backgroundCache},
+ * {@link #radialGradient600px} and {@link #currentCache}.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
 public class JoxyRootPaneUI extends BasicRootPaneUI {
-	
-	public static final float CONTRAST_ADJUSTMENT = 0f;
 	
 	/**
 	 * In this hash table we store cached images of the <b>linear</b> part of the
@@ -46,6 +40,16 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	 */
 	private static BufferedImage radialGradient600px = null;
 	
+	/**
+	 * In this image we cache the entire current radial background. That is useful since
+	 * when the window size hasn't changed, the radial background will be entirely the same
+	 * and thus, it can be completely taken from the cache.
+	 */
+	private static BufferedImage currentCache = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+	
+	/**
+	 * Initialize the {@link #radialGradient600px}.
+	 */
 	static {
 		radialGradient600px = new BufferedImage(600, 64, BufferedImage.TYPE_INT_ARGB);
 		Color color = UIManager.getColor("Window.background");
@@ -74,6 +78,9 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	@Override
 	protected void installDefaults(JRootPane c) {
 		super.installDefaults(c);
+		
+		// this is a fix for bug 15; see the description there
+		c.setOpaque(true);
 	}
 	
 	/**
@@ -87,38 +94,68 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
+		// Bug 12: some applications (breaking the API) create a JFrame and apply the LAF thereafter.
+		// That means that JoxyRootPaneUI will be applied already, coinciding with other LAF components,
+		// for example Metal. Most worrying, all kinds of stuff can happen to the defaults. Therefore
+		// we check if the LAF is Joxy, and if not, we update the component tree ourselves.
+		if (!Utils.isJoxyActive()) {
+			Output.warning("Application created the JRootPane after setting the LAF, but without using \n" +
+					"SwingUtilities.updateComponentTreeUI(frame). Joxy will do that now.");
+			SwingUtilities.updateComponentTreeUI(c);
+			return;
+		}
+		
+		// if the currentCache is not up-to-date, draw a new one
+		if (c.getWidth() != currentCache.getWidth() || c.getHeight() != currentCache.getHeight()) {
+			paintBackgroundToCache(c.getWidth(), c.getHeight());
+		}
+		
+		// actually draw the background
+		g2.drawImage(currentCache, 0, 0, null);
+	}
+	
+	/**
+	 * Actually draws the background onto the {@link #currentCache}.
+	 * @param width The desired width.
+	 * @param height The desired height.
+	 */
+	protected void paintBackgroundToCache(int width, int height) {
+		
+		currentCache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = (Graphics2D) currentCache.getGraphics();
+		
 		// speed is important here
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 		
-		int splitY = (int) Math.min(300 - 23, .75 * (c.getHeight() + 23));
+		int splitY = (int) Math.min(300 - 23, .75 * (height + 23));
 		
 		// determine colors to use
 		Color color = UIManager.getColor("Window.background");
 
 		// draw linear gradient
-		BufferedImage gradient = backgroundCache.get(c.getHeight());
+		BufferedImage gradient = backgroundCache.get(height);
 		
 		if (gradient == null) {
-			// Output.debug("Linear background: created new image for height " + c.getHeight());
-			BufferedImage newGradient = new BufferedImage(1, c.getHeight(), BufferedImage.TYPE_INT_RGB);
+			// Output.debug("Linear background: created new image for height " + height);
+			BufferedImage newGradient = new BufferedImage(1, height, BufferedImage.TYPE_INT_RGB);
 			Graphics2D imgg2 = (Graphics2D) (newGradient.getGraphics());
 		    Color backgroundTopColor = getBackgroundTopColor(color);
 	        Color backgroundBottomColor = getBackgroundBottomColor(color);
 			imgg2.setPaint(new GradientPaint(0, -23, backgroundTopColor, 0, splitY, backgroundBottomColor));
-			imgg2.fillRect(0, 0, 1, c.getHeight());
-			backgroundCache.put(c.getHeight(), newGradient);
-			g2.drawImage(newGradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
+			imgg2.fillRect(0, 0, 1, height);
+			backgroundCache.put(height, newGradient);
+			g2.drawImage(newGradient, AffineTransform.getScaleInstance(width, 1), null);
 		} else {
-			// Output.debug("Linear background: used cached image for height " + c.getHeight());
-			g2.drawImage(gradient, AffineTransform.getScaleInstance(c.getWidth(), 1), null);
+			// Output.debug("Linear background: used cached image for height " + height);
+			g2.drawImage(gradient, AffineTransform.getScaleInstance(width, 1), null);
 		}
 		
 		// draw upper radial gradient
         Color backgroundRadialColor = getBackgroundRadialColor(color);
-		int radialWidth = Math.min(600, c.getWidth());
-		if (c.getWidth() >= 600) {
+		int radialWidth = Math.min(600, width);
+		if (width >= 600) {
 			// Output.debug("Radial background: used the cached 600px image");
-			g2.drawImage(radialGradient600px, (c.getWidth()-600)/2, 0, null);
+			g2.drawImage(radialGradient600px, (width-600)/2, 0, null);
 		} else {
 			// Output.debug("Radial background: created a new image");
 			Color radial1 = new Color(backgroundRadialColor.getRed(), backgroundRadialColor.getGreen(),backgroundRadialColor.getBlue(), 0);
@@ -131,7 +168,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 					new Color[] {radial4, radial3, radial2, radial1},
 					RadialGradientPaint.CycleMethod.NO_CYCLE));
 	
-			g2.fillRect(0, 0, c.getWidth(), 64); // last one is gradientHeight
+			g2.fillRect(0, 0, width, 64); // last one is gradientHeight
 		}
 	}
 
@@ -154,7 +191,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 			
 			out = ColorUtils.shade(baseColor, (float) ((my-by) * backgroundContrast));
 		//}
@@ -179,7 +215,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 			
             out = ColorUtils.shade(baseColor, (float) ((my-by) * backgroundContrast));
 
@@ -189,6 +224,9 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	}
 	
 	public static Color getBackgroundRadialColor(Color baseColor) {
+		
+		assert baseColor != null;
+		
 		Color out = new Color(0, 0, 0);
 		
 		//if (ColorUtils.lowThreshold(baseColor)) {
@@ -200,7 +238,6 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 			// Remark: in the original code, it stated "0.9 * contrast / 0.7". But this turns out to refer
 			// to contrastF, that divides the contrast by 10.
 			double backgroundContrast = Math.min(1, 0.9 * contrast / 7);
-			backgroundContrast -= CONTRAST_ADJUSTMENT;
 		
 			out = ColorUtils.shadeScheme(baseColor, ShadeRoles.LightShade, (float) backgroundContrast);
 		//}
