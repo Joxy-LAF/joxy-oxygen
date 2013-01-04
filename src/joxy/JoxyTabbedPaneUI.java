@@ -37,7 +37,7 @@ import joxy.utils.Output;
 public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 
 	protected MouseWheelListener scrollListener;
-	public static final int ARC = 8;
+	public static final int ARC = 6;
 	
 	/**
 	 * Indicates whether the selected tab should overflow when it is
@@ -370,23 +370,23 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			switch (tabPlacement) {
 			case TOP:
 				Shape previousClip = g2.getClip();
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, g2.getClipBounds().height - 1);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y, g2.getClipBounds().width, g2.getClipBounds().height);
 				g2.setColor(new Color(0, 0, 0, 50));
 				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h + 3, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setColor(new Color(255, 255, 255, 128));
-				g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h + 3, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 2, y + 1, w - 4, h + 2, ARC, ARC));
 			}
 		} else {
 			switch (tabPlacement) {
 			case TOP:
 				Shape previousClip = g2.getClip();
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 2, g2.getClipBounds().width, g2.getClipBounds().height - 2);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, g2.getClipBounds().height - 1);
 				g2.setColor(new Color(0, 0, 0, 50));
 				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 2, h + 2, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setColor(new Color(255, 255, 255, 128));
-				g2.draw(new RoundRectangle2D.Float(x + 2, y + 1, w - 4, h + 2, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 4, h + 1, ARC, ARC));
 			}
 		}
 	}
