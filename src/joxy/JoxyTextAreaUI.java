@@ -2,19 +2,20 @@ package joxy;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.border.BevelBorder;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextAreaUI;
 import javax.swing.text.Caret;
 import javax.swing.text.Highlighter;
 
+import joxy.border.JoxyBevelBorder;
 import joxy.painter.InputFieldPainter;
 import joxy.painter.TextFieldFocusIndicatorPainter;
 import joxy.painter.TextFieldHoverIndicatorPainter;
-import joxy.utils.Utils;
 
 /**
  * Joxy's UI delegate for the JTextArea.
@@ -68,7 +69,6 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
 		textArea.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textArea.setFont(UIManager.getFont("Button.font"));
-		textArea.setOpaque(false);
 	}
 	
 	@Override
@@ -113,7 +113,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 			}
 		};
 		textArea.addFocusListener(focusListener);
-			
+		
 		createTimers();
 	}
 	
@@ -170,8 +170,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
     /**
 	 * {@inheritDoc}
 	 * 
-	 * <p>This method has been copied from the superclass, but the background
-	 * is always painted, also if the field is non-opaque.</p>
+	 * <p>This method has been copied from the superclass.</p>
 	 */
 	@Override
 	protected void paintSafely(Graphics g) {
@@ -180,6 +179,12 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		if (textArea.isOpaque()) {
+			textArea.setOpaque(false);
+			textArea.repaint();
+			return;
+		}
 		
 		paintBackground(g);
 		
@@ -194,6 +199,10 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         
         // paint the view hierarchy
+        // TODO do clipping, to prevent text from overflowing beyond the border if the component
+        // is in a JScrollPane
+        // this happens because in a scroll pane, the EmptyBorder for this component obviously
+        // doesn't have an influence anymore
         Rectangle alloc = getVisibleEditorRect();
         if (alloc != null) {
             getRootView(textArea).paint(g, alloc);
@@ -211,7 +220,11 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		
 		Rectangle vr = textArea.getVisibleRect();
 		
-		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		if (textArea.isEditable()) {
+			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		} else {
+			JoxyBevelBorder.paintActualBorder(g2, vr.x, vr.y, vr.width, vr.height, BevelBorder.LOWERED);
+		}
 		
 		if (textArea.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);

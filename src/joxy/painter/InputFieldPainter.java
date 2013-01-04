@@ -28,6 +28,7 @@ public class InputFieldPainter extends Painter {
 	 * @param width Width of the shape.
 	 * @param height Height of the shape.
 	 */
+	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
 		// background
 		g2.setColor(Color.WHITE);
