@@ -62,7 +62,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	public void installUI(final JComponent c) {
 		super.installUI(c);
 
-		tabInsets = new Insets(5, 6, 0, 6);
+		tabInsets = new Insets(7, 8, 0, 6);
 		tabAreaInsets = new Insets(0, 0, 0, 0);
 		c.setFont(UIManager.getFont("Button.font"));
 
@@ -370,7 +370,11 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			switch (tabPlacement) {
 			case TOP:
 				Shape previousClip = g2.getClip();
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y, g2.getClipBounds().width, g2.getClipBounds().height);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y, g2.getClipBounds().width, 2);
+				g2.setColor(new Color(0, 0, 0, 13));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h + 3, ARC, ARC));
+				g2.setClip(previousClip);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 2, g2.getClipBounds().width, g2.getClipBounds().height - 2);
 				g2.setColor(new Color(0, 0, 0, 50));
 				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h + 3, ARC, ARC));
 				g2.setClip(previousClip);
@@ -381,7 +385,11 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			switch (tabPlacement) {
 			case TOP:
 				Shape previousClip = g2.getClip();
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, g2.getClipBounds().height - 1);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
+				g2.setColor(new Color(0, 0, 0, 13));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 2, h + 2, ARC, ARC));
+				g2.setClip(previousClip);
+				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 3, g2.getClipBounds().width, g2.getClipBounds().height - 3);
 				g2.setColor(new Color(0, 0, 0, 50));
 				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 2, h + 2, ARC, ARC));
 				g2.setClip(previousClip);
