@@ -37,6 +37,7 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	
 	@Override
 	protected void installDefaults() {
+		progressBar.setStringPainted(true);
 	}
 	
 	@Override
