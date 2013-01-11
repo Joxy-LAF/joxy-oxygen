@@ -10,4 +10,6 @@ To do before a release
  * Set the version number in joxy.JoxyLookAndFeel
  * Set the output to the warning level in joxy.utils.Output
  * If needed, switch the native text rendering on (joxy.utils.JoxyGraphics)
+ * Update the website: the version number on the home page, the download page
+ * Write a blog post
  * ... more?
