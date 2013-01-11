@@ -230,7 +230,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		} else {
 		
 		// Check whether the button is a toolbar button; see JoxyToolBarUI
-		if (b.getClientProperty("isToolbarButton") == null) {
+		if (b.isContentAreaFilled()) {
 		    if (b.getModel().isPressed() || b.getModel().isSelected()) {
 		    	pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
 			} else {
