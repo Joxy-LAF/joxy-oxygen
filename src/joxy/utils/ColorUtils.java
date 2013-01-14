@@ -2,9 +2,7 @@ package joxy.utils;
 
 import java.awt.Color;
 
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import joxy.JoxyRootPaneUI;
 
@@ -141,58 +139,38 @@ public class ColorUtils {
 	public static Color shadeScheme(Color color, ShadeRoles role, float contrast) {
 		return shadeScheme(color, role, contrast, 0.0f);
 	}
-
+	
+	/**
+	 * Returns the background colour of a component with a "slab". Such a background colour
+	 * is in Oxygen dependent from the position of the component in the window, to let it
+	 * fit in nicely with the background gradient.
+	 * 
+	 * <p><b>From Oxygen code:</b> /libs/oxygen/oxygenhelper.h</p>
+	 * 
+	 * <p><b>Note:</b> this documentation may be incorrect!</p>
+	 * 
+	 * @param color The base colour.
+	 * @param c The component to determine the colour for.
+	 * @param centerX The x coordinate in <code>c</code> coordinates of the point to use. Most
+	 * often this will be the center point, hence the name.
+	 * @param centerY The y coordinate in <code>c</code> coordinates of the point to use. Most
+	 * often this will be the center point, hence the name.
+	 * @return The background colour.
+	 */
 	public static Color backgroundColor(Color color, JComponent c, double centerX, double centerY) {
-		/* *** /libs/oxygen/oxygenhelper.h ***
-			//! returns menu background color matching position in a given top level widget
-	        virtual const QColor& backgroundColor( const QColor& color, const QWidget* w, const QPoint& point )
-	        {
-	            if( !( w && w->window() ) || checkAutoFillBackground( w ) ) return color;
-	            else return backgroundColor( color, w->window()->height(), w->mapTo( w->window(), point ).y() );
-	        }
-	        
-            //! returns menu background color matching position in a top level widget of given height
-	        virtual const QColor& backgroundColor( const QColor& color, int height, int y )
-	        { return backgroundColor( color, qMin( qreal( 1.0 ), qreal( y )/qMin( 300, 3*height/4 ) ) ); }
-		 */
+		
 		Color result = null;
 		
 		int y = SwingUtilities.convertPoint(c, (int) centerX, (int) centerY, c.getRootPane()).y; // get window coordinates
-		float ratio = (float) Math.min(1.0, y / Math.min(300, 0.75 * c.getHeight()));
+
+		float ratio = (float) Math.min(1.0, y / Math.min(300, 0.75 * c.getRootPane().getHeight()));
+		
 		if (ratio < 0.5) {
 			result = mix(JoxyRootPaneUI.getBackgroundTopColor(color), color, 2.0f * ratio);
 		} else {
 			result = mix(color, JoxyRootPaneUI.getBackgroundBottomColor(color), 2.0f * ratio);
 		}
 		
-		/*
-	        const quint64 key( ( quint64( color.rgba() ) << 32 ) | int( ratio*512 ) );
-	        QColor *out( _backgroundColorCache.object( key ) );
-	        if( !out )
-	        {
-	            if( ratio < 0.5 )
-	            {
-	
-	                const qreal a( 2.0*ratio );
-	                out = new QColor( KColorUtils::mix( backgroundTopColor( color ), color, a ) );
-	
-	            } else {
-	
-	                const qreal a( 2.0*ratio-1 );
-	                out = new QColor( KColorUtils::mix( color, backgroundBottomColor( color ), a ) );
-	
-	            }
-	
-	            _backgroundColorCache.insert( key, out );
-	
-	        }
-	
-	        return *out;
-		 */
-		
-		if (Utils.useRNDColorScheme) {
-			return new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
-		}
 		return result;
 	}
 

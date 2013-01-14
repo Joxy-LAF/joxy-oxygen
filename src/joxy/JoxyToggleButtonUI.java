@@ -246,6 +246,7 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 				HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
 				
 				// slab
+				slabPainter.setColor(c);
 				slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			}
 		} else {

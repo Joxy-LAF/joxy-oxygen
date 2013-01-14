@@ -27,6 +27,16 @@ public abstract class Painter {
 	public static final boolean USE_CACHING = true;
 	
 	/**
+	 * Clears the cache.
+	 * 
+	 * <p>This method must be called by subclasses if something changed that influences
+	 * the rendering.</p>
+	 */
+	protected void clearCache() {
+		cache = null;
+	}
+	
+	/**
 	 * Paints the object given the currently set data, using the {@link Graphics2D}
 	 * object provided.
 	 * 

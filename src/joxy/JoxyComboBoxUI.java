@@ -247,7 +247,8 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 			// decorations
 			FocusIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, focusAmount);
 			HoverIndicatorPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4, hoverAmount);
-
+			
+			slabPainter.setColor(comboBox);
 			slabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
 		}
 

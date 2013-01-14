@@ -420,6 +420,14 @@ public class TestGUI {
 		tab7.add(border8);
 		
 		t.addTab("Borders", tab7);
+		
+		JPanel tab8 = new JPanel();
+		
+		for (int i = 1; i <= 1000; i++) {
+			tab8.add(new JButton("Button " + i));
+		}
+		
+		t.addTab("Buttons", tab8);
 	}
 	
 	/**

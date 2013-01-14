@@ -212,6 +212,7 @@ public class JoxyCheckBoxUI extends BasicCheckBoxUI {
 		HoverIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, hoverAmount);
 		
 		// slab
+		slabPainter.setColor(c);
 		slabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
 		
 		// the circle
