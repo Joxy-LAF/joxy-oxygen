@@ -26,6 +26,8 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	protected MouseWheelListener scrollListener;
 	protected MouseAdapter hoverListener;
 	public static final int ARC = 6;
+
+	private static Color hover = UIManager.getColor("Button.hover");
 	
 	/**
 	 * The currently hovered tab, -1 if none.
@@ -415,9 +417,8 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		
 		switch (tabPlacement) {
 		case TOP:
-			HoverIndicatorPainter.paint(g2, x, y, w - 1, h + 3, hoverAmountForTab);
-			g2.setStroke(new BasicStroke(1));
 			
+			// black shadow
 			Shape previousClip = g2.getClip();
 			g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
 			g2.setColor(new Color(0, 0, 0, 13));
@@ -427,6 +428,15 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			g2.setColor(new Color(0, 0, 0, 50));
 			g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
 			g2.setClip(previousClip);
+			
+			// hover effect
+			g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), hoverAmountForTab));
+			g2.setStroke(new BasicStroke(1));
+			g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
+			g2.setColor(new Color(hover.getRed(), hover.getGreen(), hover.getBlue(), hoverAmountForTab / 2));
+			g2.draw(new RoundRectangle2D.Float(x, y, w - 1, h + 4, ARC, ARC));
+			
+			// white border
 			g2.setColor(new Color(255, 255, 255, 128));
 			g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 5, h + 1, ARC, ARC));
 		}
