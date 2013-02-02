@@ -381,21 +381,25 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				g2.setColor(new Color(255, 255, 255, 128));
 				g2.draw(new RoundRectangle2D.Float(x + 2, y + 1, w - 5, h + 2, ARC, ARC));
 			}
-		} else {
-			switch (tabPlacement) {
-			case TOP:
-				Shape previousClip = g2.getClip();
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
-				g2.setColor(new Color(0, 0, 0, 13));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
-				g2.setClip(previousClip);
-				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 3, g2.getClipBounds().width, g2.getClipBounds().height - 3);
-				g2.setColor(new Color(0, 0, 0, 50));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
-				g2.setClip(previousClip);
-				g2.setColor(new Color(255, 255, 255, 128));
-				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 5, h + 1, ARC, ARC));
-			}
+			
+			return;
+		}
+		
+		// not a selected tab
+		
+		switch (tabPlacement) {
+		case TOP:
+			Shape previousClip = g2.getClip();
+			g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
+			g2.setColor(new Color(0, 0, 0, 13));
+			g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
+			g2.setClip(previousClip);
+			g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 3, g2.getClipBounds().width, g2.getClipBounds().height - 3);
+			g2.setColor(new Color(0, 0, 0, 50));
+			g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
+			g2.setClip(previousClip);
+			g2.setColor(new Color(255, 255, 255, 128));
+			g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 5, h + 1, ARC, ARC));
 		}
 	}
 	
