@@ -61,7 +61,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	@Override
 	public void installUI(final JComponent c) {
 		super.installUI(c);
-
+		
 		tabInsets = new Insets(7, 8, 0, 6);
 		tabAreaInsets = new Insets(0, 0, 0, 0);
 		c.setFont(UIManager.getFont("Button.font"));
@@ -222,18 +222,18 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			// shadow
 			g2.setColor(new Color(0, 0, 0, 50));
 			Shape previousClip = g2.getClip();
-			g2.setClip(rects[selectedIndex].width - 1, y + 1, w, h);
+			g2.setClip(rects[0].width - 2, y + 1, w, h);
 			g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h - 2, ARC, ARC));
-			g2.setClip(0, y + 4, rects[selectedIndex].width, h);
+			g2.setClip(0, y + 4, rects[0].width - 1, h);
 			g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h - 2, ARC, ARC));
 			g2.setClip(previousClip);
 			g2.drawLine(1, y, 1, y + 3);
 			
 			// white border
 			g2.setColor(new Color(255, 255, 255, 128));
-			g2.setClip(rects[selectedIndex].width - 1, y, w, h);
+			g2.setClip(rects[0].width - 2, y, w, h);
 			g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h - 3, ARC, ARC));
-			g2.setClip(0, y + 4, rects[selectedIndex].width, h);
+			g2.setClip(0, y + 4, rects[0].width - 1, h);
 			g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h - 3, ARC, ARC));
 			g2.setClip(previousClip);
 			g2.drawLine(2, y, 2, y + 3);
@@ -250,9 +250,9 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			g2.setColor(new Color(255, 255, 255, 128));
 			g2.setClip(0, y + 1, w, h - 1);
 			g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h - 3, ARC, ARC));
-			g2.setClip(0, y, rects[selectedIndex].x + 2, 1);
+			g2.setClip(0, y, rects[selectedIndex].x /* - scroll adjustment */ + 2, 1);
 			g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h - 3, ARC, ARC));
-			g2.setClip(rects[selectedIndex].x + rects[selectedIndex].width - 1, y, w, 1);
+			g2.setClip(rects[selectedIndex].x /* - scroll adjustment */ + rects[selectedIndex].width - 2, y, w, 1);
 			g2.draw(new RoundRectangle2D.Float(x + 2, y, w - 4, h - 3, ARC, ARC));
 			g2.setClip(previousClip);
 			g2.drawLine(2, y, 2, y + 2);
@@ -300,26 +300,26 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				GradientPaint tab1 = new GradientPaint(x + 1, 0, background, x + w,
 						0, backgroundTransparent);
 				g2.setPaint(tab1);
-				g2.fill(new RoundRectangle2D.Float(x + 1, y + 1, w - 1, h - 3, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 1, y + 1, w - 1, h - 4, ARC, ARC));
 				break;
 			case RIGHT:
 				GradientPaint tab2 = new GradientPaint(x, 0, backgroundTransparent,
 						x + w - 2, 0, background);
 				g2.setPaint(tab2);
-				g2.fill(new RoundRectangle2D.Float(x, y + 1, w - 2, h - 3, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x, y + 1, w - 2, h - 4, ARC, ARC));
 				break;
 			case BOTTOM:
 				GradientPaint tab3 = new GradientPaint(0, y, backgroundTransparent,
 						0, y + h - 1, background);
 				g2.setPaint(tab3);
-				g2.fill(new RoundRectangle2D.Float(x + 1, y, w - 3, h - 1, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 1, y, w - 4, h - 1, ARC, ARC));
 				break;
 			case TOP:
 			default:
 				GradientPaint tab4 = new GradientPaint(0, y + 1, background, 0, y
 						+ h, backgroundTransparent);
 				g2.setPaint(tab4);
-				g2.fill(new RoundRectangle2D.Float(x + 2, y + 1, w - 3, h - 1, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 2, y + 1, w - 4, h - 1, ARC, ARC));
 			}
 		} else {
 			Color background = new Color(0, 0, 0, 30);
@@ -331,26 +331,26 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				GradientPaint tab1 = new GradientPaint(x + 1, 0, background, x + w,
 						0, backgroundTransparent);
 				g2.setPaint(tab1);
-				g2.fill(new RoundRectangle2D.Float(x + 1, y + 1, w - 1, h - 3, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 1, y + 1, w - 1, h - 4, ARC, ARC));
 				break;
 			case RIGHT:
 				GradientPaint tab2 = new GradientPaint(x, 0, backgroundTransparent,
 						x + w - 2, 0, background);
 				g2.setPaint(tab2);
-				g2.fill(new RoundRectangle2D.Float(x, y + 1, w - 2, h - 3, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x, y + 1, w - 2, h - 4, ARC, ARC));
 				break;
 			case BOTTOM:
 				GradientPaint tab3 = new GradientPaint(0, y, backgroundTransparent,
 						0, y + h - 1, background);
 				g2.setPaint(tab3);
-				g2.fill(new RoundRectangle2D.Float(x + 1, y, w - 3, h - 1, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 1, y, w - 4, h - 1, ARC, ARC));
 				break;
 			case TOP:
 			default:
 				GradientPaint tab4 = new GradientPaint(0, y + (h/2) + 1, background, 0, y
 						+ h, backgroundTransparent, true);
 				g2.setPaint(tab4);
-				g2.fill(new RoundRectangle2D.Float(x + 2, y + 2, w - 3, h - 1, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Float(x + 2, y + 2, w - 4, h - 1, ARC, ARC));
 			}
 		}
 	}
@@ -372,14 +372,14 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				Shape previousClip = g2.getClip();
 				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y, g2.getClipBounds().width, 2);
 				g2.setColor(new Color(0, 0, 0, 13));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h + 3, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 3, h + 3, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 2, g2.getClipBounds().width, g2.getClipBounds().height - 2);
 				g2.setColor(new Color(0, 0, 0, 50));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 2, h + 3, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y, w - 3, h + 3, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setColor(new Color(255, 255, 255, 128));
-				g2.draw(new RoundRectangle2D.Float(x + 2, y + 1, w - 4, h + 2, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 2, y + 1, w - 5, h + 2, ARC, ARC));
 			}
 		} else {
 			switch (tabPlacement) {
@@ -387,14 +387,14 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 				Shape previousClip = g2.getClip();
 				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
 				g2.setColor(new Color(0, 0, 0, 13));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 2, h + 2, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 3, g2.getClipBounds().width, g2.getClipBounds().height - 3);
 				g2.setColor(new Color(0, 0, 0, 50));
-				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 2, h + 2, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 1, y + 1, w - 3, h + 2, ARC, ARC));
 				g2.setClip(previousClip);
 				g2.setColor(new Color(255, 255, 255, 128));
-				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 4, h + 1, ARC, ARC));
+				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, w - 5, h + 1, ARC, ARC));
 			}
 		}
 	}
