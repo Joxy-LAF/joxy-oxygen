@@ -1,30 +1,17 @@
 package joxy;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
+import joxy.painter.HoverIndicatorPainter;
 import joxy.utils.JoxyGraphics;
-import joxy.utils.Output;
 
 /**
  * Joxy's UI delegate for the JTabbedPane.
@@ -37,7 +24,18 @@ import joxy.utils.Output;
 public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 
 	protected MouseWheelListener scrollListener;
+	protected MouseAdapter hoverListener;
 	public static final int ARC = 6;
+	
+	/**
+	 * The currently hovered tab, -1 if none.
+	 */
+	protected int hoveredTab = -1;
+	
+	/**
+	 * The amount of hover glow. This should be animated.
+	 */
+	protected int hoverAmount = 255;
 	
 	/**
 	 * Indicates whether the selected tab should overflow when it is
@@ -56,6 +54,28 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		c.setOpaque(false);
 		JoxyTabbedPaneUI ui = new JoxyTabbedPaneUI();
 		return ui;
+	}
+	
+	@Override
+	protected void installListeners() {
+		super.installListeners();
+		
+		hoverListener = new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				hoveredTab = -1;
+				tabPane.repaint();
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				hoveredTab = tabForCoordinate(tabPane, e.getX(), e.getY());
+				tabPane.repaint();
+			}
+		};
+		
+		tabPane.addMouseListener(hoverListener);
+		tabPane.addMouseMotionListener(hoverListener);
 	}
 
 	@Override
@@ -387,8 +407,17 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		
 		// not a selected tab
 		
+		int hoverAmountForTab = 0;
+		
+		if (tabIndex == hoveredTab) {
+			hoverAmountForTab = hoverAmount;
+		}
+		
 		switch (tabPlacement) {
 		case TOP:
+			HoverIndicatorPainter.paint(g2, x, y, w - 1, h + 3, hoverAmountForTab);
+			g2.setStroke(new BasicStroke(1));
+			
 			Shape previousClip = g2.getClip();
 			g2.setClip(g2.getClipBounds().x, g2.getClipBounds().y + 1, g2.getClipBounds().width, 2);
 			g2.setColor(new Color(0, 0, 0, 13));
