@@ -415,6 +415,10 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			hoverAmountForTab = hoverAmount;
 		}
 		
+		if (!tabPane.isEnabledAt(tabIndex)) {
+			hoverAmountForTab = 0;
+		}
+		
 		switch (tabPlacement) {
 		case TOP:
 			
