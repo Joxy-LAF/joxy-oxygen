@@ -188,9 +188,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	
 	@Override
 	public void paint(Graphics g, JComponent c) {
-		
 		tabPane.setTabPlacement(JTabbedPane.TOP);
-		
 		super.paint(g, c);
 	}
 	
@@ -257,7 +255,6 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	 * @param selectedIndex Index of the selected tab.
 	 */
 	protected void paintContentBorderTabsTop(Graphics2D g2, int selectedIndex, int x, int y, int w, int h) {
-
 		
 		// If first tab is selected, we need a special case to draw the left line.
 		if (selectedIndex == 0) {
@@ -319,7 +316,7 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 			// plain text
 			g2.setColor((tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex))
 							? tabPane.getForegroundAt(tabIndex)
-							: tabPane.getBackgroundAt(tabIndex).brighter());
+							: UIManager.getColor("Button.disabledForeground"));
 
 			JoxyGraphics.drawString(g2, title, textRect.x, textRect.y + metrics.getAscent());
 		}
