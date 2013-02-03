@@ -65,12 +65,24 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 		hoverListener = new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
+				
+				// TODO this is a workaround: apparently in Netbeans tabs, tabPane can be null
+				if (tabPane == null) {
+					return;
+				}
+				
 				hoveredTab = -1;
 				tabPane.repaint();
 			}
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				
+				// TODO this is a workaround: apparently in Netbeans tabs, tabPane can be null
+				if (tabPane == null) {
+					return;
+				}
+				
 				hoveredTab = tabForCoordinate(tabPane, e.getX(), e.getY());
 				tabPane.repaint();
 			}
