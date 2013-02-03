@@ -187,6 +187,14 @@ public class JoxyTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 	
 	@Override
+	public void paint(Graphics g, JComponent c) {
+		
+		tabPane.setTabPlacement(JTabbedPane.TOP);
+		
+		super.paint(g, c);
+	}
+	
+	@Override
 	protected void paintContentBorder(Graphics g, int tabPlacement,
 			int selectedIndex) {
 		int width = tabPane.getWidth();
