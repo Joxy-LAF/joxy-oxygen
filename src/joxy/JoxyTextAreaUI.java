@@ -181,7 +181,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
 		if (textArea.isOpaque()) {
-			paintParents(g);
+			paintUnderlying(g);
 			paintBackground(g);
 		}
 		
@@ -213,7 +213,8 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
     }
 	
 	/**
-	 * Paints the parents of this component in the area covered by the component.
+	 * Paints the underlying components of this component, in the area that is covered by
+	 * the component.
 	 * 
 	 * <p>Java uses the opaque value for two reasons: both indicating whether a component
 	 * should have a background and whether they may be optimized for drawing (that means
@@ -227,7 +228,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 	 * 
 	 * @param g The Graphics object to paint with.
 	 */
-	protected void paintParents(Graphics g) {
+	protected void paintUnderlying(Graphics g) {
 		g.setColor(UIManager.getColor("Window.background"));
 		g.fillRect(0, 0, textArea.getWidth(), textArea.getHeight());
 	}
