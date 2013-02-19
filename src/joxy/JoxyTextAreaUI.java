@@ -48,10 +48,6 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 	
 	private boolean hovered = false;
 	
-	// switched to false when painting the parent
-	// TODO better documentation
-	private boolean shouldPaint = true;
-	
 	/**
 	 * The painter for the input field.
 	 */
@@ -71,7 +67,6 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		super.installDefaults();
 		
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
-		textArea.setOpaque(false);
 		textArea.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		textArea.setFont(UIManager.getFont("Button.font"));
 	}
@@ -180,49 +175,70 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 	@Override
 	protected void paintSafely(Graphics g) {
 		
-		if (shouldPaint) {
-			Graphics2D g2 = (Graphics2D) g;
-			
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-			
-			//if (textArea.isOpaque()) {
-				paintBackground(g);
-			//}
-			
-			Highlighter highlighter = textArea.getHighlighter();
-	        Caret caret = textArea.getCaret();
-	        
-	        // paint the highlights
-	        if (highlighter != null) {
-	            highlighter.paint(g);
-	        }
-	
-	        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-	        
-	        // paint the view hierarchy
-	        // TODO do clipping, to prevent text from overflowing beyond the border if the component
-	        // is in a JScrollPane
-	        // this happens because in a scroll pane, the EmptyBorder for this component obviously
-	        // doesn't have an influence anymore
-	        // note: JList is doing this already
-	        Rectangle alloc = getVisibleEditorRect();
-	        if (alloc != null) {
-	            getRootView(textArea).paint(g, alloc);
-	        }
-	        
-	        // paint the caret
-	        if (caret != null) {
-	            caret.paint(g);
-	        }
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		
+		if (textArea.isOpaque()) {
+			paintParents(g);
+			paintBackground(g);
 		}
+		
+		Highlighter highlighter = textArea.getHighlighter();
+        Caret caret = textArea.getCaret();
+        
+        // paint the highlights
+        if (highlighter != null) {
+            highlighter.paint(g);
+        }
+
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+        
+        // paint the view hierarchy
+        // TODO do clipping, to prevent text from overflowing beyond the border if the component
+        // is in a JScrollPane
+        // this happens because in a scroll pane, the EmptyBorder for this component obviously
+        // doesn't have an influence anymore
+        // note: JList is doing this already
+        Rectangle alloc = getVisibleEditorRect();
+        if (alloc != null) {
+            getRootView(textArea).paint(g, alloc);
+        }
+        
+        // paint the caret
+        if (caret != null) {
+            caret.paint(g);
+        }
     }
 	
+	/**
+	 * Paints the parents of this component in the area covered by the component.
+	 * 
+	 * <p>Java uses the opaque value for two reasons: both indicating whether a component
+	 * should have a background and whether they may be optimized for drawing (that means
+	 * that the parent doesn't have to be drawn, since the component has a background and
+	 * thus fills all of its pixels). However, in Joxy the text components that do have a
+	 * background still don't fill all of their pixels.</p>
+	 * 
+	 * <p>We still want to keep the opaque value as it is, to please applications relying
+	 * on it (Netbeans for example). Therefore we keep opaque on true, and then paint the
+	 * background ourselves. This method is responsible for that.</p>
+	 * 
+	 * @param g The Graphics object to paint with.
+	 */
+	protected void paintParents(Graphics g) {
+		g.setColor(UIManager.getColor("Window.background"));
+		g.fillRect(0, 0, textArea.getWidth(), textArea.getHeight());
+	}
+
 	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		Rectangle vr = textArea.getVisibleRect();
+		//Rectangle vr = textArea.getVisibleRect();
+		
+		Rectangle vr = new Rectangle(0, 0, textArea.getWidth(), textArea.getHeight());
 		
 		if (textArea.isEditable()) {
 			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
