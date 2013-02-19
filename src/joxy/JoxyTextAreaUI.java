@@ -16,6 +16,7 @@ import joxy.border.JoxyBevelBorder;
 import joxy.painter.InputFieldPainter;
 import joxy.painter.TextFieldFocusIndicatorPainter;
 import joxy.painter.TextFieldHoverIndicatorPainter;
+import joxy.utils.PaintHelper;
 
 /**
  * Joxy's UI delegate for the JTextArea.
@@ -181,7 +182,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
 		if (textArea.isOpaque()) {
-			paintUnderlying(g);
+			PaintHelper.paintUnderlying(g, textArea);
 			paintBackground(g);
 		}
 		
@@ -211,27 +212,6 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
             caret.paint(g);
         }
     }
-	
-	/**
-	 * Paints the underlying components of this component, in the area that is covered by
-	 * the component.
-	 * 
-	 * <p>Java uses the opaque value for two reasons: both indicating whether a component
-	 * should have a background and whether they may be optimized for drawing (that means
-	 * that the parent doesn't have to be drawn, since the component has a background and
-	 * thus fills all of its pixels). However, in Joxy the text components that do have a
-	 * background still don't fill all of their pixels.</p>
-	 * 
-	 * <p>We still want to keep the opaque value as it is, to please applications relying
-	 * on it (Netbeans for example). Therefore we keep opaque on true, and then paint the
-	 * background ourselves. This method is responsible for that.</p>
-	 * 
-	 * @param g The Graphics object to paint with.
-	 */
-	protected void paintUnderlying(Graphics g) {
-		g.setColor(UIManager.getColor("Window.background"));
-		g.fillRect(0, 0, textArea.getWidth(), textArea.getHeight());
-	}
 
 	@Override
     protected void paintBackground(Graphics g) {
