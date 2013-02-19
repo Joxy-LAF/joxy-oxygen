@@ -4,14 +4,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicEditorPaneUI;
 import javax.swing.text.Caret;
 import javax.swing.text.Highlighter;
 
+import joxy.border.JoxyBevelBorder;
 import joxy.painter.InputFieldPainter;
 import joxy.painter.TextFieldFocusIndicatorPainter;
 import joxy.painter.TextFieldHoverIndicatorPainter;
+import joxy.utils.PaintHelper;
 
 /**
  * Joxy's UI delegate for the JEditorPane.
@@ -64,9 +67,8 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		// [ws] TODO deze dingen kunnen eigenlijk ook gewoon in de defaults...
 		editor.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
 		editor.setFont(UIManager.getFont("Button.font"));
-		editor.setOpaque(false);
 		
-		// force the default font to be used if the HTML does not override it... nice :-)
+		// force the default font to be used if the HTML does not override it
 		editor.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 	}
 	
@@ -174,8 +176,11 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-		
-		paintBackground(g);
+
+		if (editor.isOpaque()) {
+			PaintHelper.paintUnderlying(g, editor);
+			paintBackground(g);
+		}
 		
 		Highlighter highlighter = editor.getHighlighter();
         Caret caret = editor.getCaret();
@@ -202,14 +207,20 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-
-		Rectangle vr = editor.getVisibleRect();
 		
-		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		//Rectangle vr = textArea.getVisibleRect();
+		
+		Rectangle vr = new Rectangle(0, 0, editor.getWidth(), editor.getHeight());
+		
+		if (editor.isEditable()) {
+			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
+		} else {
+			JoxyBevelBorder.paintActualBorder(g2, vr.x, vr.y, vr.width, vr.height, BevelBorder.LOWERED);
+		}
 		
 		if (editor.isEnabled()) {
 			TextFieldFocusIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, focusAmount);
 			TextFieldHoverIndicatorPainter.paint(g2, vr.x, vr.y, vr.width, vr.height, Math.max(0, hoverAmount - focusAmount));
 		}
-    }
+	}
 }
