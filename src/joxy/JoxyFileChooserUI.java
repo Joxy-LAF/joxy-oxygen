@@ -53,6 +53,7 @@ public class JoxyFileChooserUI extends MetalFileChooserUI {
 				Icon newIcon = null;
 				
 				if (f.isFile()) {
+					// TODO this is not used
 					FileNameMap fileNameMap = URLConnection.getFileNameMap();
 					MimetypesFileTypeMap map = new MimetypesFileTypeMap();
 					map.addMimeTypes("application/javascript js");

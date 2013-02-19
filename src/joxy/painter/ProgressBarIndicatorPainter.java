@@ -23,14 +23,6 @@ public class ProgressBarIndicatorPainter extends Painter {
 	// In actual code: 2.5f. But it seems Java arcs are different... sigh.
 	private static final float ARC = 6;
 	
-	/**
-	 * Draws the indicator. The color is determined from the system defaults.
-	 * @param g2 The Graphics2D to paint with.
-	 * @param x x-coordinate for the left upper corner.
-	 * @param y y-coordinate for the left upper corner.
-	 * @param width Width of the shape.
-	 * @param height Height of the shape.
-	 */
 	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
 		

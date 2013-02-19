@@ -19,15 +19,6 @@ public class InputFieldPainter extends Painter {
 
 	private static final int ARC = 4;
 	
-	/**
-	 * Draws the hover indicator. Note that a hover indicator is  a 'border' around the
-	 * rectangle given here.
-	 * @param g2 The Graphics2D to paint with.
-	 * @param x x-coordinate for the left upper corner.
-	 * @param y y-coordinate for the left upper corner.
-	 * @param width Width of the shape.
-	 * @param height Height of the shape.
-	 */
 	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
 		// background

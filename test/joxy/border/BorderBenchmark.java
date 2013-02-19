@@ -1,7 +1,5 @@
 package joxy.border;
 
-import static org.junit.Assert.*;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 

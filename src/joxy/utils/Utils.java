@@ -169,7 +169,10 @@ public class Utils {
 			"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 			// Window colors
 			"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
-
+			
+			// Panel
+			"Panel.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
+			
 			// Tabbed pane
 			"TabbedPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 			
