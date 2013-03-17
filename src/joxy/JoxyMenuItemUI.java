@@ -9,6 +9,7 @@ import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicMenuItemUI;
 import javax.swing.text.View;
 
+import joxy.icon.IconEffects;
 import joxy.painter.MenuItemBackgroundPainter;
 import joxy.utils.JoxyGraphics;
 
@@ -204,7 +205,15 @@ public class JoxyMenuItemUI extends BasicMenuItemUI {
 		
 		// draw icon
 		if (mi.getIcon() != null) {
-			mi.getIcon().paintIcon(mi, g2, iconRect.x, iconRect.y);
+			if (!mi.isEnabled()) {
+				// If the button is disabled, draw the icon fainter
+				IconEffects.getDisabledIcon(mi.getIcon()).paintIcon(mi, g2, iconRect.x, iconRect.y);
+			} else if (hovered) {
+				// If the button is hovered, draw the icon lighter
+				IconEffects.getActiveIcon(mi.getIcon()).paintIcon(mi, g2, iconRect.x, iconRect.y);
+			} else {
+				mi.getIcon().paintIcon(mi, g2, iconRect.x, iconRect.y);
+			}
 		}
 		
 		// draw text

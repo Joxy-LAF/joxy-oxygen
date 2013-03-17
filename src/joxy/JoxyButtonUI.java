@@ -18,6 +18,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 
+import joxy.icon.IconEffects;
 import joxy.painter.ButtonSlabPainter;
 import joxy.painter.DarkEngravingPainter;
 import joxy.painter.FocusIndicatorPainter;
@@ -242,7 +243,15 @@ public class JoxyButtonUI extends BasicButtonUI {
 		
 		// Draw icon
 		if (b.getIcon() != null) {
-			b.getIcon().paintIcon(b, g2, paintIconR.x, paintIconR.y);
+			if (!b.isEnabled()) {
+				// If the button is disabled, draw the icon fainter
+				IconEffects.getDisabledIcon(b.getIcon()).paintIcon(b, g2, paintIconR.x, paintIconR.y);
+			} else if (!b.isContentAreaFilled() && b.getModel().isRollover()) {
+				// If the button is a toolbar button and it is hovered, draw the icon lighter
+				IconEffects.getActiveIcon(b.getIcon()).paintIcon(b, g2, paintIconR.x, paintIconR.y);
+			} else {
+				b.getIcon().paintIcon(b, g2, paintIconR.x, paintIconR.y);
+			}
 		}
 		
 		// Draw text
