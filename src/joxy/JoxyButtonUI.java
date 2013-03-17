@@ -33,11 +33,6 @@ import joxy.utils.TileSet;
 /**
  * Joxy's UI delegate for the JButton.
  * 
- * <p>This class is a bit messy, because there are two approaches being
- * developed: both translating the Oxygen C++ code, and just trying around.
- * The latter is default, for trying the translated code, set
- * USE_NEW_BUTTON_CODE to true. However, this is not finished yet.</p>
- * 
  * <p>The JoxyButtonUI supports animations for the focus and hovered states.
  * This means that the hover/focus indicator will fade in and out when it
  * appears and disappears again. This is done with two variables, hoverAmount
@@ -65,8 +60,6 @@ public class JoxyButtonUI extends BasicButtonUI {
     private Rectangle paintTextR = new Rectangle();
     /** The Rectangle that stores the bounds of this button */
 	private static Rectangle boundRectangle = new Rectangle();
-	/** Whether to use the new code for painting buttons */
-	private static final boolean USE_NEW_BUTTON_CODE = false;
 	
 	/**
 	 * Amount of hover and focus, from 0 to 255. These are not private so that they
@@ -213,70 +206,35 @@ public class JoxyButtonUI extends BasicButtonUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		if (USE_NEW_BUTTON_CODE) {
-		// Note that in the original code, the button can be painted in flat mode. In Java, there is no such thing as
-		// flat mode, so we only draw the non-flat mode.
-		// TODO [ws] There is one in Java! See isContentAreaPainted().
-		boundRectangle = new Rectangle(0, 0, c.getWidth() - 1, c.getHeight() - 1);
-
-		// match color to the window background
-		g2.setColor(ColorUtils.backgroundColor(UIManager.getColor("Button.background"), c, boundRectangle.getCenterX(), boundRectangle.getCenterY()));
-		fillButtonSlab(g2, g2.getColor(), b.getModel().isPressed());
-		
-		/*  if( enabled && hoverAnimated && !( opts & Sunken ) )
-            {
-            	renderButtonSlab( painter, slabRect, buttonColor, opts, hoverOpacity, AnimationHover, TileSet::Ring );
-         */
-		if (b.isEnabled() && !b.getModel().isPressed() /* note that we forget about "State_On" here, that,
-														   according to the Qt 4.7 specification, indicates "if the widget is checked".
-														   As far as I know, we do not have such a state in Java and hence, ignore it.
-														   [TC 01-12-2011] */) {
-			renderButtonSlab(g2, c, JoxyLookAndFeel.ANIMATION_HOVER, new TileSet(TileSet.RING)); /* other parameters are implicit via the Graphics2D object or global */
-
-		/*  } else if( enabled && !mouseOver && focusAnimated && !( opts & Sunken ) ) {
-                renderButtonSlab( painter, slabRect, buttonColor, opts, focusOpacity, AnimationFocus, TileSet::Ring );
-		 */
-		} else if (b.isEnabled() && !b.getModel().isRollover() && !b.getModel().isPressed()) {
-			
-		
-		/*
-            } else {
-                renderButtonSlab( painter, slabRect, buttonColor, opts ); */
-
-
-		/*  }  */
-		}
-		} else {
-
-			// Check whether the button is a toolbar button; see JoxyToolBarUI
-			if (b.isContentAreaFilled()) {
-				if (b.getModel().isPressed()) {
-					PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-				} else {
-					// shadow
-					g2.setColor(new Color(0, 0, 0, 80));
-					g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-					g2.setColor(new Color(0, 0, 0, 40));
-					g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
-					g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 3, ARC+3, ARC+3));
-
-					// decorations
-					FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
-					HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
-					
-					// slab
-					slabPainter.setColor(c);
-					slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
-				}
+		// Check whether the button is a toolbar button; see JoxyToolBarUI
+		if (b.isContentAreaFilled()) {
+			if (b.getModel().isPressed()) {
+				PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
-				if (b.getModel().isPressed()) {
-					pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
-				} else {
-					// If mouse is over the component, draw hover indicator; note it is a special indicator
-					// for toolbar buttons
-					ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
-				}
-			}		
+				// shadow
+				g2.setColor(new Color(0, 0, 0, 80));
+				g2.fill(new RoundRectangle2D.Double(2, 2, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+				g2.setColor(new Color(0, 0, 0, 40));
+				g2.fill(new RoundRectangle2D.Double(2, 3, c.getWidth() - 4, c.getHeight() - 4, ARC, ARC));
+				g2.fill(new RoundRectangle2D.Double(1, 3, c.getWidth() - 2, c.getHeight() - 3, ARC+3, ARC+3));
+
+				// decorations
+				FocusIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, focusAmount);
+				HoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
+				
+				// slab
+				slabPainter.setColor(c);
+				slabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+			}
+		} else {
+			if (b.getModel().isPressed()) {
+				pressedToolbarPainter.paint(g2, 0, 0, c.getWidth(), c.getHeight());
+			} else {
+				// If mouse is over the component, draw hover indicator; note it is a special indicator
+				// for toolbar buttons
+				ToolbarHoverIndicatorPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4, hoverAmount);
+			}
+		}	
 		
 		// Layout the button, i.e. determine the place for icon and text
 		FontMetrics f = b.getFontMetrics(b.getFont());
@@ -298,7 +256,6 @@ public class JoxyButtonUI extends BasicButtonUI {
 			int w = f.stringWidth(clippedText);
 			int h = f.getHeight();
 			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2, paintTextR.y + (paintTextR.height + h) / 2 - 3);
-		}
 		}
 	}
 	
