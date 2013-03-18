@@ -73,7 +73,9 @@ public class TestGUI {
 		JToolBar tb = new JToolBar("Toolbar");
 		tb.add(new JButton("New", new ImageIcon("/usr/share/icons/oxygen/22x22/actions/document-new.png")));
 		tb.add(new JButton("Open", new ImageIcon("/usr/share/icons/oxygen/22x22/actions/document-open-folder.png")));
-		tb.add(new JButton("Save", new ImageIcon("/usr/share/icons/oxygen/22x22/actions/document-save.png")));
+		JButton saveButton = new JButton("Save", new ImageIcon("/usr/share/icons/oxygen/22x22/actions/document-save.png"));
+		saveButton.setEnabled(false);
+		tb.add(saveButton);
 		frame.add(tb, BorderLayout.NORTH);
 		
 		JTabbedPane t = new JTabbedPane(JTabbedPane.TOP);
