@@ -70,12 +70,14 @@ public class JoxyTitledBorder extends TitledBorder {
 		}
 		
 		// text
-		g2.setColor(UIManager.getColor("TitledBorder.foreground"));
-		g2.setFont(UIManager.getFont("TitledBorder.font"));
-		FontMetrics f = g2.getFontMetrics();
-		int w = f.stringWidth(title);
-		int h = f.getHeight();
-		JoxyGraphics.drawString(g2, title, x + (width - w) / 2, y + h + 2);
+		if (title != null) {
+			g2.setColor(UIManager.getColor("TitledBorder.foreground"));
+			g2.setFont(UIManager.getFont("TitledBorder.font"));
+			FontMetrics f = g2.getFontMetrics();
+			int w = f.stringWidth(title);
+			int h = f.getHeight();
+			JoxyGraphics.drawString(g2, title, x + (width - w) / 2, y + h + 2);
+		}
 	}
 	
     /**
