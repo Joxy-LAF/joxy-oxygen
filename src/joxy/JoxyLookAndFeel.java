@@ -15,7 +15,7 @@ import joxy.utils.Utils;
  * 
  * <p>Besides implementing the obligatory (abstract) methods, this class also
  * provides a {@link #getVersion()} method, that can be used to get the version
- * identifier (e.g. "0.1.0") of this version of Joxy.</p>
+ * identifier (e.g. "0.2.0") of this version of Joxy.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
@@ -32,7 +32,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	
 	//-- VARIABLES ------------------------------------------------------------
 	/** Define the version of Joxy */
-	private final String version = "current";
+	private final String version = "0.2.0";
 	/** Whether Joxy already has been installed in the UIManager. */
 	private static boolean isInstalled = false;
 	
