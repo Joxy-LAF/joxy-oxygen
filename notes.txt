@@ -1,9 +1,6 @@
 The repository for the original Oxygen code
 -------------------------------------------
-
 https://projects.kde.org/projects/kde/kde-workspace/repository/revisions/master/show/kstyles/oxygen/
-
-
 
 To do before a release
 ----------------------
@@ -11,5 +8,16 @@ To do before a release
  * Set the output to the warning level in joxy.utils.Output
  * If needed, switch the native text rendering on (joxy.utils.JoxyGraphics)
  * Update the website: the version number on the home page, the download page
- * Write a blog post
- * ... more?
+ * Write a blog post (to Draft)
+
+Doing a release
+---------------
+ * Make JAR and SO files and compress them to joxy-latest.zip
+ * Using Filezilla, connect to
+   Host: sftp://web.sourceforge.net
+   Username: "your SF username",joxy
+   Password: "your SF password"
+ * Navigate to /home/pfs/project/joxy
+ * Move the current Latest version to the Old folder; change its name to joxy-x.x.x.zip
+ * Upload the new file (joxy-latest.zip) to Latest
+ * If necessary, empty the Experimental folder
