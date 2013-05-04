@@ -129,6 +129,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"ButtonUI", "joxy.JoxyButtonUI",
 				"CheckBoxUI", "joxy.JoxyCheckBoxUI",
 				"CheckBoxMenuItemUI", "joxy.JoxyMenuItemUI",
+				"ColorChooserUI", "joxy.JoxyColorChooserUI",
 				"ComboBoxUI", "joxy.JoxyComboBoxUI",
 				"DesktopPaneUI", "joxy.JoxyDesktopPaneUI",
 				"EditorPaneUI", "joxy.JoxyEditorPaneUI",
