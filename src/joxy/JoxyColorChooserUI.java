@@ -19,8 +19,7 @@ public class JoxyColorChooserUI extends BasicColorChooserUI {
     
 	@Override
 	protected void installDefaults() {
-		//super.installDefaults();
-		System.out.println("TUUT");
+		super.installDefaults();
 		chooser.setOpaque(false);
 	}
 }
