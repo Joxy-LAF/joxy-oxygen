@@ -135,7 +135,8 @@ public class TestGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JColorChooser.showDialog(frame, "A color chooser", Color.BLACK);
+				Color c = JColorChooser.showDialog(frame, "A color chooser", Color.GREEN);
+				JOptionPane.showMessageDialog(frame, "Color chosen: " + c);
 			}
 		});
 		tab1.add(j2);
