@@ -40,7 +40,7 @@ public class Output {
 	
 	//-- PRIVATE VARIABLES ----------------------------------------------------
 	/** Indicates the mode we are currently in. */
-	private static int mode = OUTPUT_MODE_WARNING;
+	private static int mode = OUTPUT_MODE_DEBUG;
 	/** Indicates if only debugmessages from a certain class should
 	 *  be output, or all ("*") messages (if OUTPUT_MODE_DEBUG of course).
 	 *  Multiple classnames can be given, separated by ":". */
