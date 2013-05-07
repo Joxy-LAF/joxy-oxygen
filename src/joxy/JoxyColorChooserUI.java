@@ -31,7 +31,7 @@ public class JoxyColorChooserUI extends BasicColorChooserUI {
 		super.installUI(c);
 		
 		// Remove the preview panel
-		//chooser.setPreviewPanel(new JPanel());
+		chooser.setPreviewPanel(new JPanel());
 	}
 	
 	@Override

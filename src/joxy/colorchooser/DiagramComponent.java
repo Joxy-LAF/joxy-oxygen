@@ -25,7 +25,8 @@ import joxy.JoxyArrowButton;
  * but since that class is not visible, works a bit different and most importantly, is not
  * documented at all, we decided to reimplement this functionality.</p>
  * 
- * <p>Note: at the moment only <i>Red</i> mode is supported.</p>
+ * <p>The diagram panel can be in several modes; see {@link DiagramComponentMode}.
+ * </p>
  */
 public class DiagramComponent extends JPanel implements MouseListener, MouseMotionListener {
 	
@@ -42,34 +43,194 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 	/**
 	 * The x coordinate of the selected colour in the colour square.
 	 */
-	int selectedSquareX;
+	int xSquare;
 	
 	/**
 	 * The y coordinate of the selected colour in the colour square.
 	 */
-	int selectedSquareY;
+	int ySquare;
 	
 	/**
 	 * The y coordinate of the selected colour on the colour line.
 	 */
-	int selectedLineY;
+	int yLine;
 	
 	/**
 	 * The component used for painting. By default, this is a {@link JoxyArrowButton}.
 	 */
-	JComponent arrow = new JoxyArrowButton(JoxyArrowButton.EAST);
+	protected JComponent arrow = new JoxyArrowButton(JoxyArrowButton.EAST);
+	
+	/**
+	 * The modes a diagram component can be in.
+	 * 
+	 * <p>The diagram panel can be in <s>six</s> <b>three at the moment</b> modes:
+	 * <ul>
+	 * <s>
+	 * <li>HSV colour model:</li>
+	 * <ul>
+	 * <li>hue;</li>
+	 * <li>saturation;</li>
+	 * <li>value;</li>
+	 * </ul>
+	 * </ul>
+	 * </s>
+	 * <ul>
+	 * <li>RGB colour model:</li>
+	 * <ul>
+	 * <li>red;</li>
+	 * <li>green;</li>
+	 * <li>blue.</li>
+	 * </ul>
+	 * </ul>
+	 * </p>
+	 */
+	public enum DiagramComponentMode {
+		
+		/**
+		 * Mode where the hue can be set in the colour line, and the saturation
+		 * and value in the colour square.
+		 */
+		HUE_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				throw new RuntimeException("Hue mode not supported!");
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				throw new RuntimeException("Hue mode not supported!");
+			}
+		}),
+
+		/**
+		 * Mode where the saturation can be set in the colour line, and the hue
+		 * and value in the colour square.
+		 */
+		SATURATION_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				throw new RuntimeException("Saturation mode not supported!");
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				throw new RuntimeException("Saturation mode not supported!");
+			}
+		}),
+
+		/**
+		 * Mode where the value can be set in the colour line, and the hue
+		 * and saturation in the colour square.
+		 */
+		VALUE_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				throw new RuntimeException("Value mode not supported!");
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				throw new RuntimeException("Value mode not supported!");
+			}
+		}),
+
+		/**
+		 * Mode where the red component can be set in the colour line, and the green
+		 * and blue components in the colour square.
+		 */
+		RED_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				return new Color(255 - yLine, xSquare, 255 - ySquare);
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				return new int[] {
+					color.getGreen(),
+					255 - color.getBlue(),
+					255 - color.getRed()
+				};
+			}
+		}),
+
+		/**
+		 * Mode where the green component can be set in the colour line, and the red
+		 * and blue components in the colour square.
+		 */
+		GREEN_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				return new Color(xSquare, 255 - yLine, 255 - ySquare);
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				return new int[] {
+					color.getRed(),
+					255 - color.getBlue(),
+					255 - color.getGreen()
+				};
+			}
+		}),
+
+		/**
+		 * Mode where the blue component can be set in the colour line, and the red
+		 * and green components in the colour square.
+		 */
+		BLUE_MODE(new ColorModeCalculator() {
+
+			@Override
+			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
+				return new Color(255 - ySquare, xSquare, 255 - yLine);
+			}
+
+			@Override
+			public int[] colorToDiagram(Color color) {
+				return new int[] {
+					color.getGreen(),
+					255 - color.getRed(),
+					255 - color.getBlue()
+				};
+			}
+		});
+		
+		/**
+		 * The {@link ColorModeCalculator} for this mode.
+		 */
+		ColorModeCalculator calculator;
+		
+		/**
+		 * Creates a new {@link DiagramComponentMode}.
+		 * @param calculator The {@link ColorModeCalculator} to use.
+		 */
+		DiagramComponentMode(ColorModeCalculator calculator) {
+			this.calculator = calculator;
+		}
+	}
+	
+	/**
+	 * The mode this DiagramComponent is in.
+	 */
+	protected DiagramComponentMode mode;
 	
 	/**
 	 * A listener that will be notified of any changes to the selected colour.
 	 */
-	ColorChangeListener listener = null;
+	protected ColorChangeListener listener = null;
 	
 	/**
 	 * Creates the panel and sets its defaults.
 	 * 
 	 * @param color The colour to initialize the panel with.
+	 * @param mode The initial mode.
 	 */
-	public DiagramComponent(Color color) {
+	public DiagramComponent(Color color, DiagramComponentMode mode) {
 		// the width is 30 pixels larger, since we need additional space for the right
 		// component
 		setPreferredSize(new Dimension(286, 256));
@@ -77,18 +238,25 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
+		this.mode = mode;
 		setColor(color);
 	}
 	
 	/**
-	 * Sets the colour displayed by this panel.
+	 * Sets the colour displayed by this panel, using the current mode.
+	 * 
+	 * <p>Note that this does not call the {@link ColorChangeListener}, since
+	 * this change is not done by the user.</p> 
 	 * 
 	 * @param color The new colour to show.
 	 */
 	public void setColor(Color color) {
-		selectedSquareX = color.getGreen();
-		selectedSquareY = 255 - color.getBlue();
-		selectedLineY = 255 - color.getRed();
+		int[] coords = mode.calculator.colorToDiagram(color);
+		xSquare = coords[0];
+		ySquare = coords[1];
+		yLine = coords[2];
+		
+		repaint();
 	}
 	
 	/**
@@ -97,7 +265,27 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 	 * @return The currently selected colour.
 	 */
 	public Color getColor() {
-		return new Color(255 - selectedLineY, selectedSquareX, 255 - selectedSquareY);
+		return mode.calculator.diagramToColor(xSquare, ySquare, yLine);
+	}
+	
+	/**
+	 * Sets the mode. This method also updates the selected colour such that
+	 * it stays the same, although the mode has changed.
+	 * 
+	 * @param mode The new mode.
+	 */
+	public void setMode(DiagramComponentMode mode) {
+		
+		// get the old colour and set the mode
+		Color c = getColor();
+		this.mode = mode;
+		
+		// clear the caches
+		leftCache = null;
+		rightCache = null;
+		
+		// put the colour back in the new mode
+		setColor(c);
 	}
 	
 	/**
@@ -125,13 +313,13 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 		}
 		g.drawImage(rightCache, 266, 0, null);
 		
-		g.translate(260, selectedLineY - 3);
+		g.translate(260, yLine - 3);
 		arrow.setSize(new Dimension(7, 7));
 		arrow.paint(g);
-		g.translate(-260, -selectedLineY + 3);
+		g.translate(-260, -yLine + 3);
 		
 		g.setColor(Color.WHITE);
-		g.drawOval(selectedSquareX - 3, selectedSquareY - 3, 7, 7);
+		g.drawOval(xSquare - 3, ySquare - 3, 7, 7);
 	}
 
 	/**
@@ -144,7 +332,8 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 		
 		for (int x = 0; x < 256; x++) {
 			for (int y = 0; y < 256; y++) {
-				image.setRGB(x, y, ((255 - selectedLineY) << 16) + (x << 8) + ((255 - y) << 0));
+				Color c = mode.calculator.diagramToColor(x, y, yLine);
+				image.setRGB(x, y, c.getRGB());
 			}
 		}
 		
@@ -161,7 +350,8 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 		
 		for (int y = 0; y < 256; y++) {
 			for (int x = 0; x < 20; x++) {
-				image.setRGB(x, y, ((255 - y) << 16) + (selectedSquareX << 8) + ((255 - selectedSquareY) << 0));
+				Color c = mode.calculator.diagramToColor(xSquare, ySquare, y);
+				image.setRGB(x, y, c.getRGB());
 			}
 		}
 		
@@ -183,14 +373,14 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 		
 		if (x < 256) {
 			// inside the colour square
-			selectedSquareX = x;
-			selectedSquareY = y;
+			xSquare = x;
+			ySquare = y;
 			rightCache = null;
 			repaint();
 			
 		} else if (x > 266) {
 			// inside the colour line
-			selectedLineY = y;
+			yLine = y;
 			leftCache = null;
 			repaint();
 		}
