@@ -51,15 +51,18 @@ public class JoxySpinnerUI extends BasicSpinnerUI {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-
-					if (e.getWheelRotation() == -1) {
-						spinner.setValue(spinner.getNextValue());
+					
+					try {
+						if (e.getWheelRotation() == -1) {
+							spinner.setValue(spinner.getNextValue());
+						}
+	
+						if (e.getWheelRotation() == 1) {
+							spinner.setValue(spinner.getPreviousValue());
+						}
+					} catch (IllegalArgumentException ex) {
+						// in this case, the value was not allowed, so ignore this scroll event
 					}
-
-					if (e.getWheelRotation() == 1) {
-						spinner.setValue(spinner.getPreviousValue());
-					}
-
 				}
 			}
 		};
