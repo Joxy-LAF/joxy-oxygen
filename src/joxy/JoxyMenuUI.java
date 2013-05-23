@@ -60,7 +60,6 @@ public class JoxyMenuUI extends BasicMenuUI {
 		menuItem.setOpaque(false);
 		menuItem.setRolloverEnabled(true);
 		menuItem.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
-		menuItem.setFont(UIManager.getFont("Button.font"));
 	}
 	
 	@Override

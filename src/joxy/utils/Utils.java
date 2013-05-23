@@ -246,6 +246,7 @@ public class Utils {
 		propMap = new Object[] {
 			// Button settings
 			"Button.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
+			"Button.toolbarFont", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "toolBarFont")),
 			// Editor pane settings
 			"EditorPane.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// General settings
@@ -274,8 +275,12 @@ public class Utils {
 			"TableHeader.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// List settings
 			"List.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-			//"List.cellRenderer", new DefaultListCellRenderer.UIResource(),
 			// Menu settings
+			"Menu.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "menuFont")),
+			"Menu.menuPopupOffsetX", -4,
+			"Menu.menuPopupOffsetY", -4,
+			"Menu.submenuPopupOffsetX", -11,
+			"MenuItem.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "menuFont")),
 			"MenuItem.highlight", getKDEConfigValue(kdeConfigLines, "[Style]", "MenuHighlightMode"),
 			// ToolTip settings
 			"ToolTip.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
@@ -286,10 +291,6 @@ public class Utils {
 			"PasswordField.echoChar", '\u2022',
 			// Slider settings
 			"Slider.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
-			// Menu settings
-			"Menu.menuPopupOffsetX", -4,
-			"Menu.menuPopupOffsetY", -4,
-			"Menu.submenuPopupOffsetX", -11,
 			// Titled border settings
 			"TitledBorder.font", stringToFontUI(getKDEConfigValue(kdeConfigLines, "[General]", "font")),
 			// Special setting for Netbeans
@@ -362,7 +363,9 @@ public class Utils {
 			defaultsHashMap.put("[Colors:Tooltip]BackgroundNormal", "29,29,29");
 			defaultsHashMap.put("[Colors:Tooltip]ForegroundNormal", "251,251,251");
 			defaultsHashMap.put("[Colors:Window]BackgroundNormal", "201,201,202");
-			defaultsHashMap.put("[General]font", "Ubuntu,9");
+			defaultsHashMap.put("[General]font", "DejaVu Sans,9,-1,5,50,0,0,0,0,0");
+			defaultsHashMap.put("[General]menuFont", "DejaVu Sans,9,-1,5,50,0,0,0,0,0");
+			defaultsHashMap.put("[General]toolBarFont", "DejaVu Sans,9,-1,5,50,0,0,0,0,0");
 			defaultsHashMap.put("[InactiveShadow]InnerColor", "0,0,0");
 			defaultsHashMap.put("[InactiveShadow]OuterColor", "0,0,0");
 			defaultsHashMap.put("[InactiveShadow]Size", "25");
