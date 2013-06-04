@@ -185,7 +185,7 @@ public class ColorUtils {
 	public static Color mix(Color c1, Color c2, float bias) {
 		if (bias <= 0.0) return c1;
 		if (bias >= 1.0) return c2;
-		if (bias == Double.NaN) return c1; // special case copied from original code
+		if (Double.isNaN(bias)) return c1; // special case copied from original code
 		
 		// [ws] bug fixed: /256f was missing
 		float r = mixNumberFloat(c1.getRed() / 256f, c2.getRed() / 256f, bias);
