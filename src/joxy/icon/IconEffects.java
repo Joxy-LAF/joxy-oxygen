@@ -24,7 +24,6 @@ public class IconEffects {
 		BufferedImageOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
 		BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		icon.paintIcon(null, image.getGraphics(), 0, 0);
-		BufferedImage result = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		op.filter(image, image);
 		
 		short[] red = new short[256];
@@ -52,7 +51,6 @@ public class IconEffects {
 		BufferedImageOp op = new RescaleOp(1.05f, 10, null);
 		BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		icon.paintIcon(null, image.getGraphics(), 0, 0);
-		BufferedImage result = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		op.filter(image, image);
 		return new ImageIcon(image);
 	}
