@@ -8,6 +8,7 @@ To do before a release
  * Set the output to the warning level in joxy.utils.Output
  * If needed, switch the native text rendering on (joxy.utils.JoxyGraphics)
  * Update the website: the version number on the home page, the download page, the FAQ page
+ * Update the Javadoc on the website
  * Write a blog post (to Draft)
 
 Doing a release
