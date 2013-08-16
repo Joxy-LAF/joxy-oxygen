@@ -12,13 +12,15 @@ import javax.swing.*;
 
 import joxy.utils.Output;
 
-
+/**
+ * A copy of the <i>About KDE</i> window, in Swing.
+ */
 public class AboutKDEWindow extends JFrame {
 	/** Serial version UID */
 	private static final long serialVersionUID = 4039760594384966275L;
 
 	public AboutKDEWindow() {
-		super("Info over KDE");
+		super("About KDE");
 		
 		createContentPane((JPanel) getContentPane());
 		
@@ -48,7 +50,7 @@ public class AboutKDEWindow extends JFrame {
 		public UpperPanel() {
 			setLayout(new GridLayout());
 			
-			JLabel contentLabel = new JLabel("<html><font size=5>KDE - Wees vrij!</font><br><b>Joxy Look and Feel voor Java Swing</b>");
+			JLabel contentLabel = new JLabel("<html><font size=5>KDE - Be free!</font><br><b>Joxy Look and Feel</b>");
 			contentLabel.setIcon(new ImageIcon("/usr/share/icons/oxygen/48x48/animations/process-idle-kde.png"));
 			contentLabel.setVerticalTextPosition(JLabel.TOP);
 			add(contentLabel);
@@ -60,7 +62,11 @@ public class AboutKDEWindow extends JFrame {
 		private static final long serialVersionUID = -6478578696701775202L;
 
 		public LeftPanel() throws IOException {
-			super(new ImageIcon(ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"))));
+			try {
+				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"))));
+			} catch (IOException e) {
+				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/apps/kdeui/pics/aboutkde.png"))));
+			}
 		}
 	}
 	
@@ -73,25 +79,25 @@ public class AboutKDEWindow extends JFrame {
 			
 			JTabbedPane tp = new JTabbedPane();
 			
-			JLabel label1 = new JLabel("<html><b>KDE</b> is een wereldwijd netwerk van software-" +
-					"ingenieurs, artiesten, schrijvers, vertalers en facilitators, die aan de " +
-					"ontwikkeling van <a href=iets>vrije software</a> zijn toegewijd. Deze " +
-					"gemeenschap heeft honderden vrijesoftwareprogramma's ontwikkeld als onderdeel " +
-					"van het KDE-ontwikkelplatform en de KDE-softwaredistributie.<br>" +
-					"<br>" +
-					"KDE is een samenwerkingsverband waarin geen enkele entiteit de controle " +
-					"heeft over de inspanningen of producten van KDE of exclusief eigenaar is. " +
-					"Iedereen is welkom om mee te doen en te werken aan KDE, inclusief u.<br>" +
-					"<br>" +
-					"Kijk voor meer informatie over het KDE-project en over de software die we " +
-					"maken op <a href=http://www.kde.org/>http://www.kde.org/</a>.");
+			JLabel label1 = new JLabel("<html><b>KDE</b> is a world-wide network of software engineers, "
+					+ "artists, writers, translators and facilitators who are committed to "
+					+ "<a href=something>Free Software</a> development. This community has "
+					+ "created hundreds of Free Software applcations as part of the KDE Development "
+					+ "Platform and KDE Software Distribution.<br>"
+					+ "<br>"
+					+ "KDE is a cooperative enterprise in which no single entity controls the "
+					+ "efforts or products of KDE to the exclusion of others. Everyone is welcome "
+					+ "to join and contribute to KDE, including you.<br>"
+					+ "<br>"
+					+ "Visit <a href=http://www.kde.org/>http://www.kde.org/</a> for more information "
+					+ "about the KDE community and the software we produce.");
 			label1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 			label1.setVerticalAlignment(JLabel.TOP);
-			tp.addTab("Over KDE", label1);
+			tp.addTab("About", label1);
 			
-			tp.addTab("Feedback doorgeven", new JLabel());
-			tp.addTab("Lid worden van KDE", new JLabel());
-			tp.addTab("KDE ondersteunen", new JLabel());
+			tp.addTab("Report Bugs or Wishes", new JLabel());
+			tp.addTab("Join KDE", new JLabel());
+			tp.addTab("Support KDE", new JLabel());
 			
 			add(tp);
 		}
