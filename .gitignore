@@ -8,3 +8,6 @@
 
 # Ignore .directory files written by Dolphin
 *.directory
+
+# Ignore the Maven build folder
+joxy/target/

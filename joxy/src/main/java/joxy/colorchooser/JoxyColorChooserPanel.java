@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import joxy.colorchooser.DiagramComponent.DiagramComponentMode;
+import joxy.utils.HCYColor;
 
 /**
  * A color chooser panel in Oxygen style.
@@ -59,7 +60,7 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 		ButtonGroup group = new ButtonGroup();
 		
 		// hue
-		hueButton = new JRadioButton("Hue:"); // TODO should be internationalized
+		hueButton = new JRadioButton("Hue:"); // TODO should be internationalised
 		hueButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -67,12 +68,10 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 				dc.setMode(DiagramComponentMode.HUE_MODE);
 			}
 		});
-		hueButton.setEnabled(false);
 		group.add(hueButton);
 		radioPanel.add(hueButton);
 		
 		hueSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
-		hueSpinner.setEnabled(false);
 		hueSpinner.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -114,12 +113,10 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 				dc.setMode(DiagramComponentMode.SATURATION_MODE);
 			}
 		});
-		saturationButton.setEnabled(false);
 		group.add(saturationButton);
 		radioPanel.add(saturationButton);
 		
 		saturationSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
-		saturationSpinner.setEnabled(false);
 		saturationSpinner.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -160,12 +157,10 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 				dc.setMode(DiagramComponentMode.VALUE_MODE);
 			}
 		});
-		valueButton.setEnabled(false);
 		group.add(valueButton);
 		radioPanel.add(valueButton);
 		
 		valueSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
-		valueSpinner.setEnabled(false);
 		valueSpinner.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -215,6 +210,7 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 	protected void updateSpinners() {
 		Color c = getColorFromModel();
 		
+		hueSpinner.setValue((int) (new HCYColor(c).getH() * 256)); // TODO wrong
 		redSpinner.setValue(c.getRed());
 		greenSpinner.setValue(c.getGreen());
 		blueSpinner.setValue(c.getBlue());
