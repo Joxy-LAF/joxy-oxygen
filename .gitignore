@@ -5,6 +5,7 @@
 
 # Ignore backup files
 *~
+*.kate-swp
 
 # Ignore .directory files written by Dolphin
 *.directory
