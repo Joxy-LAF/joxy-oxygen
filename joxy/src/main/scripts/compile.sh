@@ -3,7 +3,7 @@
 # Scriptname
 NM=`basename $0`
 
-OUTPUT="libjoxy.so"
+OUTPUT="install/libjoxy.so"
 
 # Read params
 VERBOSE=0 # if this script should be verbose
@@ -110,7 +110,7 @@ fi
 # START OF COMPILE PIECE
 log info "Now compiling..."
 
-CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -o "${OUTPUT}" joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h -lQtGui -lQtCore"
+CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -o "${OUTPUT}" src/main/cpp/joxy_utils_JoxyGraphics.cpp src/main/cpp/joxy_utils_JoxyGraphics.h -lQtGui -lQtCore"
 log debug "Running '$CMD'..."
 $CMD
 
@@ -118,7 +118,7 @@ if [ $? -eq 0 ]; then
   log info "Done. File '${OUTPUT}' created."
   log info "You should move this file to the Java library path."
   log info "Currently, the following directories are present in your Java library path:"
-  $JAVA_HOME/jre/bin/java getLibraryPath | awk -F: '{for (i = 1; i <= NF; i++) print $i}' | sed 's/^/'$NM': [I]   /'
+  $JAVA_HOME/jre/bin/java -cp src/main/scripts/ getLibraryPath | awk -F: '{for (i = 1; i <= NF; i++) print $i}' | sed 's/^/'$NM': [I]   /'
   log info "You should pick one of these folders to move the shared library to."
 else
   log error "Compiling not succesful. Please check g++ output or Joxy wiki."
