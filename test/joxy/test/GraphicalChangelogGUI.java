@@ -42,38 +42,37 @@ import javax.swing.table.TableModel;
 
 import joxy.JoxyLookAndFeel;
 
+/**
+ * A graphical user interface containing all Swing GUI elements, for
+ * doing comparisons between versions of Joxy.
+ */
 public class GraphicalChangelogGUI {
 	
-	static JFrame frame;
+	private static JFrame frame;
 	
+	/**
+	 * The main method, that sets the look-and-feel to Joxy and shows the GUI.
+	 * @param args The command-line arguments; these are ignored.
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					UIManager.setLookAndFeel("joxy.JoxyLookAndFeel");
-					//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-					//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnsupportedLookAndFeelException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				showSomeGUI();
+				showTestGUI();
 			}
 		});
 	}
-
-	protected static void showSomeGUI() {
+	
+	/**
+	 * Shows the GUI.
+	 */
+	protected static void showTestGUI() {
 		frame = new JFrame("Graphical changelog");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

@@ -5,7 +5,7 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.border.BevelBorder;
 
-import joxy.JoxyPanelUI;
+import joxy.ui.JoxyPanelUI;
 import joxy.utils.Output;
 
 /**

@@ -1,6 +1,7 @@
 package joxy.test;
 
 import java.awt.*;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import joxy.utils.JoxyGraphics;
 import joxy.utils.Output;
+import joxy.utils.Utils;
 
 /**
  * A graphical user interface containing all kinds of GUI elements, for
@@ -30,8 +32,12 @@ import joxy.utils.Output;
  */
 public class TestGUI {
 	
-	static JFrame frame;
+	private static JFrame frame;
 	
+	/**
+	 * The main method, that sets the look-and-feel to Joxy and shows the GUI.
+	 * @param args The command-line arguments; these are ignored.
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -47,7 +53,7 @@ public class TestGUI {
 					e.printStackTrace();
 				}
 				
-				showSomeGUI();
+				showTestGUI();
 			}
 		});
 	}
@@ -62,11 +68,14 @@ public class TestGUI {
 		}
 	}
 	
-	protected static void showSomeGUI() {
+	/**
+	 * Shows the GUI.
+	 */
+	protected static void showTestGUI() {
 		frame = new JFrame("Test GUI for Joxy");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.setJMenuBar(new TestMenu());
+		frame.setJMenuBar(new TestMenu(frame));
 		
 		frame.setLayout(new BorderLayout(5, 5));
 		
@@ -156,6 +165,16 @@ public class TestGUI {
 		tab1.add(new JSpinner());
 		tab1.add(new JFormattedTextField("A formatted text field"));
 		tab1.add(new JPasswordField(10));
+		JButton notificationButton = new JButton("Show notification");
+		notificationButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Utils.displayNotification("Test notification", "This is a test notification "
+						+ "from the Joxy test GUI.", MessageType.INFO);
+			}
+		});
+		tab1.add(notificationButton);
 		t.addTab("Selection of components", tab1);
 		
 		t.addTab("Disabled tab", new JPanel());
@@ -435,7 +454,7 @@ public class TestGUI {
 	
 	/**
 	 * For integration with Oxygen-Transparent, set the opacity and blur.
-	 * Adapted from <a href=
+	 * 
 	 * @param frame The JFrame to set the transparency on.
 	 * @param opacity The opacity, from 0 to 1.
 	 */

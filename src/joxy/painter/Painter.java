@@ -11,6 +11,11 @@ import java.awt.image.BufferedImage;
  * <p>A painter always has a paint method. This super class encapsulates this method to
  * introduce caching. A painter can also require data, such as colors or the opacity.</p>
  * 
+ * <p>For the caching to work effectively, every UI component should instantiate its own
+ * {@link Painter}(s). Indeed, the caching only works if the size of subsequent calls is
+ * identical. This does not work if one {@link Painter} is shared between several
+ * components, which (probably) have different sizes.</p>
+ * 
  * @author Thom Castermans
  * @author Willem Sonke
  */

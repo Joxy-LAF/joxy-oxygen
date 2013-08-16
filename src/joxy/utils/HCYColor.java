@@ -178,27 +178,27 @@ public class HCYColor {
 	}
 
 	//-- GETTERS AND SETTERS --
-	float getY() {
+	public float getY() {
 		return y;
 	}
 
-	void setY(float y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
-	float getC() {
+	public float getC() {
 		return c;
 	}
 
-	void setC(float c) {
+	public void setC(float c) {
 		this.c = c;
 	}
 
-	float getH() {
+	public float getH() {
 		return h;
 	}
 
-	void setH(float h) {
+	public void setH(float h) {
 		this.h = h;
 	}
 }

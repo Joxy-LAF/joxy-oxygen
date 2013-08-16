@@ -601,6 +601,7 @@ public class Utils {
 			break;
 		}
 		
+		// TODO maybe use KNotify
 		ProcessBuilder pb = new ProcessBuilder("notify-send", icon, title, text);
 		try {
 			pb.start();
