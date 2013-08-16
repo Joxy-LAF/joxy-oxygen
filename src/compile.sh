@@ -16,92 +16,109 @@ do
 done
 
 
-function addslashesforsed
-{
-    filename=$1
+function addslashesforsed() {
+	filename=$1
 
-    sed $filename \
-        -e 's#\\#\\\\#' \
-        -e 's#/#\\/#' \
-        -e 's#\.#\\.#' \
-        -e 's#\*#\\*#' \
-        -e 's#\[#\\[#'
+	sed $filename \
+		-e 's#\\#\\\\#' \
+		-e 's#/#\\/#' \
+		-e 's#\.#\\.#' \
+		-e 's#\*#\\*#' \
+		-e 's#\[#\\[#'
 
-    return $?
+	return $?
 }
 
+function log() {
+	# Options for echo?
+	local OPTIONS=
+	if [[ "${1:0:1}" = "-" ]]; then
+		OPTIONS=$1
+		shift
+	fi
+	
+	# Log level?
+	local PREFIX=" [I]"
+	if [[ "$1" = "debug" ]]; then
+		if [[ $VERBOSE -eq 1 ]]; then
+			PREFIX=" [D]"
+			shift
+		else
+			return
+		fi
+	elif [[ "$1" = "error" ]]; then
+		PREFIX=" [E]"
+		shift
+	elif [[ "$1" = "info" ]]; then
+		PREFIX=" [I]"
+		shift
+	elif [[ "$1" = "warning" ]]; then
+		PREFIX=" [W]"
+		shift
+	fi
+	
+	# Actual echo statement
+	echo $OPTIONS "$NM:$PREFIX $1"
+}
 
 # Try to determine Java homedirectory
-JAVA_HOME="/usr/lib/jvm/java-7-openjdk"
-JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk"
-if [ ! -d $JAVA_HOME ]
-then
-  JAVA_HOME="/usr/lib/jvm/java-7-openjdk-i386"
-  JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk"
-  if [ ! -d $JAVA_HOME ]
-  then
-	JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
-	JAVA_HOME_ALT="/usr/lib/jvm/java-6-openjdk-amd64"
-	if [ ! -d $JAVA_HOME ]
-	then
-	  JAVA_HOME="/usr/lib/jvm/java-6-openjdk"
-	  JAVA_HOME_ALT=""
-	  if [ ! -d $JAVA_HOME ]
-	  then
-		JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64"
-		if [ ! -d $JAVA_HOME ]
-		then
-		  JAVA_HOME=""
+if [ -z "$JAVA_HOME" ] || [ ! -d $JAVA_HOME ]; then
+	declare -a POTENTIAL_JAVA_HOMES=('/usr/lib/jvm/java-7-openjdk' '/usr/lib/jvm/java-6-openjdk' '/usr/lib/jvm/java-7-openjdk-i386' '/usr/lib/jvm/java-6-openjdk-i386' '/usr/lib/jvm/java-7-openjdk-amd64' '/usr/lib/jvm/java-6-openjdk-amd64' '/usr/lib/jvm/java-7' '/usr/lib/jvm/java-6')
+	declare -a FOUND_JAVA_HOMES=()
+	
+	for POTENTIAL_JAVA_HOME in ${POTENTIAL_JAVA_HOMES[@]}; do
+		if [ -d $POTENTIAL_JAVA_HOME ]; then
+			FOUND_JAVA_HOMES=(${FOUND_JAVA_HOMES[@]} $POTENTIAL_JAVA_HOME)
 		fi
-	  fi
+	done
+	
+	# If multiple Java installations are found, let the user pick one
+	if [ ${#FOUND_JAVA_HOMES[@]} -gt 1 ]; then
+		log "Multiple Java installations were found:"
+		INDEX=0
+		for FOUND_JAVA_HOME in ${FOUND_JAVA_HOMES[@]}; do
+			log "  [$INDEX]: ${FOUND_JAVA_HOMES[$INDEX]}"
+			INDEX=$((INDEX + 1))
+		done
+		
+		# Read the user's choice
+		choice=nan
+		while [[ "$choice" = *[!0-9]* || ( ! -z "$choice" && ( $choice -lt 0 || $choice -ge ${#FOUND_JAVA_HOMES[@]} ) ) ]]; do
+			log -n "Please pick one of these (default is [0]): "
+			read choice
+		done
+		
+		# Using default?
+		if [[ -z "$choice" ]]; then choice=0; fi
+		JAVA_HOME=${FOUND_JAVA_HOMES[$choice]}
 	fi
-  fi
 fi
-# If two Java installations are found, let the user pick one
-if [ -d $JAVA_HOME_ALT ]
-then
-  echo -ne "$NM: Two Java installations were found:\n    [0] $JAVA_HOME\n    [1] $JAVA_HOME_ALT\n  Please pick one of these (default is [0]): "
-  read choice
-  if [ " $choice" = " 1" ]
-  then
-	JAVA_HOME=$JAVA_HOME_ALT
-  fi
-fi
+
 # No Java installation? :(
-if [ -z $JAVA_HOME ]
-then
-  echo -e "$NM: [EE] Could not find Java home. Looked at:\n\t'/usr/lib/jvm/java-6-openjdk',\n\t'/usr/lib/jvm/java-6-openjdk-amd64'\n\t'/usr/lib/jvm/java-7-openjdk',\n\t'/usr/lib/jvm/java-7-openjdk-amd64'."
-  echo "$NM: [EE] Please edit $0 if your Java installation is located somewhere else."
-  exit -1
+if [ -z "$JAVA_HOME" ] || [ ! -d $JAVA_HOME ]; then
+	log error "Could not find Java home. Looked at:"
+	for LOOKED_AT in ${POTENTIAL_JAVA_HOMES[@]}; do
+		log error "  $LOOKED_AT"
+	done
+	log error "Please edit $0 if your Java installation is located somewhere else."
+	exit 1
 else
-  echo "$NM: [II] JAVA_HOME='$JAVA_HOME'"
+	log debug "JAVA_HOME='$JAVA_HOME'"
 fi
-
-# Check library path
-LIST_SEP="\n    - "
-LIST_SEP_ESC=`echo "$LIST_SEP" | addslashesforsed`
-CMD="$JAVA_HOME/jre/bin/java getLibraryPath"
-if [ $VERBOSE -eq 1 ]
-then
-  echo "$NM: [II] Running '$CMD'..."
-fi
-JAVA_LB_PATH=`$CMD | awk -F: -v ORS="$LIST_SEP" '{for (i = 1; i <= NF; i++) print $i}' | sed '$d'`
-
 
 # START OF COMPILE PIECE
-echo "$NM: [II] Now compiling..."
+log info "Now compiling..."
 
 CMD="g++ $G_VERBOSE -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -I/usr/include/qt4 -O0 -g -Wall -Werror -shared -z defs -fPIC -o "${OUTPUT}" joxy_utils_JoxyGraphics.cpp joxy_utils_JoxyGraphics.h -lQtGui -lQtCore"
-if [ $VERBOSE -eq 1 ]
-then
-  echo "$NM: [II] Running '$CMD'..."
-fi
+log debug "Running '$CMD'..."
 $CMD
 
-if [ $? -eq 0 ]
-then
-  echo "$NM: [II] Done. File '${OUTPUT}' created."
-  echo -e "$NM: [II] You should move this file to the Java library path. \n  Currently, the following directories are present in your Java library path:$LIST_SEP$JAVA_LB_PATH\n  You should pick one of these folders to move the shared library to."
+if [ $? -eq 0 ]; then
+  log info "Done. File '${OUTPUT}' created."
+  log info "You should move this file to the Java library path."
+  log info "Currently, the following directories are present in your Java library path:"
+  $JAVA_HOME/jre/bin/java getLibraryPath | awk -F: '{for (i = 1; i <= NF; i++) print $i}' | sed 's/^/'$NM': [I]   /'
+  log info "You should pick one of these folders to move the shared library to."
 else
-  echo "$NM: [EE] Compiling not succesfull. Please check g++ output or Joxy wiki."
+  log error "Compiling not succesful. Please check g++ output or Joxy wiki."
 fi
