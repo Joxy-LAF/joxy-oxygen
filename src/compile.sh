@@ -6,13 +6,14 @@ NM=`basename $0`
 OUTPUT="libjoxy.so"
 
 # Read params
-VERBOSE=0
-G_VERBOSE=""
-while getopts "v" option "$@"
+VERBOSE=0 # if this script should be verbose
+G_VERBOSE="" # option to pass to g++, to make it verbose
+while getopts "dv" option "$@"
 do
-  case ${option} in
-	v) VERBOSE=1; G_VERBOSE=" -v " ;;
-  esac
+	case ${option} in
+		d) VERBOSE=1 ;;
+		v) VERBOSE=1; G_VERBOSE=" -v " ;;
+	esac
 done
 
 
