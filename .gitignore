@@ -1,0 +1,10 @@
+# This file contains patterns to match files that Git should ignore.
+
+# Ignore compiled libraries
+*.so
+
+# Ignore backup files
+*~
+
+# Ignore .directory files written by Dolphin
+*.directory
