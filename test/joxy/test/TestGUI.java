@@ -30,8 +30,12 @@ import joxy.utils.Output;
  */
 public class TestGUI {
 	
-	static JFrame frame;
+	private static JFrame frame;
 	
+	/**
+	 * The main method, that sets the look-and-feel to Joxy and shows the GUI.
+	 * @param args The command-line arguments; these are ignored.
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -47,7 +51,7 @@ public class TestGUI {
 					e.printStackTrace();
 				}
 				
-				showSomeGUI();
+				showTestGUI();
 			}
 		});
 	}
@@ -62,7 +66,10 @@ public class TestGUI {
 		}
 	}
 	
-	protected static void showSomeGUI() {
+	/**
+	 * Shows the GUI.
+	 */
+	protected static void showTestGUI() {
 		frame = new JFrame("Test GUI for Joxy");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -435,7 +442,7 @@ public class TestGUI {
 	
 	/**
 	 * For integration with Oxygen-Transparent, set the opacity and blur.
-	 * Adapted from <a href=
+	 * 
 	 * @param frame The JFrame to set the transparency on.
 	 * @param opacity The opacity, from 0 to 1.
 	 */
