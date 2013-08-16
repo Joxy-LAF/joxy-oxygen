@@ -60,9 +60,10 @@ public class PainterBenchmark {
 	
 	@Test
 	public void benchmarkInputField() {
+		Painter painter = new InputFieldPainter();
 		long beforeTime = System.nanoTime();
 		for (int i = 0; i < 100; i++) {
-			InputFieldPainter.paint(g2, 0, 0, 120, 40);
+			painter.paint(g2, 0, 0, 120, 40);
 		}
 		long afterTime = System.nanoTime();
 		Output.print(((afterTime - beforeTime) / 100000) / 1000f + " ms per draw.");
@@ -90,9 +91,10 @@ public class PainterBenchmark {
 	
 	@Test
 	public void benchmarkProgressBarIndicator() {
+		Painter painter = new ProgressBarIndicatorPainter();
 		long beforeTime = System.nanoTime();
 		for (int i = 0; i < 100; i++) {
-			ProgressBarIndicatorPainter.paint(g2, 0, 0, 120, 40);
+			painter.paint(g2, 0, 0, 120, 40);
 		}
 		long afterTime = System.nanoTime();
 		Output.print(((afterTime - beforeTime) / 100000) / 1000f + " ms per draw.");
