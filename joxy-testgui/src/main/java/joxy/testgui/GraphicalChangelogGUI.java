@@ -1,4 +1,4 @@
-package joxy.test;
+package joxy.testgui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package joxy.test;
+package joxy.testgui;
 
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
