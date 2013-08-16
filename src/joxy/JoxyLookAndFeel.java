@@ -124,7 +124,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 	protected void initClassDefaults(UIDefaults table) {
 		super.initClassDefaults(table);
 		
-		final String joxyUIPrefix = "joxy.";
+		final String joxyUIPrefix = "joxy.ui.";
 		
 		// Set the classes to use (from Joxy) instead of the default ones
 		table.putDefaults(new Object[] {

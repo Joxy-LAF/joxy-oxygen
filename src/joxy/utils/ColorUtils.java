@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import joxy.JoxyRootPaneUI;
+import joxy.ui.JoxyRootPaneUI;
 
 /**
  * This class provides some methods to change colors, that is,

@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import joxy.JoxyPanelUI;
+import joxy.ui.JoxyPanelUI;
 import joxy.utils.JoxyGraphics;
 import joxy.utils.Output;
 

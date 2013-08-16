@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import joxy.JoxyArrowButton;
+import joxy.ui.JoxyArrowButton;
 
 /**
  * A JPanel that displays the colour space.
