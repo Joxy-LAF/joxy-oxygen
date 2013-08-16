@@ -75,7 +75,7 @@ public class TestGUI {
 		frame = new JFrame("Test GUI for Joxy");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.setJMenuBar(new TestMenu());
+		frame.setJMenuBar(new TestMenu(frame));
 		
 		frame.setLayout(new BorderLayout(5, 5));
 		

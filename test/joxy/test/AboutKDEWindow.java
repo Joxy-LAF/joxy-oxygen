@@ -1,6 +1,7 @@
 package joxy.test;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,12 +16,12 @@ import joxy.utils.Output;
 /**
  * A copy of the <i>About KDE</i> window, in Swing.
  */
-public class AboutKDEWindow extends JFrame {
+public class AboutKDEWindow extends JDialog {
 	/** Serial version UID */
 	private static final long serialVersionUID = 4039760594384966275L;
 
-	public AboutKDEWindow() {
-		super("About KDE");
+	public AboutKDEWindow(Frame parent) {
+		super(parent, "About KDE");
 		
 		createContentPane((JPanel) getContentPane());
 		
