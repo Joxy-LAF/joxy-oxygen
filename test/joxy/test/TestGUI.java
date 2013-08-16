@@ -1,6 +1,7 @@
 package joxy.test;
 
 import java.awt.*;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import joxy.utils.JoxyGraphics;
 import joxy.utils.Output;
+import joxy.utils.Utils;
 
 /**
  * A graphical user interface containing all kinds of GUI elements, for
@@ -163,6 +165,16 @@ public class TestGUI {
 		tab1.add(new JSpinner());
 		tab1.add(new JFormattedTextField("A formatted text field"));
 		tab1.add(new JPasswordField(10));
+		JButton notificationButton = new JButton("Show notification");
+		notificationButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Utils.displayNotification("Test notification", "This is a test notification "
+						+ "from the Joxy test GUI.", MessageType.INFO);
+			}
+		});
+		tab1.add(notificationButton);
 		t.addTab("Selection of components", tab1);
 		
 		t.addTab("Disabled tab", new JPanel());
