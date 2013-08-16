@@ -63,9 +63,9 @@ public class AboutKDEWindow extends JFrame {
 
 		public LeftPanel() throws IOException {
 			try {
-				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"))));
+				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png")))); // Debian, Kubuntu
 			} catch (IOException e) {
-				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/apps/kdeui/pics/aboutkde.png"))));
+				setIcon(new ImageIcon(ImageIO.read(new File("/usr/share/apps/kdeui/pics/aboutkde.png")))); // Chakra
 			}
 		}
 	}
