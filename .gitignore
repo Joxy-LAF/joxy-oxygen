@@ -12,4 +12,6 @@
 
 # Ignore the Maven build folders
 joxy/target/
+joxy-testgui/target/
 joxy/install/
+joxy-testgui/install/
