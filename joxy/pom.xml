@@ -5,6 +5,9 @@
   <packaging>jar</packaging>
   <version>0.3.0-SNAPSHOT</version>
   <name>joxy</name>
+  <description>
+    A Java Swing look-and-feel for integrating with KDE's Oxygen style.
+  </description>
   <url>http://joxy.denvelop.nl</url>
   
   <build>
