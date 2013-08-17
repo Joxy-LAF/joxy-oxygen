@@ -62,9 +62,13 @@ public class TestGUI {
 	
 	static {
 		try {
-			konqi = ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png"));
+			konqi = ImageIO.read(new File("/usr/share/kde4/apps/kdeui/pics/aboutkde.png")); // Debian, Kubuntu
 		} catch (IOException e) {
-			Output.warning("Konqi image not found");
+			try {
+				konqi = ImageIO.read(new File("/usr/share/apps/kdeui/pics/aboutkde.png")); // Chakra
+			} catch (IOException e2) {
+				Output.warning("Konqi image not found");
+			}
 		}
 	}
 	
