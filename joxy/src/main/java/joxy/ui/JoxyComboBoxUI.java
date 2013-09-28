@@ -73,6 +73,10 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 	 */
 	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
 	/**
+	 * The painter for the pressed button slab, if it is not a toolbar button.
+	 */
+	private PressedButtonSlabPainter pressedSlabPainter = new PressedButtonSlabPainter();
+	/**
 	 * The painter for the input field (for an editable combo box).
 	 */
 	private InputFieldPainter fieldPainter = new InputFieldPainter();
@@ -255,8 +259,8 @@ public class JoxyComboBoxUI extends BasicComboBoxUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
 		if (isPopupVisible(comboBox)) { // [ws] TODO this does not work well...
-			PressedButtonSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4,
-					comboBox.getHeight() - 4);
+			pressedSlabPainter.setColor(comboBox);
+			pressedSlabPainter.paint(g2, 2, 2, comboBox.getWidth() - 4, comboBox.getHeight() - 4);
 		} else {
 			// shadow
 			g2.setColor(new Color(0, 0, 0, 80));

@@ -21,15 +21,7 @@
 
 package joxy.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
@@ -40,16 +32,9 @@ import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 
 import joxy.icon.IconEffects;
-import joxy.painter.ButtonSlabPainter;
-import joxy.painter.DarkEngravingPainter;
-import joxy.painter.FocusIndicatorPainter;
-import joxy.painter.ToolbarHoverIndicatorPainter;
-import joxy.painter.PressedButtonSlabPainter;
-import joxy.painter.HoverIndicatorPainter;
-import joxy.utils.ColorUtils;
+import joxy.painter.*;
+import joxy.utils.*;
 import joxy.utils.ColorUtils.ShadeRoles;
-import joxy.utils.JoxyGraphics;
-import joxy.utils.TileSet;
 
 
 /**
@@ -100,6 +85,10 @@ public class JoxyButtonUI extends BasicButtonUI {
 	 * The painter for the button slab, if it is not a toolbar button.
 	 */
 	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+	/**
+	 * The painter for the pressed button slab, if it is not a toolbar button.
+	 */
+	private PressedButtonSlabPainter pressedSlabPainter = new PressedButtonSlabPainter();
 	/**
 	 * The painter for the pressed button, if it is a toolbar button.
 	 */
@@ -231,7 +220,8 @@ public class JoxyButtonUI extends BasicButtonUI {
 		// Check whether the button is a toolbar button; see JoxyToolBarUI
 		if (b.isContentAreaFilled()) {
 			if (b.getModel().isPressed()) {
-				PressedButtonSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
+				pressedSlabPainter.setColor(c);
+				pressedSlabPainter.paint(g2, 2, 2, c.getWidth() - 4, c.getHeight() - 4);
 			} else {
 				// shadow
 				g2.setColor(new Color(0, 0, 0, 80));
