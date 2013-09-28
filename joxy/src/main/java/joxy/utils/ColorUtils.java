@@ -183,13 +183,12 @@ public class ColorUtils {
 		Color result = null;
 		
 		int y = SwingUtilities.convertPoint(c, (int) centerX, (int) centerY, c.getRootPane()).y; // get window coordinates
-
-		float ratio = (float) Math.min(1.0, y / Math.min(300, 0.75 * c.getRootPane().getHeight()));
 		
+		float ratio = (float) Math.min(1.0, y / Math.min(300, 0.75 * c.getRootPane().getHeight()));
 		if (ratio < 0.5) {
 			result = mix(JoxyRootPaneUI.getBackgroundTopColor(color), color, 2.0f * ratio);
 		} else {
-			result = mix(color, JoxyRootPaneUI.getBackgroundBottomColor(color), 2.0f * ratio);
+			result = mix(color, JoxyRootPaneUI.getBackgroundBottomColor(color), 2.0f * ratio - 1);
 		}
 		
 		return result;
