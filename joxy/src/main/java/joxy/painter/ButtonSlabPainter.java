@@ -56,7 +56,7 @@ public class ButtonSlabPainter extends Painter {
 	 * @see ColorUtils#backgroundColor(Color, javax.swing.JComponent, double, double)
 	 */
 	public void setColor(JComponent c) {
-		Color color = ColorUtils.backgroundColor(UIManager.getColor("Button.background"), c, c.getWidth() / 2, c.getHeight() / 2);
+		Color color = ColorUtils.backgroundColor(c.getBackground(), c, c.getWidth() / 2, c.getHeight() / 2);
 		
 		setColor(color);
 	}
