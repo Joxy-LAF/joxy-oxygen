@@ -468,17 +468,17 @@ public class TestGUI {
 		
 		t.addTab("Borders", tab7);
 		
-		JPanel tab8 = new JPanel();
+		JPanel tab8 = new JPanel(new GridLayout(0, 5));
 		
 		for (int i = 1; i <= 1000; i++) {
 			JButton button = new JButton("Button " + i);
 			tab8.add(button);
-			button.setBackground(new Color((int) (Math.random() * 255),
-					(int) (Math.random() * 255),
-					(int) (Math.random() * 255)));
+			//button.setBackground(new Color((int) (Math.random() * 255),
+			//		(int) (Math.random() * 255),
+			//		(int) (Math.random() * 255)));
 		}
 		
-		t.addTab("Buttons", tab8);
+		t.addTab("Buttons", new JScrollPane(tab8));
 	}
 	
 	/**
