@@ -29,7 +29,9 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JComponent;
 import javax.swing.JRootPane;
+import javax.swing.border.BevelBorder;
 
+import joxy.border.JoxyBevelBorder;
 import joxy.utils.ColorUtils;
 
 /**
@@ -85,9 +87,10 @@ public class PressedButtonSlabPainter extends Painter {
 		GradientPaint gradient = new GradientPaint(0, 2, light, 0, height, color);
 		g2.setPaint(gradient);
 		g2.fill(new RoundRectangle2D.Double(0, 0, width, height, ARC, ARC));
- 		g2.setColor(new Color(169, 161, 158));
- 		g2.setStroke(new BasicStroke(0.2f));
- 		g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height - 1, ARC, ARC));
-	}
+ 		//g2.setColor(new Color(169, 161, 158));
+ 		//g2.setStroke(new BasicStroke(0.2f));
+ 		//g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height - 1, ARC, ARC));
 
+		JoxyBevelBorder.paintActualBorder(g2, -1, -1, width + 2, height + 3, BevelBorder.LOWERED);
+	}
 }
