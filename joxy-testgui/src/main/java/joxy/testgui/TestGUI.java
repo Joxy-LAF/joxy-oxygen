@@ -471,7 +471,11 @@ public class TestGUI {
 		JPanel tab8 = new JPanel();
 		
 		for (int i = 1; i <= 1000; i++) {
-			tab8.add(new JButton("Button " + i));
+			JButton button = new JButton("Button " + i);
+			tab8.add(button);
+			button.setBackground(new Color((int) (Math.random() * 255),
+					(int) (Math.random() * 255),
+					(int) (Math.random() * 255)));
 		}
 		
 		t.addTab("Buttons", tab8);
