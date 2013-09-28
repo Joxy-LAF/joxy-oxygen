@@ -161,82 +161,90 @@ public class Utils {
 		}
 		// Now we create a colorMap from this
 		colorMap = new Object[] {
-			// Button colors
-			"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
-			"Button.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
-			"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
-			"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
-			
-			// Window shadow
-			"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
-			"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
-			"Shadow.activeSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
-			"Shadow.activeUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
-			"Shadow.activeVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
-			"Shadow.inactiveInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
-			"Shadow.inactiveOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
-			"Shadow.inactiveSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
-			"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
-			"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
-			// Selection color
-			"EditorPane.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"EditorPane.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			"FormattedTextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"FormattedTextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			"TextArea.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"TextArea.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			// Window colors
-			"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
-			
-			// Panel
-			"Panel.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
-			
-			// Tabbed pane
-			"TabbedPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			
-			// Table
-			"Table.background", stringToColorUI("255,255,255"),
-			"Table.alternateRowColor", stringToColorUI("240,240,240"),
-			"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			"Table.gridColor", stringToColorUI("128,128,128"),
-			"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			
-			// List
-			"List.background", stringToColorUI("255,255,255"),
-			"List.alternateRowColor", stringToColorUI("240,240,240"),
-			"List.dropLineColor", stringToColorUI("255,255,255"),
-			"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			"List.gridColor", stringToColorUI("128,128,128"),
-			"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			
-			// Menu
-			"MenuItem.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			
-			// Tool tips
-			"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
-			"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
-			
-			// Tree
-			"Tree.background", stringToColorUI("255,255,255"),
-			"Tree.alternateRowColor", stringToColorUI("240,240,240"),
-			"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
-			"Tree.gridColor", stringToColorUI("128,128,128"),
-			"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
-			"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
-			
-			// Desktop pane
-			"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
-			
-			// Tabbed pane
-			"TabbedPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
-			
-			// Titled border
-			"TitledBorder.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+
+				// Button colors
+				"Button.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
+				"Button.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+				"Button.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
+				"Button.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Button.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
+
+				// ComboBox colors
+				"ComboBox.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "BackgroundNormal")),
+				"ComboBox.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+				"ComboBox.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
+				"ComboBox.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"ComboBox.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
+
+				// Window shadow
+				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
+				"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
+				"Shadow.activeSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
+				"Shadow.activeUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
+				"Shadow.activeVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
+				"Shadow.inactiveInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
+				"Shadow.inactiveOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
+				"Shadow.inactiveSize", Integer.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "Size")),
+				"Shadow.inactiveUseOuter", Boolean.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "UseOuterColor")),
+				"Shadow.inactiveVerticalOffset", Float.valueOf(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "VerticalOffset")),
+				// Selection color
+				"EditorPane.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"EditorPane.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+				"FormattedTextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"FormattedTextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+				"TextArea.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"TextArea.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+				"TextField.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"TextField.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+				// Window colors
+				"Window.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
+
+				// Panel
+				"Panel.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")),
+
+				// Tabbed pane
+				"TabbedPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+
+				// Table
+				"Table.background", stringToColorUI("255,255,255"),
+				"Table.alternateRowColor", stringToColorUI("240,240,240"),
+				"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Table.gridColor", stringToColorUI("128,128,128"),
+				"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+
+				// List
+				"List.background", stringToColorUI("255,255,255"),
+				"List.alternateRowColor", stringToColorUI("240,240,240"),
+				"List.dropLineColor", stringToColorUI("255,255,255"),
+				"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"List.gridColor", stringToColorUI("128,128,128"),
+				"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+
+				// Menu
+				"MenuItem.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+
+				// Tool tips
+				"ToolTip.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "BackgroundNormal")),
+				"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
+
+				// Tree
+				"Tree.background", stringToColorUI("255,255,255"),
+				"Tree.alternateRowColor", stringToColorUI("240,240,240"),
+				"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Tree.gridColor", stringToColorUI("128,128,128"),
+				"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
+				"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
+
+				// Desktop pane
+				"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
+
+				// Tabbed pane
+				"TabbedPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
+
+				// Titled border
+				"TitledBorder.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 		};	
 		return colorMap;
 	}
