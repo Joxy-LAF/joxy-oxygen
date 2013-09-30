@@ -201,6 +201,11 @@ public class Utils {
 				"FormattedTextField.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
 				"FormattedTextField.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
 
+				// Spinner
+				"Spinner.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"Spinner.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"Spinner.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
+
 				// Window shadow
 				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
 				"Shadow.activeOuter", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "OuterColor")),
