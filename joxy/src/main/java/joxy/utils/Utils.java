@@ -175,6 +175,13 @@ public class Utils {
 				"ComboBox.focus", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationFocus")),
 				"ComboBox.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 				"ComboBox.hover", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "DecorationHover")),
+				
+				// TextArea
+				"TextArea.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				
+				// TextField
+				"TextField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				
 
 				// Window shadow
 				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
@@ -214,8 +221,8 @@ public class Utils {
 				"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
 
 				// List
-				"List.background", stringToColorUI("255,255,255"),
-				"List.alternateRowColor", stringToColorUI("240,240,240"),
+				"List.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"List.alternateRowColor", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundAlternate")),
 				"List.dropLineColor", stringToColorUI("255,255,255"),
 				"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 				"List.gridColor", stringToColorUI("128,128,128"),
