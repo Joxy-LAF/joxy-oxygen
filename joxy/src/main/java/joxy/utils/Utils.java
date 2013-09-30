@@ -178,15 +178,28 @@ public class Utils {
 				
 				// TextArea
 				"TextArea.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"TextArea.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"TextArea.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
 				
 				// TextField
 				"TextField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"TextField.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"TextField.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
 
 				// PasswordField
 				"PasswordField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"PasswordField.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"PasswordField.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
 
 				// EditorPane
 				"EditorPane.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"EditorPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"EditorPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
+
+				// FormattedTextField
+				"FormattedTextField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"FormattedTextField.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
+				"FormattedTextField.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundInactive")),
 
 				// Window shadow
 				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),
