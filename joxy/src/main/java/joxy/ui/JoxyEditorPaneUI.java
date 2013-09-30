@@ -234,6 +234,7 @@ public class JoxyEditorPaneUI extends BasicEditorPaneUI {
 		Rectangle vr = new Rectangle(0, 0, editor.getWidth(), editor.getHeight());
 		
 		if (editor.isEditable()) {
+			fieldPainter.setColor(editor.getBackground());
 			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		} else {
 			JoxyBevelBorder.paintActualBorder(g2, vr.x, vr.y, vr.width, vr.height, BevelBorder.LOWERED);

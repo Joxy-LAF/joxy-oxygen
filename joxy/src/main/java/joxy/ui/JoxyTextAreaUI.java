@@ -243,6 +243,7 @@ public class JoxyTextAreaUI extends BasicTextAreaUI {
 		Rectangle vr = new Rectangle(0, 0, textArea.getWidth(), textArea.getHeight());
 		
 		if (textArea.isEditable()) {
+			fieldPainter.setColor(textArea.getBackground());
 			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		} else {
 			JoxyBevelBorder.paintActualBorder(g2, vr.x, vr.y, vr.width, vr.height, BevelBorder.LOWERED);

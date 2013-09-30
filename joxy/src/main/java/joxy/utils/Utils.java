@@ -181,7 +181,12 @@ public class Utils {
 				
 				// TextField
 				"TextField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
-				
+
+				// PasswordField
+				"PasswordField.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+
+				// EditorPane
+				"EditorPane.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
 
 				// Window shadow
 				"Shadow.activeInner", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[ActiveShadow]", "InnerColor")),

@@ -629,7 +629,8 @@ public class JoxyPasswordFieldUI extends BasicPasswordFieldUI {
 	@Override
     protected void paintBackground(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		
+
+		fieldPainter.setColor(textField.getBackground());
 		fieldPainter.paint(g2, 0, 0, textField.getWidth(), textField.getHeight());
 		
 		if (textField.isEnabled()) {
