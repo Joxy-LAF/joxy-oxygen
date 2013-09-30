@@ -234,6 +234,7 @@ public class JoxyListUI extends BasicListUI {
 		if (list.getName() != null && list.getName().equals("ComboBox.list")) {
 			super.paint(g2, c); // this also paints the contents of the list
 		} else {
+			fieldPainter.setColor(list.getBackground());
 			fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 			
 			Shape oldClip = g2.getClip();

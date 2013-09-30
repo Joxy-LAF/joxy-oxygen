@@ -236,9 +236,9 @@ public class Utils {
 				"TabbedPane.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
 
 				// Table
-				"Table.background", stringToColorUI("255,255,255"),
-				"Table.alternateRowColor", stringToColorUI("240,240,240"),
-				"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Table.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"Table.alternateRowColor", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundAlternate")),
+				"Table.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
 				"Table.gridColor", stringToColorUI("128,128,128"),
 				"Table.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 				"Table.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
@@ -246,8 +246,8 @@ public class Utils {
 				// List
 				"List.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
 				"List.alternateRowColor", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundAlternate")),
-				"List.dropLineColor", stringToColorUI("255,255,255"),
-				"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"List.dropLineColor", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"List.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
 				"List.gridColor", stringToColorUI("128,128,128"),
 				"List.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 				"List.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),
@@ -265,9 +265,9 @@ public class Utils {
 				"ToolTip.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Tooltip]", "ForegroundNormal")),
 
 				// Tree
-				"Tree.background", stringToColorUI("255,255,255"),
-				"Tree.alternateRowColor", stringToColorUI("240,240,240"),
-				"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+				"Tree.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundNormal")),
+				"Tree.alternateRowColor", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "BackgroundAlternate")),
+				"Tree.foreground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:View]", "ForegroundNormal")),
 				"Tree.gridColor", stringToColorUI("128,128,128"),
 				"Tree.selectionBackground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "BackgroundNormal")),
 				"Tree.selectionForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Selection]", "ForegroundNormal")),

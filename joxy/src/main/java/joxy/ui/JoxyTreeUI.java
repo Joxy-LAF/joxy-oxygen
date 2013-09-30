@@ -75,7 +75,8 @@ public class JoxyTreeUI extends BasicTreeUI {
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 	
 	    Rectangle vr = tree.getVisibleRect();
-	
+
+		fieldPainter.setColor(tree.getBackground());
 		fieldPainter.paint(g2, vr.x, vr.y, vr.width, vr.height);
 		
 		Shape oldClip = g2.getClip();
