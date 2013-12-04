@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2013  Thom Castermans  thom.castermans@gmail.com
  * Copyright 2013  Willem Sonke     willemsonke@planet.nl
  * 
