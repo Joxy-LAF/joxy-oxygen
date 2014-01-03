@@ -28,7 +28,7 @@ import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
 
 import joxy.border.JoxyBevelBorder;
-import joxy.utils.ColorUtils;
+import joxy.color.ColorUtils;
 
 /**
  * Painter for an input field such as a text field.

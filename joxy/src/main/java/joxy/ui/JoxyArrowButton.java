@@ -30,7 +30,7 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import joxy.utils.ColorUtils;
+import joxy.color.ColorUtils;
 
 /**
  * A {@link JButton} subclass that implements an arrow button.

@@ -31,10 +31,11 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 
+import joxy.color.ColorUtils;
+import joxy.color.ColorUtils.ShadeRoles;
 import joxy.icon.IconEffects;
 import joxy.painter.*;
 import joxy.utils.*;
-import joxy.utils.ColorUtils.ShadeRoles;
 
 
 /**

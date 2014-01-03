@@ -28,7 +28,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JRootPane;
 
-import joxy.utils.ColorUtils;
+import joxy.color.ColorUtils;
 
 /**
  * Painter for a button slab. A button slab is the shape that makes up a button.

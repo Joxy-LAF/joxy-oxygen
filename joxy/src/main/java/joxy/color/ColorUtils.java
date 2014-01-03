@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package joxy.utils;
+package joxy.color;
 
 import java.awt.Color;
 

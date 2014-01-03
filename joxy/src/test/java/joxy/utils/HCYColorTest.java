@@ -23,6 +23,8 @@ package joxy.utils;
 
 import java.awt.Color;
 
+import joxy.color.HCYColor;
+
 import org.junit.Assert;
 import org.junit.Test;
 

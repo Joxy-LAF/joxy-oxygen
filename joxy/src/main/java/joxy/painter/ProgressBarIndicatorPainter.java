@@ -34,7 +34,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.UIManager;
 
-import joxy.utils.ColorUtils;
+import joxy.color.ColorUtils;
 
 /**
  * Painter for a progress bar indicator.

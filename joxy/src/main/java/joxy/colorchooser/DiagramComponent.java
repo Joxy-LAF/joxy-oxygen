@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import joxy.color.HCYColor;
 import joxy.ui.JoxyArrowButton;
 
 /**
@@ -115,12 +116,18 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 
 			@Override
 			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
-				throw new RuntimeException("Hue mode not supported!");
+				HCYColor hcy = new HCYColor(yLine / 256f, xSquare / 256f, ySquare / 256f);
+				return hcy.toColor();
 			}
 
 			@Override
 			public int[] colorToDiagram(Color color) {
-				throw new RuntimeException("Hue mode not supported!");
+				HCYColor hcy = new HCYColor(color);
+				return new int[] {
+					(int) (256 * hcy.getC()),
+					(int) (256 * hcy.getY()),
+					(int) (256 * hcy.getH())
+				};
 			}
 		}),
 
@@ -208,14 +215,14 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 
 			@Override
 			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
-				return new Color(255 - ySquare, xSquare, 255 - yLine);
+				return new Color(xSquare, 255 - ySquare, 255 - yLine);
 			}
 
 			@Override
 			public int[] colorToDiagram(Color color) {
 				return new int[] {
-					color.getGreen(),
-					255 - color.getRed(),
+					color.getRed(),
+					255 - color.getGreen(),
 					255 - color.getBlue()
 				};
 			}

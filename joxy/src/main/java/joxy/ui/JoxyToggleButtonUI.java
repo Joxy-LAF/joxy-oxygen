@@ -40,13 +40,13 @@ import javax.swing.plaf.basic.BasicToggleButtonUI;
 import javax.swing.text.View;
 
 import joxy.JoxyLookAndFeel;
+import joxy.color.ColorUtils;
+import joxy.color.ColorUtils.ShadeRoles;
 import joxy.painter.ButtonSlabPainter;
 import joxy.painter.DarkEngravingPainter;
 import joxy.painter.FocusIndicatorPainter;
 import joxy.painter.HoverIndicatorPainter;
 import joxy.painter.ToolbarHoverIndicatorPainter;
-import joxy.utils.ColorUtils;
-import joxy.utils.ColorUtils.ShadeRoles;
 import joxy.utils.JoxyGraphics;
 import joxy.utils.TileSet;
 

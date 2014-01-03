@@ -32,7 +32,7 @@ import javax.swing.JRootPane;
 import javax.swing.border.BevelBorder;
 
 import joxy.border.JoxyBevelBorder;
-import joxy.utils.ColorUtils;
+import joxy.color.ColorUtils;
 
 /**
  * Painter for a pressed button slab. A pressed button slab is the shape that makes

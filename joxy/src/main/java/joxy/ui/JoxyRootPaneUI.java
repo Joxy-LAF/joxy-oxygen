@@ -31,8 +31,9 @@ import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
+import joxy.color.ColorUtils;
+import joxy.color.ColorUtils.ShadeRoles;
 import joxy.utils.*;
-import joxy.utils.ColorUtils.ShadeRoles;
 
 /**
  * Joxy's UI delegate for the JRootPaneUI.

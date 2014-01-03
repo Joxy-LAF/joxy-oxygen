@@ -32,8 +32,8 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import joxy.color.HCYColor;
 import joxy.colorchooser.DiagramComponent.DiagramComponentMode;
-import joxy.utils.HCYColor;
 
 /**
  * A color chooser panel in Oxygen style.

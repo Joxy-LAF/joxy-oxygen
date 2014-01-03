@@ -26,8 +26,8 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.UIManager;
 
-import joxy.utils.ColorUtils;
-import joxy.utils.ColorUtils.ShadeRoles;
+import joxy.color.ColorUtils;
+import joxy.color.ColorUtils.ShadeRoles;
 import joxy.utils.Utils;
 
 /**
