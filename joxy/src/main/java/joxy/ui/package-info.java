@@ -26,6 +26,6 @@
  * in the <code>joxy</code> package, but they have now moved into this
  * separate package for clarity.</p>
  * 
- * @since 0.2.1
+ * @since 0.3.0
  */
 package joxy.ui;
