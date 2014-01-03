@@ -43,13 +43,18 @@ import joxy.border.JoxyBevelBorder;
  */
 public class DarkEngravingPainter extends Painter {
 
-	private static final int ARC = 4;
+	private static final int ARC = 6;
 
 	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
+		
+		// small white line below the engraving
+		g2.setColor(new Color(255, 255, 255, 100));
+		g2.draw(new RoundRectangle2D.Float(1, 1, width - 3, height - 3, ARC, ARC));
+		
 		// background
 		g2.setColor(new Color(182, 174, 170)); // TODO find correct color
-		g2.fill(new RoundRectangle2D.Float(2, 2, width - 4, height - 5, ARC, ARC));
+		g2.fill(new RoundRectangle2D.Float(2, 2, width - 4, height - 4, ARC, ARC));
 
 		JoxyBevelBorder.paintActualBorder(g2, 0, 0, width, height, BevelBorder.LOWERED);
 	}
