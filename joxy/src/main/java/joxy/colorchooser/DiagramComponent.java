@@ -32,7 +32,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import joxy.color.HCYColor;
+import joxy.color.HSVColor;
 import joxy.ui.JoxyArrowButton;
 
 /**
@@ -116,17 +116,17 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 
 			@Override
 			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
-				HCYColor hcy = new HCYColor(yLine / 256f, xSquare / 256f, ySquare / 256f);
-				return hcy.toColor();
+				HSVColor hsv = new HSVColor(yLine / 256f, xSquare / 256f, 1 - ySquare / 256f);
+				return hsv.toColor();
 			}
 
 			@Override
 			public int[] colorToDiagram(Color color) {
-				HCYColor hcy = new HCYColor(color);
+				HSVColor hsv = new HSVColor(color);
 				return new int[] {
-					(int) (256 * hcy.getC()),
-					(int) (256 * hcy.getY()),
-					(int) (256 * hcy.getH())
+					(int) (256 * hsv.getS()),
+					(int) (256 * (1 - hsv.getV())),
+					(int) (256 * hsv.getH())
 				};
 			}
 		}),
@@ -139,12 +139,18 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 
 			@Override
 			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
-				throw new RuntimeException("Saturation mode not supported!");
+				HSVColor hsv = new HSVColor(xSquare / 256f, 1 - yLine / 256f, 1 - ySquare / 256f);
+				return hsv.toColor();
 			}
 
 			@Override
 			public int[] colorToDiagram(Color color) {
-				throw new RuntimeException("Saturation mode not supported!");
+				HSVColor hsv = new HSVColor(color);
+				return new int[] {
+					(int) (256 * hsv.getH()),
+					(int) (256 * (1 - hsv.getV())),
+					(int) (256 * (1 - hsv.getS()))
+				};
 			}
 		}),
 
@@ -156,12 +162,18 @@ public class DiagramComponent extends JPanel implements MouseListener, MouseMoti
 
 			@Override
 			public Color diagramToColor(int xSquare, int ySquare, int yLine) {
-				throw new RuntimeException("Value mode not supported!");
+				HSVColor hsv = new HSVColor(xSquare / 256f, 1 - ySquare / 256f, 1 - yLine / 256f);
+				return hsv.toColor();
 			}
 
 			@Override
 			public int[] colorToDiagram(Color color) {
-				throw new RuntimeException("Value mode not supported!");
+				HSVColor hsv = new HSVColor(color);
+				return new int[] {
+					(int) (256 * hsv.getH()),
+					(int) (256 * (1 - hsv.getS())),
+					(int) (256 * (1 - hsv.getV()))
+				};
 			}
 		}),
 

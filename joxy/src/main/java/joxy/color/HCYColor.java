@@ -97,30 +97,30 @@ public class HCYColor {
 		float r = gamma(color.getRed() / 255.0f);
 		float g = gamma(color.getGreen() / 255.0f);
 		float b = gamma(color.getBlue() / 255.0f);
-		a = color.getAlpha();
+		this.a = color.getAlpha();
 		
 		// luma component
 		setY(lumag(r, g, b));
 
 		// hue component
-        float p = Math.max(Math.max(r, g), b);
-        float n = Math.min(Math.min(r, g), b);
-        float d = (float) (6.0 * (p - n));
+        float max = Math.max(Math.max(r, g), b);
+        float min = Math.min(Math.min(r, g), b);
+        float d = (float) (6.0 * (max - min));
 		
-		if (n == p)
+		if (min == max)
 			setH(0.0f);
-		else if (r == p)
+		else if (r == max)
 			setH(((g - b) / d));
-		else if (g == p)
-			setH((float) (((b - r) / d) + (1.0 / 3.0)));
+		else if (g == max)
+			setH((float) (((b - r) / d) + (1.0 / 3)));
 		else
-			setH((float) (((r - g) / d) + (2.0 / 3.0)));
+			setH((float) (((r - g) / d) + (2.0 / 3)));
 		
 		// chroma component
 		if (0.0 == y || 1.0 == y)
 			setC(0.0f);
 		else
-			setC(Math.max( (y - n) / y, (p - y) / (1 - y) ));
+			setC(Math.max( (y - min) / y, (max - y) / (1 - y) ));
 	}
 	
 	/**
@@ -270,7 +270,7 @@ public class HCYColor {
 
 	/**
 	 * Returns the chroma (C) component of this color.
-	 * @return The chroma component <code>y</code> (<code>0.0 <= h < 1.0</code>).
+	 * @return The chroma component <code>y</code> (<code>0.0 <= c < 1.0</code>).
 	 */
 	public float getC() {
 		return normalize(c);

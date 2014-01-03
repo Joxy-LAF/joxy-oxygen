@@ -32,7 +32,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import joxy.color.HCYColor;
+import joxy.color.HSVColor;
 import joxy.colorchooser.DiagramComponent.DiagramComponentMode;
 
 /**
@@ -230,8 +230,11 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 	 */
 	protected void updateSpinners() {
 		Color c = getColorFromModel();
+		HSVColor hsv = new HSVColor(c);
 		
-		hueSpinner.setValue((int) (new HCYColor(c).getH() * 256)); // TODO wrong
+		hueSpinner.setValue((int) (hsv.getH() * 360));
+		saturationSpinner.setValue((int) (hsv.getS() * 256));
+		valueSpinner.setValue((int) (hsv.getV() * 256));
 		redSpinner.setValue(c.getRed());
 		greenSpinner.setValue(c.getGreen());
 		blueSpinner.setValue(c.getBlue());
