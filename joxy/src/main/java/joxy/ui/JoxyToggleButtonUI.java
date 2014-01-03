@@ -405,26 +405,4 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		
 		return ColorUtils.highThreshold(color) ? color : ColorUtils.shadeScheme(color, ShadeRoles.LightShade, UIManager.getInt("General.contrast"));
 	}
-	
-	/**
-	 * Performs the actual painting of the slab on boundRectangle.
-	 * @param g    The Graphics object to paint with.
-	 * @param size *** probably some size *** TODO
-	 */
-//	private static void fillSlab(Graphics g, int size) {
-//        /* *** /kstyles/oxygen/oxygenstyle.cpp ***
-//            const qreal s( qreal( size ) * ( 3.6 + ( 0.5 * _slabThickness ) ) / 7.0 );
-//        	const QRectF r( QRectF( rect ).adjusted( s, s, -s, -s ) );
-//	        if( !r.isValid() ) return;
-//	
-//	        p.drawRoundedRect( r, s/2, s/2 );
-//         */
-//		Graphics2D g2 = (Graphics2D) g;
-//
-//		double s = size * (3.6 + (0.5 * SLAB_THICKNESS)) / 7.0;
-//		g2.fill(new RoundRectangle2D.Double(boundRectangle.x + s,
-//						    				boundRectangle.y + s,
-//						    				boundRectangle.width - s,
-//						    				boundRectangle.height - s, s/2.0, s/2.0));
-//	}
 }
