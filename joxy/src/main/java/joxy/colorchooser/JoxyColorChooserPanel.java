@@ -253,7 +253,7 @@ public class JoxyColorChooserPanel extends AbstractColorChooserPanel {
 
 	@Override
 	public String getDisplayName() {
-		return "Colors"; // TODO what to return here exactly?
+		return "Colors";
 	}
 
 	@Override
