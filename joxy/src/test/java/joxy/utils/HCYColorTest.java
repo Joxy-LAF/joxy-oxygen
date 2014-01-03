@@ -58,7 +58,6 @@ public class HCYColorTest {
     public void testGetters() {
         // Test if the getters return sane values
         for (Color testColor : testColors) {
-            System.out.println("Testing colour " + testColor + "...");
             HCYColor testHCYColor = new HCYColor(testColor);
             Assert.assertTrue("Expected the hue value to be non-negative, but " +
                     "it was " + testHCYColor.getH() + " for input color " +

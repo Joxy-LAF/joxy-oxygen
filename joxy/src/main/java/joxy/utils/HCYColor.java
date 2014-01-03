@@ -162,10 +162,8 @@ public class HCYColor {
 	 * Wraps a value to the range [0, d].
 	 */
 	public static float wrap(float n, float d) {
-        Output.debug("Wrapping " + n + " to range [0, " + d + "]...");
 		float r = (n % d + d) % d;
-		Output.debug("r = " + r);
-		return (float) (r < 0.0 ? d + r : (r > 0.0 ? r : 0.0));
+		return r < 0.0 ? d + r : r;
 	}
 	
 	/**
@@ -217,7 +215,6 @@ public class HCYColor {
 	}
 
 	public float getH() {
-        System.out.println("hoi!");
 		return wrap(h);
 	}
 
