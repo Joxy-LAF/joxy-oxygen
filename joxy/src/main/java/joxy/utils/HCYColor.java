@@ -86,12 +86,11 @@ public class HCYColor {
 	 */
 	public Color toColor() {
 		// start with sane component values
-		float h2 = wrap(getH());
-		float c2 = normalize(getC());
-		float y2 = normalize(getY());
+		float c2 = getC();
+		float y2 = getY();
 		
 		// calculate some needed variables
-		float hs = (float) (h2 * 6.0);
+		float hs = (float) (getH() * 6.0);
 		float th;
 		float tm;
 		if (hs < 1.0) {
@@ -163,7 +162,9 @@ public class HCYColor {
 	 * Wraps a value to the range [0, d].
 	 */
 	public static float wrap(float n, float d) {
-		float r = n % d;
+        Output.debug("Wrapping " + n + " to range [0, " + d + "]...");
+		float r = (n % d + d) % d;
+		Output.debug("r = " + r);
 		return (float) (r < 0.0 ? d + r : (r > 0.0 ? r : 0.0));
 	}
 	
@@ -200,7 +201,7 @@ public class HCYColor {
 
 	//-- GETTERS AND SETTERS --
 	public float getY() {
-		return y;
+		return normalize(y);
 	}
 
 	public void setY(float y) {
@@ -208,7 +209,7 @@ public class HCYColor {
 	}
 
 	public float getC() {
-		return c;
+		return normalize(c);
 	}
 
 	public void setC(float c) {
@@ -216,7 +217,8 @@ public class HCYColor {
 	}
 
 	public float getH() {
-		return h;
+        System.out.println("hoi!");
+		return wrap(h);
 	}
 
 	public void setH(float h) {
