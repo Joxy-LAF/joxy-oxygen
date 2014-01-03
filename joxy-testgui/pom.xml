@@ -10,7 +10,11 @@
     A simple GUI that can be used to test Joxy, a Java Swing look-and-feel for integration with the KDE Oxygen theme.
   </description>
   <url>http://joxy.denvelop.nl</url>
-
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
   <build>
     <plugins>
       <plugin>
