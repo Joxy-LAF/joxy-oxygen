@@ -289,6 +289,9 @@ public class Utils {
 				// Desktop pane
 				"Desktop.background", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Window]", "BackgroundNormal")), // TODO pick correct color
 
+				// Option pane
+				"OptionPane.messageForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundNormal")),
+
 				// Tabbed pane
 				"TabbedPane.disabledForeground", stringToColorUI(getKDEConfigValue(kdeConfigLines, "[Colors:Button]", "ForegroundInactive")),
 
