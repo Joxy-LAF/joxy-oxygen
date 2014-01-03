@@ -360,60 +360,6 @@ public class JoxyButtonUI extends BasicButtonUI {
             textR,
             button.getIconTextGap());
     }
-    
-	private static void renderButtonSlab(Graphics2D g, JComponent c, int animationMode, TileSet ts) {
-		/*AbstractButton b = (AbstractButton) c;
-		Color buttonColor = g.getColor();
-		
-		// fill
-		if (true) { // TODO to be replaced with a call that determines whether the background should be drawn
-			fillButtonSlab(g, boundRectangle, buttonColor, b.getModel().isPressed());
-		}
-		
-		// edges
-		if (b.getModel().isPressed()) {
-			slabSunken(buttonColor); // this, in fact, returns a TileSet (?)
-		} else {
-			Color glowColor = slabShadowColor(buttonColor, options, opacity, mode)
-			slab(buttonColor, glow, 0.0) // this, in fact, also returns a TileSet :-)
-		}*/
-		
-		// TODO Implement this
-		/* *** /kstyles/oxygen/oxygenstyle.cpp ***
-		    void Style::renderButtonSlab( QPainter *painter, QRect r, const QColor &color, StyleOptions options, qreal opacity,
-		        AnimationMode mode,
-		        TileSet::Tiles tiles ) const
-		    {
-		        if( ( r.width() <= 0 ) || ( r.height() <= 0 ) ) return;
-		
-		        r.translate( 0,-1 );
-		        if( !painter->clipRegion().isEmpty() ) painter->setClipRegion( painter->clipRegion().translated( 0,-1 ) );
-		
-		        // fill
-		        if( !( options & NoFill ) ) helper().fillButtonSlab( *painter, r, color, options&Sunken );
-		
-		        // edges
-		        // for slabs, hover takes precedence over focus ( other way around for holes )
-		        // but in any case if the button is sunken we don't show focus nor hover
-		        TileSet *tile(0L);
-		        if( options & Sunken )
-		        {
-		            tile = helper().slabSunken( color );
-		
-		        } else {
-		
-		            QColor glow = slabShadowColor( color, options, opacity, mode );
-		            tile = helper().slab( color, glow, 0.0 );
-		
-		        }
-		
-		        if( tile )
-		        { tile->render( r, painter, tiles ); }
-		
-		    }
-		 */
-	}
-	
 	
 	/**
 	 * Fill the background of the button on the rectangle boundRectangle.

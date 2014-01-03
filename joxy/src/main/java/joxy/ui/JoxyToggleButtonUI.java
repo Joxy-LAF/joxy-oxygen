@@ -48,7 +48,6 @@ import joxy.painter.FocusIndicatorPainter;
 import joxy.painter.HoverIndicatorPainter;
 import joxy.painter.ToolbarHoverIndicatorPainter;
 import joxy.utils.JoxyGraphics;
-import joxy.utils.TileSet;
 
 /**
  * Joxy's UI delegate for the JToggleButton.
@@ -72,8 +71,6 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
     private Rectangle paintTextR = new Rectangle();
     /** The Rectangle that stores the bounds of this button */
 	private static Rectangle boundRectangle = new Rectangle();
-	/** Whether to use the new code for painting buttons */
-	private static final boolean USE_NEW_BUTTON_CODE = false;
 
 	/** Amount of hover and focus, from 0 to 255 */
 	private int hoverAmount = 0, focusAmount = 0;
@@ -217,40 +214,6 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 		
-		if (USE_NEW_BUTTON_CODE) {
-		// Note that in the original code, the button can be painted in flat mode. In Java, there is no such thing as
-		// flat mode, so we only draw the non-flat mode.
-		boundRectangle = new Rectangle(0, 0, c.getWidth() - 1, c.getHeight() - 1);
-
-		// match color to the window background
-		g2.setColor(ColorUtils.backgroundColor(UIManager.getColor("Button.background"), c, boundRectangle.getCenterX(), boundRectangle.getCenterY()));
-		fillButtonSlab(g2, g2.getColor(), b.getModel().isPressed());
-		
-		/*  if( enabled && hoverAnimated && !( opts & Sunken ) )
-            {
-            	renderButtonSlab( painter, slabRect, buttonColor, opts, hoverOpacity, AnimationHover, TileSet::Ring );
-         */
-		if (b.isEnabled() && !b.getModel().isPressed() /* note that we forget about "State_On" here, that,
-														   according to the Qt 4.7 specification, indicates "if the widget is checked".
-														   As far as I know, we do not have such a state in Java and hence, ignore it.
-														   [TC 01-12-2011] */) {
-			renderButtonSlab(g2, c, JoxyLookAndFeel.ANIMATION_HOVER, new TileSet(TileSet.RING)); /* other parameters are implicit via the Graphics2D object or global */
-
-		/*  } else if( enabled && !mouseOver && focusAnimated && !( opts & Sunken ) ) {
-                renderButtonSlab( painter, slabRect, buttonColor, opts, focusOpacity, AnimationFocus, TileSet::Ring );
-		 */
-		} else if (b.isEnabled() && !b.getModel().isRollover() && !b.getModel().isPressed()) {
-			
-		
-		/*
-            } else {
-                renderButtonSlab( painter, slabRect, buttonColor, opts ); */
-
-
-		/*  }  */
-		}
-		} else {
-		
 		// Check whether the button is a toolbar button; see JoxyToolBarUI
 		if (b.isContentAreaFilled()) {
 		    if (b.getModel().isPressed() || b.getModel().isSelected()) {
@@ -307,7 +270,6 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
 			int w = f.stringWidth(clippedText);
 			int h = f.getHeight();
 			JoxyGraphics.drawString(g2, clippedText, paintTextR.x + (paintTextR.width - w) / 2, paintTextR.y + (paintTextR.height + h) / 2 - 3);
-		}
 		}
 	}
 	
@@ -390,60 +352,6 @@ public class JoxyToggleButtonUI extends BasicToggleButtonUI {
             textR,
             button.getIconTextGap());
     }
-    
-	private static void renderButtonSlab(Graphics2D g, JComponent c, int animationMode, TileSet ts) {
-		/*AbstractButton b = (AbstractButton) c;
-		Color buttonColor = g.getColor();
-		
-		// fill
-		if (true) { // TODO to be replaced with a call that determines whether the background should be drawn
-			fillButtonSlab(g, boundRectangle, buttonColor, b.getModel().isPressed());
-		}
-		
-		// edges
-		if (b.getModel().isPressed()) {
-			slabSunken(buttonColor); // this, in fact, returns a TileSet (?)
-		} else {
-			Color glowColor = slabShadowColor(buttonColor, options, opacity, mode)
-			slab(buttonColor, glow, 0.0) // this, in fact, also returns a TileSet :-)
-		}*/
-		
-		// TODO Implement this
-		/* *** /kstyles/oxygen/oxygenstyle.cpp ***
-		    void Style::renderButtonSlab( QPainter *painter, QRect r, const QColor &color, StyleOptions options, qreal opacity,
-		        AnimationMode mode,
-		        TileSet::Tiles tiles ) const
-		    {
-		        if( ( r.width() <= 0 ) || ( r.height() <= 0 ) ) return;
-		
-		        r.translate( 0,-1 );
-		        if( !painter->clipRegion().isEmpty() ) painter->setClipRegion( painter->clipRegion().translated( 0,-1 ) );
-		
-		        // fill
-		        if( !( options & NoFill ) ) helper().fillButtonSlab( *painter, r, color, options&Sunken );
-		
-		        // edges
-		        // for slabs, hover takes precedence over focus ( other way around for holes )
-		        // but in any case if the button is sunken we don't show focus nor hover
-		        TileSet *tile(0L);
-		        if( options & Sunken )
-		        {
-		            tile = helper().slabSunken( color );
-		
-		        } else {
-		
-		            QColor glow = slabShadowColor( color, options, opacity, mode );
-		            tile = helper().slab( color, glow, 0.0 );
-		
-		        }
-		
-		        if( tile )
-		        { tile->render( r, painter, tiles ); }
-		
-		    }
-		 */
-	}
-	
 	
 	/**
 	 * Fill the background of the button on the rectangle boundRectangle.
