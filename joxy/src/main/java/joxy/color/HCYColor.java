@@ -28,11 +28,13 @@ import java.awt.Color;
  * KDE uses this model internally to modify colors, and this class allows Joxy
  * to do the same.
  * 
+ * The HCY color model is similar to the HSV / HSL color model, but it uses
+ * some correction values.
+ * 
  * The logic for many methods of this class is taken from KDE's HCY color
  * implementation.
  * 
- * @author Thom Castermans
- * @author Willem Sonke
+ * @see HSVColor
  */
 public class HCYColor {
 	
