@@ -27,6 +27,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicOptionPaneUI;
 
+import joxy.utils.Output;
+
 /**
  * Joxy's UI delegate for the JOptionPane.
  * 

@@ -43,8 +43,9 @@ import joxy.utils.Utils;
  * Joxy's UI delegate for the JFileChooser.
  * 
  * <p>We extend Metal's file chooser here, because the basic LAF file chooser
- * does nothing. However we want to use a real native file chooser in the
- * future.</p>
+ * does nothing. We want to improve this file chooser to be more like the KDE
+ * one in the future. Therefore we probably need to extend the basic LAF file
+ * chooser again.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke

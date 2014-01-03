@@ -24,29 +24,34 @@ package joxy.ui;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicCheckBoxUI;
 import javax.swing.plaf.basic.BasicHTML;
-import javax.swing.plaf.basic.BasicRadioButtonUI;
 import javax.swing.text.View;
 
-import joxy.painter.RoundButtonSlabPainter;
-import joxy.painter.RoundFocusIndicatorPainter;
-import joxy.painter.RoundHoverIndicatorPainter;
+import joxy.painter.ButtonSlabPainter;
+import joxy.painter.FocusIndicatorPainter;
+import joxy.painter.HoverIndicatorPainter;
 import joxy.utils.JoxyGraphics;
 
 /**
- * Joxy's UI delegate for the JRadioButton.
+ * Joxy's UI delegate for the JCheckBox and the JRadioButton.
  * 
  * <p>This class is largely copied from {@link JoxyButtonUI}.</p>
  * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
-public class JoxyRadioButtonUI extends BasicRadioButtonUI {
+public class JoxyCheckRadioUI extends BasicCheckBoxUI {
 
+	/** The width and height of the arcs that form up
+	 *  the corners of the rounded rectangles. */
+	public static final int ARC = 8;
+	
 	private static final int WIDTH = 16;
 	private static final int HEIGHT = 16;
 
@@ -70,11 +75,23 @@ public class JoxyRadioButtonUI extends BasicRadioButtonUI {
 	/** Listeners for the animation */
 	private MouseListener hoverListener;
 	private FocusListener focusListener;
+	
+	/**
+	 * The painter for the button slab.
+	 */
+	private ButtonSlabPainter slabPainter = new ButtonSlabPainter();
+
+	/**
+	 * Whether this delegate is painting for a JCheckBox (<code>true</code>)
+	 * or a JRadioButton (<code>false</code>).
+	 */
+	private boolean isCheckBox;
     
 	public static ComponentUI createUI(JComponent c) {
 		c.setOpaque(false);
 		((AbstractButton) c).setRolloverEnabled(true);
-		JoxyRadioButtonUI ui = new JoxyRadioButtonUI();
+		JoxyCheckRadioUI ui = new JoxyCheckRadioUI();
+		ui.isCheckBox = c instanceof JCheckBox;
 		return ui;
 	}
 	@Override
@@ -214,29 +231,49 @@ public class JoxyRadioButtonUI extends BasicRadioButtonUI {
 		
 		// shadow
 		g2.setColor(new Color(0, 0, 0, 80));
-		g2.fill(new Ellipse2D.Double(iconRect.x, iconRect.y, iconRect.width, iconRect.height));
+		g2.fill(new RoundRectangle2D.Double(iconRect.x, iconRect.y, iconRect.width, iconRect.height, ARC, ARC));
 		g2.setColor(new Color(0, 0, 0, 40));
-		g2.fill(new Ellipse2D.Double(iconRect.x, iconRect.y + 1, iconRect.width, iconRect.height));
-		g2.fill(new Ellipse2D.Double(iconRect.x - 1, iconRect.y + 1, iconRect.width + 2, iconRect.height + 1));
+		g2.fill(new RoundRectangle2D.Double(iconRect.x, iconRect.y + 1, iconRect.width, iconRect.height, ARC, ARC));
+		g2.fill(new RoundRectangle2D.Double(iconRect.x - 1, iconRect.y + 1, iconRect.width + 2, iconRect.height + 1, ARC+3, ARC+3));
 		
 		// decorations
-		RoundFocusIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, focusAmount);
-		RoundHoverIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, hoverAmount);
+		FocusIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, focusAmount);
+		HoverIndicatorPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height, hoverAmount);
 		
 		// slab
-		RoundButtonSlabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
+		slabPainter.setColor(c);
+		slabPainter.setRound(!isCheckBox);
+		slabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
 		
 		// the circle
-		if (b.getModel().isPressed() || (b.getModel().isSelected() && !b.isEnabled())) { // [ws] TODO only for KDE 4.8
-			g2.setColor(new Color(0, 0, 0, 50));
-			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
-			g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
-			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+		if (b.getModel().isPressed() || (b.getModel().isSelected() && !b.isEnabled())) {
+			if (isCheckBox) {
+				g2.setColor(new Color(0, 0, 0, 50));
+				g2.setStroke(new BasicStroke(1.5f));
+				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
+				g2.drawLine(4, 9, 7, 12);
+				g2.drawLine(7, 12, 13, 5);
+				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+			} else {
+				g2.setColor(new Color(0, 0, 0, 50));
+				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
+				g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
+				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+			}
 		} else if (b.getModel().isSelected()) {
-			g2.setColor(Color.BLACK);
-			g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
-			g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
-			g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+			if (isCheckBox) {
+				g2.setColor(Color.BLACK);
+				g2.setStroke(new BasicStroke(1.5f));
+				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
+				g2.drawLine(4, 9, 7, 12);
+				g2.drawLine(7, 12, 13, 5);
+				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+			} else {
+				g2.setColor(Color.BLACK);
+				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
+				g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
+				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
+			}
 		}
 		
 		// Draw text

@@ -102,7 +102,7 @@ public class JoxyBevelBorder extends BevelBorder {
 						new Color[]{new Color(0, 0, 0, 60), new Color(0, 0, 0, 15),
 						             new Color(0, 0, 0, 15), new Color(0, 0, 0, 0)});
 				g2.setPaint(innerGradient);
-				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, width - 5, height - 6, ARC - 2, ARC - 2));
+				g2.draw(new RoundRectangle2D.Float(x + 2, y + 2, width - 5, height - 6, ARC - 3, ARC - 3));
 			} catch (IllegalArgumentException e) {
 				Output.debug("IllegalArgumentException from the bevel border gradients: " + e.getMessage());
 			}

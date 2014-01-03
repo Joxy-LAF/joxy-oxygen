@@ -150,7 +150,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 		// Set the classes to use (from Joxy) instead of the default ones
 		table.putDefaults(new Object[] {
 				"ButtonUI", joxyUIPrefix + "JoxyButtonUI",
-				"CheckBoxUI", joxyUIPrefix + "JoxyCheckBoxUI",
+				"CheckBoxUI", joxyUIPrefix + "JoxyCheckRadioUI",
 				"CheckBoxMenuItemUI", joxyUIPrefix + "JoxyMenuItemUI",
 				"ColorChooserUI", joxyUIPrefix + "JoxyColorChooserUI",
 				"ComboBoxUI", joxyUIPrefix + "JoxyComboBoxUI",
@@ -170,7 +170,7 @@ public class JoxyLookAndFeel extends BasicLookAndFeel {
 				"PopupMenuUI", joxyUIPrefix + "JoxyPopupMenuUI",
 				"PopupMenuSeparatorUI", joxyUIPrefix + "JoxySeparatorUI",
 				"ProgressBarUI", joxyUIPrefix + "JoxyProgressBarUI",
-				"RadioButtonUI", joxyUIPrefix + "JoxyRadioButtonUI",
+				"RadioButtonUI", joxyUIPrefix + "JoxyCheckRadioUI",
 				"RadioButtonMenuItemUI", joxyUIPrefix + "JoxyMenuItemUI",
 				"RootPaneUI", joxyUIPrefix + "JoxyRootPaneUI",
 				"ScrollBarUI", joxyUIPrefix + "JoxyScrollBarUI",

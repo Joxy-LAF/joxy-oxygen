@@ -123,16 +123,6 @@ public class PainterBenchmark {
 	}
 	
 	@Test
-	public void benchmarkRoundButtonSlab() {
-		long beforeTime = System.nanoTime();
-		for (int i = 0; i < 100; i++) {
-			RoundButtonSlabPainter.paint(g2, 0, 0, 120, 40);
-		}
-		long afterTime = System.nanoTime();
-		Output.print(((afterTime - beforeTime) / 100000) / 1000f + " ms per draw.");
-	}
-	
-	@Test
 	public void benchmarkRoundFocusIndicator() {
 		long beforeTime = System.nanoTime();
 		for (int i = 0; i < 100; i++) {

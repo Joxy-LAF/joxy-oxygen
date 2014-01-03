@@ -22,11 +22,11 @@
 package joxy.painter;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JComponent;
 import javax.swing.JRootPane;
-import javax.swing.UIManager;
 
 import joxy.utils.ColorUtils;
 
@@ -45,7 +45,16 @@ public class ButtonSlabPainter extends Painter {
 	 */
 	private Color color = Color.WHITE;
 	
+	/**
+	 * A lighter variant of the background colour, used to paint the gradient.
+	 */
 	private Color light = Color.WHITE;
+	
+	/**
+	 * Whether this painter paints rounded rectangles (<code>false</code>)
+	 * or ellipses (<code>true</code>).
+	 */
+	private boolean round = false;
 	
 	/**
 	 * Sets the slab's background colour for the next calls to
@@ -71,7 +80,7 @@ public class ButtonSlabPainter extends Painter {
 	 * colour for the component's position in the window.
 	 * 
 	 * @param c The component to set the background colour for. The component needs to have
-	 * a {@link JRootPane} anchestor.
+	 * a {@link JRootPane} ancestor.
 	 * @see ColorUtils#backgroundColor(Color, javax.swing.JComponent, double, double)
 	 */
 	public void setColor(JComponent c) {
@@ -80,15 +89,40 @@ public class ButtonSlabPainter extends Painter {
 		setColor(color);
 	}
 	
+	/**
+	 * Sets whether this painter paints rounded rectangles (<code>false</code>)
+	 * or ellipses (<code>true</code>) for the next calls to
+	 * {@link #paint(Graphics2D, int, int, int, int)}.
+	 * 
+	 * @param round The new roundness.
+	 */
+	public void setRound(boolean round) {
+		if (this.round == round) {
+			return;
+		}
+		
+		this.round = round;
+		
+		clearCache();
+	}
+	
 	@Override
 	protected void paintObject(Graphics2D g2, float width, float height) {
 //		GradientPaint top = new GradientPaint(0, 2, new Color(241, 240, 239), 0, height, new Color(223, 220, 217));
 //		GradientPaint top = new GradientPaint(0, 2, ColorUtils.darken(UIManager.getColor("Button.background"), 0.9f), 0, height, UIManager.getColor("Button.background"));
 		GradientPaint gradient = new GradientPaint(0, 2, light, 0, height, color);
 		g2.setPaint(gradient);
-		g2.fill(new RoundRectangle2D.Double(0, 0, width, height, ARC, ARC));
+		if (round) {
+			g2.fill(new Ellipse2D.Double(0, 0, width, height));
+		} else {
+			g2.fill(new RoundRectangle2D.Double(0, 0, width, height, ARC, ARC));
+		}
 		g2.setColor(Color.WHITE);
 		g2.setStroke(new BasicStroke(0.2f));
-		g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height - 1, ARC, ARC));
+		if (round) {
+			g2.draw(new Ellipse2D.Double(0, 0, width - 1, height - 1));
+		} else {
+			g2.draw(new RoundRectangle2D.Double(0, 0, width - 1, height - 1, ARC, ARC));
+		}
 	}
 }
