@@ -68,8 +68,6 @@ public class Utils {
 	public static final String MENU_HIGHLIGHT_STRONG = "MM_STRONG";
 	
 	//-- VARIABLES ------------------------------------------------------------
-	/** Path to home directory of the user */
-	private static String homeDir = System.getProperty("user.home");
 	/** System file separator */
 	private static String fileSep = System.getProperty("file.separator");
 	/** Contents of the kdeglobals config file, initially not set */
@@ -626,34 +624,45 @@ public class Utils {
 	 * @return The created ImageIcon.
 	 */
 	public static ImageIcon getOxygenIcon(String name, int size) {
-		String oxygenFolderName = "/usr/share/icons/oxygen/"+ size + "x" + size + "/";
-        File file = new File(oxygenFolderName + name + ".png");
-
-        if (file.exists()) {
-            return new ImageIcon(file.getPath());
-        }
+		ArrayList<String> looked = new ArrayList<String>();
+		
+		// Find locations where icons could be stored and try those
+		String[] oxygenFolderNames = KDEPathFinder.getIconPaths();
+		for (int i = 0; i < oxygenFolderNames.length; i++) {
+			oxygenFolderNames[i] += "oxygen" + fileSep + size + "x" + size + fileSep;
+			File file = new File(oxygenFolderNames[i] + name + ".png");
+	        if (file.exists()) {
+	            return new ImageIcon(file.getPath());
+	        } else {
+	        	looked.add(file.getPath());
+	        }
+		}
         
-        // File not found? Try other folders
+        // File not found? Try sub folders...
         String folderName = name.split("/")[0];
         String realFileName = name.split("/")[name.split("/").length - 1];
-        File oxygenFolder = new File(oxygenFolderName);
-        ArrayList<String> looked = new ArrayList<String>();
-        if (oxygenFolder.exists() && oxygenFolder.isDirectory()) {
-        	File[] subFolders = oxygenFolder.listFiles();
-        	for (File subFolder : subFolders) {
-        		if (subFolder.getName().equals(folderName))  continue;
-        		File possibleFile = new File(subFolder.getAbsolutePath() + "/" + realFileName + ".png");
-        		if (possibleFile.exists()) {
-        			return new ImageIcon(possibleFile.getPath());
-        		}
-        		looked.add(possibleFile.getPath());
-        	}
+        File[] oxygenFolders = new File[oxygenFolderNames.length];
+        for (int i = 0; i < oxygenFolders.length; i++) {
+        	oxygenFolders[i] = new File(oxygenFolderNames[i]);
+        }
+        
+        for (File oxygenFolder : oxygenFolders) {
+	        if (oxygenFolder.exists() && oxygenFolder.isDirectory()) {
+	        	File[] subFolders = oxygenFolder.listFiles();
+	        	for (File subFolder : subFolders) {
+	        		if (subFolder.getName().equals(folderName))  continue;
+	        		File possibleFile = new File(subFolder.getAbsolutePath() + "/" + realFileName + ".png");
+	        		if (possibleFile.exists()) {
+	        			return new ImageIcon(possibleFile.getPath());
+	        		}
+	        		looked.add(possibleFile.getPath());
+	        	}
+	        }
         }
         
         // Still not found...
-		Output.warning("Could not find " + name + " icon");
+		Output.warning("Could not find " + name + " icon.");
 		Output.warning("Searched on places:");
-		Output.warning("  /usr/share/icons/oxygen/"+ size + "x" + size + "/" +name + ".png");
 		for (String lookedAt : looked) {
 			Output.warning("  " + lookedAt);
 		}
