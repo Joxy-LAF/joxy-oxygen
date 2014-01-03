@@ -246,30 +246,29 @@ public class JoxyCheckRadioUI extends BasicCheckBoxUI {
 		slabPainter.paint(g2, iconRect.x, iconRect.y, iconRect.width, iconRect.height);
 		
 		// the circle
+		Color fg = b.getForeground();
 		if (b.getModel().isPressed() || (b.getModel().isSelected() && !b.isEnabled())) {
+			g2.setColor(new Color(fg.getRed(), fg.getGreen(), fg.getBlue(), 50));
 			if (isCheckBox) {
-				g2.setColor(new Color(0, 0, 0, 50));
 				g2.setStroke(new BasicStroke(1.5f));
 				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 				g2.drawLine(4, 9, 7, 12);
 				g2.drawLine(7, 12, 13, 5);
 				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 			} else {
-				g2.setColor(new Color(0, 0, 0, 50));
 				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 				g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
 				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 			}
 		} else if (b.getModel().isSelected()) {
+			g2.setColor(fg);
 			if (isCheckBox) {
-				g2.setColor(Color.BLACK);
 				g2.setStroke(new BasicStroke(1.5f));
 				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 				g2.drawLine(4, 9, 7, 12);
 				g2.drawLine(7, 12, 13, 5);
 				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);
 			} else {
-				g2.setColor(Color.BLACK);
 				g2.translate(iconRect.getCenterX() - 9, iconRect.getCenterY() - 9);
 				g2.fill(new Ellipse2D.Double(6, 6, 5.5, 5.5));
 				g2.translate(-iconRect.getCenterX() + 9, -iconRect.getCenterY() + 9);

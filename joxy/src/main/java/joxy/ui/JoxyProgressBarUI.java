@@ -124,8 +124,8 @@ public class JoxyProgressBarUI extends BasicProgressBarUI {
 	
 	@Override
 	public Dimension getPreferredSize(JComponent c) {
-		Dimension flup = super.getPreferredSize(c);
-		flup.height += 7;
-		return flup;
+		Dimension oldPreferred = super.getPreferredSize(c);
+		oldPreferred.height += 7;
+		return oldPreferred;
 	}
 }

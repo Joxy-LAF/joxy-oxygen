@@ -28,29 +28,69 @@ import java.awt.Color;
  * KDE uses this model internally to modify colors, and this class allows Joxy
  * to do the same.
  * 
- * <p>The logic for many methods of this class is taken from KDE's HCY color
- * implementation.</p>
+ * The logic for many methods of this class is taken from KDE's HCY color
+ * implementation.
  * 
  * @author Thom Castermans
  * @author Willem Sonke
  */
 public class HCYColor {
 	
-	private float h; // hue
-	private float c; // chroma
-	private float y; // luma
-	private float a; // alpha
+	/**
+	 * The hue (H) component of this color (<code>0.0 <= h < 1.0</code>).
+	 */
+	private float h;
+
+	/**
+	 * The chroma (C) component of this color (<code>0.0 <= c < 1.0</code>).
+	 */
+	private float c;
 	
+	/**
+	 * The luma (Y) component of this color (<code>0.0 <= y < 1.0</code>).
+	 */
+	private float y;
+	
+	/**
+	 * The alpha component of this color (<code>0.0 <= a < 1.0</code>).
+	 */
+	private float a;
+	
+	/**
+	 * An array containing correction values for converting HCY values
+	 * into RGB values.
+	 */
 	private static float[] yc = new float[] {0.299f, 0.587f, 0.114f};
+	
+	/**
+	 * Generates a HCYColor (with alpha value 1.0, which means opaque) by
+	 * specifying the H, C and Y component. If the given H, C and Y values
+	 * are out of range, they will be wrapped / normalized automatically.
+	 * 
+	 * @param h The hue.
+	 * @param c The chroma.
+	 * @param y The luma.
+	 */
+	public HCYColor(float h, float c, float y) {
+		this.h = wrap(h);
+		this.c = normalize(c);
+		this.y = normalize(y);
+		
+		this.a = 1;
+	}
 	
 	/**
 	 * Generates a HCYColor out of a simple Java (RGB) color.
 	 * 
-	 * @param color The Java RGB color, non-null.
+	 * @param color The Java RGB color, non-<code>null</code>.
+	 * @throws IllegalArgumentException If <code>color</code> is
+	 * <code>null</code>.
 	 */
 	public HCYColor(Color color) {
 		
-		assert color != null;
+		if (color == null) {
+			throw new IllegalArgumentException("The color may not be null");
+		}
 		
 		float r = gamma(color.getRed() / 255.0f);
 		float g = gamma(color.getGreen() / 255.0f);
@@ -83,6 +123,7 @@ public class HCYColor {
 	
 	/**
 	 * Generates a Java color of this HCYColor.
+	 * @return The resulting {@link Color} object.
 	 */
 	public Color toColor() {
 		// start with sane component values
@@ -146,6 +187,9 @@ public class HCYColor {
 
 	/**
 	 * Gamma function.
+	 * 
+	 * @param n The input value.
+	 * @return The resulting value.
 	 */
 	public static float gamma(float n) {
         return (float) Math.pow(normalize(n), 2.2f);
@@ -153,6 +197,9 @@ public class HCYColor {
 	
 	/**
 	 * Inverse gamma function, see {@link #gamma(float)}.
+	 * 
+	 * @param n The input value.
+	 * @return The resulting value.
 	 */
 	public static float inverseGamma(float n) {
 		return (float) Math.pow(normalize(n), 1.0/2.2);
@@ -160,6 +207,10 @@ public class HCYColor {
 	
 	/**
 	 * Wraps a value to the range [0, d].
+	 * 
+	 * @param n The input value.
+	 * @param d The upper-bound of the range to wrap to.
+	 * @return The resulting value.
 	 */
 	public static float wrap(float n, float d) {
 		float r = (n % d + d) % d;
@@ -168,11 +219,13 @@ public class HCYColor {
 	
 	/**
 	 * Wraps a value to the range [0, 1].
+	 * 
+	 * @param n The input value.
+	 * @return The resulting value.
 	 */
 	public static float wrap(float n) {
 		return wrap(n, 1.0f);
 	}
-
 	
 	/**
 	 * Normalizes the input, that means, map values lower than 0 to 0, and map values
@@ -197,28 +250,51 @@ public class HCYColor {
 	    return r*yc[0] + g*yc[1] + b*yc[2];
 	}
 
-	//-- GETTERS AND SETTERS --
-	public float getY() {
-		return normalize(y);
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getC() {
-		return normalize(c);
-	}
-
-	public void setC(float c) {
-		this.c = c;
-	}
-
+	/**
+	 * Returns the hue (H) component of this color.
+	 * @return The hue component <code>y</code> (<code>0.0 <= h < 1.0</code>).
+	 */
 	public float getH() {
 		return wrap(h);
 	}
 
+	/**
+	 * Sets the hue (H) component of this color.
+	 * @param h The new hue component. If needed, this value is wrapped.
+	 */
 	public void setH(float h) {
 		this.h = h;
+	}
+
+	/**
+	 * Returns the chroma (C) component of this color.
+	 * @return The chroma component <code>y</code> (<code>0.0 <= h < 1.0</code>).
+	 */
+	public float getC() {
+		return normalize(c);
+	}
+
+	/**
+	 * Sets the chroma (C) component of this color.
+	 * @param c The new chroma component. If needed, this value is normalized.
+	 */
+	public void setC(float c) {
+		this.c = c;
+	}
+
+	/**
+	 * Returns the luma (Y) component of this color.
+	 * @return The luma component <code>y</code> (<code>0.0 <= y < 1.0</code>).
+	 */
+	public float getY() {
+		return normalize(y);
+	}
+
+	/**
+	 * Sets the luma (Y) component of this color.
+	 * @param y The new luma component. If needed, this value is normalized.
+	 */
+	public void setY(float y) {
+		this.y = y;
 	}
 }
