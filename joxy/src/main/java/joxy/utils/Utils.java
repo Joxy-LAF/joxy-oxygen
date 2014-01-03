@@ -72,14 +72,6 @@ public class Utils {
 	private static String homeDir = System.getProperty("user.home");
 	/** System file separator */
 	private static String fileSep = System.getProperty("file.separator");
-	// Possible locations of the kdeglobals config file
-	private static File kdeglobals1 = new File(homeDir + fileSep + ".kde"     + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
-	private static File kdeglobals2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
-	private static File kdeglobals3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "kdeglobals");
-	// Possible locations of the oxygenrc config file
-	private static File oxygenrc1 = new File(homeDir + fileSep + ".kde"     + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc2 = new File(homeDir + fileSep + ".kdemod4" + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
-	private static File oxygenrc3 = new File(homeDir + fileSep + ".kde4"    + fileSep + "share" + fileSep + "config" + fileSep + "oxygenrc");
 	/** Contents of the kdeglobals config file, initially not set */
 	private static String[] kdeConfigLines = null;
 	/** HashMap with default values */
@@ -542,21 +534,29 @@ public class Utils {
 	 * files and save them in the global variable {@code kdeConfigLines}.
 	 */
 	private static void readKDEConfigFiles() {
-		// Check where kdeglobals config file is
+		String[] configPaths = KDEPathFinder.getConfigPaths();
+		
+		// Check where kdeglobals and oxygenrc config files are
 		File kdeglobals = null;
-		if (kdeglobals1.exists())  kdeglobals = kdeglobals1;
-		if (kdeglobals2.exists())  kdeglobals = kdeglobals2;
-		if (kdeglobals3.exists())  kdeglobals = kdeglobals3;
-		// Read content into string and split on newlines
+		File oxygenrc = null;
+		for (String configPath : configPaths) {
+			File kdeglobalsFile = new File(configPath + "kdeglobals");
+			if (kdeglobalsFile.exists()) {
+				kdeglobals = kdeglobalsFile;
+			}
+			
+			File oxygenrcFile = new File(configPath + "oxygenrc");
+			if (oxygenrcFile.exists()) {
+				oxygenrc = oxygenrcFile;
+			}
+		}
+		
+		// Read content of kdeglobals into string and split on newlines
 		Pattern p = Pattern.compile("\\n+");
 		String[] kdeglobalsLines = (kdeglobals == null ? new String[0] : p.split(readFileAsString(kdeglobals)));
-		// Check where oxygenrc config file is
-		File oxygenrc = null;
-		if (oxygenrc1.exists())  oxygenrc = oxygenrc1;
-		if (oxygenrc2.exists())  oxygenrc = oxygenrc2;
-		if (oxygenrc3.exists())  oxygenrc = oxygenrc3;
-		// Read content into string and split on newlines
+		// Read content of oxygenrc into string and split on newlines
 		String[] oxygenrcLines = (oxygenrc == null ? new String[0] : p.split(readFileAsString(oxygenrc)));
+		
 		// Save the concatenation of the two files globally
 		kdeConfigLines = concatArrays(kdeglobalsLines, oxygenrcLines);
 	}
