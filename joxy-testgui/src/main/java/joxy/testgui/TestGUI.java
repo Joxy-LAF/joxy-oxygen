@@ -502,5 +502,5 @@ public class TestGUI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 }

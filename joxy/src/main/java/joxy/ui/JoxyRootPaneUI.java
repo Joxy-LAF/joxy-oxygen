@@ -70,6 +70,12 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 	private static BufferedImage currentCache = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 	
 	/**
+	 * Whether we still have to use {@link XUtils#setOxygenGradientHint(Frame, boolean)}
+	 * to tell Oxygen that it should draw the radial background.
+	 */
+	private boolean shouldTellOxygenAboutRadialBackground = true;
+	
+	/**
 	 * Initialize the {@link #radialGradient600px}.
 	 */
 	static {
@@ -105,6 +111,17 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		c.setOpaque(true);
 	}
 	
+	@Override
+	protected void uninstallDefaults(JRootPane c) {
+		super.uninstallDefaults(c);
+		
+		// tell Oxygen that we are not drawing the radial background anymore
+		Window w = SwingUtilities.getWindowAncestor(c);
+		if (w instanceof Frame) {
+			XUtils.setOxygenGradientHint((Frame) w, false);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -125,6 +142,16 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 					"SwingUtilities.updateComponentTreeUI(frame). Joxy will do that now.");
 			SwingUtilities.updateComponentTreeUI(c);
 			return;
+		}
+		
+		// Bug 23: let Oxygen know that we are drawing the radial background, so that
+		// Oxygen starts drawing it in the window decoration too.
+		if (shouldTellOxygenAboutRadialBackground) {
+			Window w = SwingUtilities.getWindowAncestor(c);
+			if (w instanceof Frame) {
+				XUtils.setOxygenGradientHint((Frame) w, true);
+			}
+			shouldTellOxygenAboutRadialBackground = false;
 		}
 		
 		// if the currentCache is not up-to-date, draw a new one
