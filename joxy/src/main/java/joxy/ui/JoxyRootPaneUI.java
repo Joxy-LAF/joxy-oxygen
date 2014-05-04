@@ -117,9 +117,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		
 		// tell Oxygen that we are not drawing the radial background anymore
 		Window w = SwingUtilities.getWindowAncestor(c);
-		if (w instanceof Frame) {
-			XUtils.setOxygenGradientHint((Frame) w, false);
-		}
+		XUtils.setOxygenGradientHint(w, false);
 	}
 	
 	/**
@@ -148,9 +146,7 @@ public class JoxyRootPaneUI extends BasicRootPaneUI {
 		// Oxygen starts drawing it in the window decoration too.
 		if (shouldTellOxygenAboutRadialBackground) {
 			Window w = SwingUtilities.getWindowAncestor(c);
-			if (w instanceof Frame) {
-				XUtils.setOxygenGradientHint((Frame) w, true);
-			}
+			XUtils.setOxygenGradientHint(w, true);
 			shouldTellOxygenAboutRadialBackground = false;
 		}
 		
